@@ -1,0 +1,1 @@
+# Uvod_do_analyzy_dat_v_R
