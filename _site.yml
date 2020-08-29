@@ -1,0 +1,13 @@
+name: "Aleš Vomáčka"
+output_dir: "."
+navbar:
+  title: "Úvod do analýzy dat v R"
+  left:
+    - text: "Materiály k výuce"
+      href: materials.html
+    - text: "Atestace"
+      href: atestation.html
+output:
+  html_document:
+    theme: paper
+    css: 'styles.css'
