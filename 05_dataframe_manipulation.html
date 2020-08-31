@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Prohlížení a manipulace s dataframem</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Úvod do analýzy dat v R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Materiály k přednáškám
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Úvod</li>
+    <li class="dropdown-header">Instalace R, R studia a tidyverse</li>
+    <li>
+      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
+    </li>
+    <li class="dropdown-header">Import a export dat</li>
+    <li>
+      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown-header">Atestace</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Prohlížení a manipulace s dataframem</h1>
+
+</div>
+
+
+<p>V této části se zaměříme na prohlížení dataframů a manipulaci s ním jako celkem.</p>
+<div id="prohlížení-dataframu" class="section level2">
+<h2>Prohlížení dataframu</h2>
+<p>V R existuje několik způsobů, jak si prohlédnout nahraná data. Nejpřímočařejší je funkce <code>View()</code>, která zobrazí data v novém okně. Tento přehled připomíná Excelovský spreadsheet nebo SPSS data view:</p>
+<pre class="r"><code>View(countries)</code></pre>
+<div class="figure">
+<img src="images/View_example.PNG" alt="Funkce View()" width="488" />
+<p class="caption">
+Funkce View()
+</p>
+</div>
+<p>Pokud je dataframe extrémně velký, ať už počtem řádků nebo počtem sloupců, funkce <code>View()</code> může být zdlouhavá. V takovém případě jsou lepším řešením funkce <code>head()</code> a <code>tail()</code>. Tyto funkce vypíší do konzole prvních/posledních <code>n</code> řádků dataframu, kde <code>n</code> je argument obou funkcí. Například, pro zobrazení prvních třech řádků dataframu <code>countries</code>:</p>
+<pre class="r"><code>head(countries, n = 3)</code></pre>
+<pre><code>##   X  country code      gdp population   area eu_member postsoviet life_exp
+## 1 1  Belgium   BE 450505.7   11398589  30528       yes         no     81.2
+## 2 2 Bulgaria   BG  55182.2    7050034 110879       yes        yes     74.8
+## 3 3  Czechia   CZ 207772.4   10610055  78867       yes        yes     79.2
+##   uni_prc poverty_risk material_dep  hdi foundation_date maj_belief dem_index
+## 1   0.360        0.203        0.113 0.92      1831-07-21   catholic      7.78
+## 2   0.248        0.389        0.438 0.81      1989-11-10   orthodox      7.03
+## 3   0.217        0.122        0.098 0.89      1993-01-01  nonbelief      7.69
+##             di_cat           hd_title_name
+## 1 Flawed democracy         King – Philippe
+## 2 Flawed democracy President – Rumen Radev
+## 3 Flawed democracy President – Miloš Zeman</code></pre>
+</div>
+<div id="sumarizace-dataframu" class="section level2">
+<h2>Sumarizace dataframu</h2>
+<p>Prohlédnutí celého dataframu je užitečné pro ověření, že se data importovala správně. Pro prohlédnutí obsahu je ovšem lepší obsah dataframu sumarizovat. Počet proměnných/sloupců v dataframu lze získat funkcí <code>ncol()</code>, případně funkci <code>length()</code>. Analogicky, pro počet pozorování/řádků můžeme využít funkci <code>nrow()</code>. Dataframe <code>countries</code> má 17 sloupců a 38 řádků.</p>
+<p>Jména proměnných získáme pomocí funkce <code>names()</code>:</p>
+<pre class="r"><code>names(countries)</code></pre>
+<pre><code>##  [1] &quot;X&quot;               &quot;country&quot;         &quot;code&quot;            &quot;gdp&quot;            
+##  [5] &quot;population&quot;      &quot;area&quot;            &quot;eu_member&quot;       &quot;postsoviet&quot;     
+##  [9] &quot;life_exp&quot;        &quot;uni_prc&quot;         &quot;poverty_risk&quot;    &quot;material_dep&quot;   
+## [13] &quot;hdi&quot;             &quot;foundation_date&quot; &quot;maj_belief&quot;      &quot;dem_index&quot;      
+## [17] &quot;di_cat&quot;          &quot;hd_title_name&quot;</code></pre>
+<p>Pokud chceme zjistit hodnoty, kterých určitá proměnná nabývá, využijeme funkce <code>unique()</code>, která vrátí unikátní hodnoty vektoru (tedy, pokud se nějaká hodnota opakuje, bude vrácena pouze jednou). Je přitom nutné specifikovat konkrétní proměnnou:</p>
+<pre class="r"><code>unique(countries$maj_belief)</code></pre>
+<pre><code>## [1] &quot;catholic&quot;      &quot;orthodox&quot;      &quot;nonbelief&quot;     &quot;protestantism&quot;
+## [5] &quot;islam&quot;</code></pre>
+<p>Počet unikátních hodnot, kterých proměnná nabývá získáme kombinací funkcí <code>unique()</code> a <code>length()</code>. Proměnná <code>maj_belief</code> nabývá 5 unikátních hodnot:</p>
+<pre class="r"><code>unique(countries$maj_belief) %&gt;% length()</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>Počet chybjících proměnných pro danou proměnnou získáme pomocí kombinace funkcí <code>is.na()</code> a <code>sum()</code>. Funkce <code>is.na()</code> vrátí logický vektor, kde hodnota <code>TRUE</code> reprezentuje chybějící hodnotu a <code>FALSE</code> platnou hodnotu. Protože R interpretuje logickou hodnotu <code>TRUE</code> jako <code>1</code> a <code>FALSE</code> jako <code>0</code>, můžeme využít funkce <code>sum()</code>, abychom zjistili celkový počet chybějících hodnot v sloupci. Například proměná <code>gdp</code> obsahuje tři chybějící hodnoty:</p>
+<pre class="r"><code>is.na(countries$gdp) %&gt;% sum()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Pro summarizaci všech proměnných najednou máme několik možností. Poměrně bohatý přehled nabízí funkce <code>summary</code>, která vrátí počet pozorování a chybějících hodnot pro každou proměnnou a pro numerické proměnné i minimum, maximum, první kvantil, medián, třetí kvantil a průměr. Pro naše data: <code>summary(countries)</code>.</p>
+<p>Funkce <code>str()</code> poskytuje popis dataframu z hlediska typů proměnných. Funkce glimpse() z balíčku <code>dplyr</code> je téměř identická s funkcí <code>str()</code>, ale jejím výsledkem je nový dataframe, což ulehčuje další práci.</p>
+</div>
+<div id="filtrování-sloupcůproměnných" class="section level2">
+<h2>Filtrování sloupců/proměnných</h2>
+<p>Pro filtrování proměnných můžeme využít funkce <code>select()</code> z balíčku <code>dplyr</code> (který je součástí <code>tidyverse</code>). Funkce <code>select()</code> vyžaduje alespoň dva argumenty: a) <code>.data</code> je název dataframu, se kterým pracujeme a b) název sloupce, který chceme vybrat nebo pravidlo pro vybrání více sloupců.</p>
+<p>Nejjednoduší způsob využití select je vybrání jednoho sloupce, na který odkážeme jeho jménem. Například pro vybrání sloupce <code>gdp</code> z dataframu <code>countries</code>:</p>
+<pre class="r"><code>select(.data = countries, gdp)</code></pre>
+<p>Pokud chceme vybrat více sloupců, můžeme je jeden za druhým jednoduše vypsat, oddělené čárkou:</p>
+<pre class="r"><code>select(.data = countries, gdp, population, area)</code></pre>
+<p>Pokud chceme vybrat všechny proměnné/sloupce <em>až na ty jmenované</em>, přidáme před jméno proměnné mínus (<code>-</code>). To se hodí v situacích, kdy se chceme zbavit již nepotřebných proměnných:</p>
+<pre class="r"><code>select(.data = countries, -gdp)</code></pre>
+<p>Vypuštění více sloupců funguje stejně jako v přechdozím případně. Abychom ale nemuseli psát <code>-</code> před každou proměnnou, můžeme využít funkci <code>c()</code>:</p>
+<pre class="r"><code>select(.data = countries, -c(gdp, population, area))</code></pre>
+<p>Sloupce/proměnné nemusíme vybírat jen tím, že je jmenovitě vypíšeme. Můžeme využít i takzvaných <em>selection helpers</em>. Přehled selection helpers můžeme získat pomocí příkazu <code>?select</code></p>
+<p>Pro vybrání více sloupců v určitém rozsahu můžeme využít <code>:</code>. Pro vybrání všech proměnných od <code>gdp</code> po <code>area</code> včetně:</p>
+<pre class="r"><code>select(.data = countries, gdp:area)</code></pre>
+<p>Můžeme filtrovat podle typu proměnné, pomocí kombinace <em>select helper funkce</em> <code>where</code> a jedné z funkcí kontrolujících typ proměnné (<code>is.numeric</code>, <code>is.character</code>, <code>is.factor</code>, atd.). Vybrání všech numerických proměnných:</p>
+<pre class="r"><code>select(.data = countries, where(is.numeric))</code></pre>
+<p>Nakonec můžeme vybrat určitý znak nebo sérii znaků pomocí <em>select helper funkce</em> <code>contains</code>. Pro vybrání všech proměnných, jejichž název obsahuje <code>_</code>:</p>
+<pre class="r"><code>select(.data = countries, contains(&quot;_&quot;))</code></pre>
+<p>Výše popsané příklady nepředstavují zdaleka všechny <em>select helper funkce</em> (mezi další užitečné patří např. <code>start_with()</code>, <code>ends_with()</code>, <code>all_of()</code>, <code>any_of()</code>) a funkce je možná kombinovat pomocí logických operátorů. Příklady lze najít v již zmíněné nápovědě <code>?select()</code>.</p>
+</div>
+<div id="filtrování-řádkůpozorování" class="section level2">
+<h2>Filtrování řádků/pozorování</h2>
+<p>Filtrování řádků/pozorování lze provést pomocí funkce <code>filter()</code>, taktéž pocházející z balíčku <code>dplyr</code>. Logika je přitom velmi podobná jako u funkce <code>select()</code>. Například, pokud chceme z dataframu countries vybrat pouze země, které jsou členy Evropské unie:</p>
+<pre class="r"><code>filter(.data = countries, eu_member == &quot;yes&quot;)</code></pre>
+<p>Funkci <code>filter()</code> je možné kombinovat s dalšími funkcemi. Např. pro vybrání zemí s nadprůměrným HDP (proměnná <code>gdp</code> obsahuje chybějící hodnoty a je proto nutné se jich zbavit argumentem <code>na.rm = TRUE</code>):</p>
+<pre class="r"><code>filter(.data = countries, gdp &gt; mean(gdp, na.rm = TRUE))</code></pre>
+<p>Podmínky lze kombinovat pomocí logických operátorů: <code>==</code> má význam <em>rovná se</em>, <code>!=</code> je <em>nerovná se</em>,<code>&amp;</code> je operátor <em>a zároveň</em> a <code>|</code> je operátor <em>nebo</em>. Pokud bychom chtěli vybrat země s nadprůměrným HDP, které zároveň nejsou členy Evropské unie:</p>
+<pre class="r"><code>filter(.data = countries, gdp &gt; mean(gdp, na.rm = TRUE) &amp; eu_member == &quot;no&quot;)</code></pre>
+<p>Stejně jako v případě <code>select()</code>, napověda <code>?filter()</code> obsahuje užitečné tipy a příklady využít funkce <code>filter()</code>.</p>
+</div>
+<div id="řazení-dataframu" class="section level2">
+<h2>Řazení dataframu</h2>
+<p>Dataframe je možné řadit pomocí funkce <code>arrange()</code> z balíčku <code>dplyr</code>. Funkce arrange, obdobně jako select() a filter(), potřebuje alespoň dva argumenty: a) .data je název dataframu a b) název proměnné/proměnných podle které má být dataframe seřazen. Pro seřazení dataframu podle HDP:</p>
+<pre class="r"><code>arrange(.data = countries, gdp)</code></pre>
+<p><code>arrange()</code> řadí od numerické hodnoty od nejnižší po nejvyšší a text podle abecedy od A po Z. Pokud chceme řadit o opačném pořadí, využijeme pomocnou funkci desc(). Například, seřazení dataframu podle HDP od nejvyššího po nejnižší:</p>
+<pre class="r"><code>arrange(.data = countries, desc(gdp))</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

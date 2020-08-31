@@ -3,10 +3,16 @@ output_dir: "."
 navbar:
   title: "Úvod do analýzy dat v R"
   left:
-    - text: "Materiály k výuce"
-      href: materials.html
+    - text: "Materiály k přednáškám"
+      menu:
+        - text: "Úvod"
+        - text: "Instalace R, R studia a tidyverse"
+        - text: "Objekty, proměnné a funkce"
+          href: 03_objects_functions.html
+        - text: "Import a export dat"
+        - text: "Prohlížení a manipulce s dataframem"
+          href: 05_dataframe_manipulation.html
     - text: "Atestace"
-      href: atestation.html
 output:
   html_document:
     theme: paper

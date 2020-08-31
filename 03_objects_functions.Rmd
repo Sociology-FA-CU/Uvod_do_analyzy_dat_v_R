@@ -1,0 +1,109 @@
+---
+title: "Objekty, proměnné a funkce"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Typy objektů
+
+## Atomové vektory
+
+Při práci s R se setkáme s řadou objektů.
+Nejzákladnějším typem objektu je takzvaný atomický vektor (*atomic vector*).
+Atomické vektory jsou základním stavebním kamenem R a všechny ostatní objekty, se kterými se setkáme, z nich vychází.
+Každý vektor má určitý počet elementů, tedy dílčích částí.
+Atomový vektor s jedním elementem si můžeme představit jako základní jednotku informace.
+Příkladem atomových vektorů s jedním elementem je:
+
+```{r atomic vector simple}
+"jablko"
+```
+
+Tedy jedna hodnota. Několik různých atomových vektorů lze sloučit dohromady pomocí funkce `c()` (zkratka pro *concatenate*).
+Například, spojením tří vektorů s jedním elementem, `jablko`, `pomeranč`, `hruška` můžeme vytvořit nový vektor s třemi elementy:
+
+```{r r concatenate example}
+c("jablko", "pomeranč", "hruška")
+```
+
+### Typy atomových vektorů
+
+Ne všechny atomové vektory jsou stejné.
+Existuje šest typů vektorů: `integer` a `double` (dohromady spadající do kategorie `numeric`), `character`, `logical`, `complex` a `raw`.
+S vektory typu `complex` a `raw` se setkáme naprosto minimálně a proto se jim nebudeme více věnovat.
+
+
+|Typ vektoru|Popis                       |Příklady      |
+|:---------:|:--------------------------:|:------------:|
+|Integer    |Celé číslo                  | 1, 17        |
+|Double     |Racionální (desetinné) číslo|2.3, 14.7     |
+|Character  |Znak                        | "a", "1", "_"|
+|Logical    |Logický stav                | TRUE, FALSE  |
+
+
+Všechny elementy atomického vektoru musí být stejného typu. Kombinace `c(1, 2, 3, 4, "a")` není platným vektorem, protože obsahuje jak čislo (konkrétně `integer`), tak znak (`character`).
+Pokud chceme těchto pět vektorů zkombinovat, musí být všechny ve formátu `character`, tedy `c("1", "2", "3", "4", "a")`
+
+Specifickou pozoronost si zaslouží `NA`, které kóduje chybějící hodnoty.
+R chápe `NA` jako neznámé, tedy elementy, které mohou teoreticky nabýt jakkékoliv hodnoty.
+To má důležité implikace pro prováděné výpočty, viz. níže.
+
+## Matice (matrices) a Arrays
+
+Zatímco atomové vektory jsou jednodimenzionální, přidáním druhé dimenze vytvoříme matici (*matrix*):
+
+```{r matrix example}
+matrix(1:6, nrow = 2, ncol = 3)
+```
+
+Jedná se o klasické matice, jak je známe z matematiky a dá se s nimi proto pracovat stejným způsobem.
+Rozšířením o třetí a další dimenze získáme *array*.
+
+```{r array example}
+array(1:12, c(2, 3, 2))
+```
+
+## Tabulky
+
+Tabulka je ko
+
+## Faktory
+
+Faktory představují speciální atomického vektoru, sloužící k uchovávání kategoriálních dat.
+Jedná se o `integer` vektor, kde je každé číselné hodnotě přiřazen slovní název (zvaný `level`).
+
+```{r factor example}
+factor(x = c("Souhlasím", "Nesouhlasím", "Nesouhlasím","Nevím", "Neutrální"), levels = c("Souhlasím", "Neutrální", "Nesouhlasím"))
+```
+
+Faktory mohou nabývat pouze předem definovaných hodnot.
+Všimněme si, že předposlední hodnota v příkladu výše je `<NA>`.
+To proto, že jsme nikdy nedefinovaly level *Nevím*.
+Tato vlastnost se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála souhlasu) a všechny ostatní hodnoty musí být nutně chybné.
+
+
+Speciální typem faktoru je seřazaný faktor (*ordered factor*).
+V seřazeném faktoru mají hodnoty pevně dané pořadí a hodí se proto uchovávání ordinálních proměnných.
+
+```{r ordered example}
+ordered(x = c("Souhlasím", "Nesouhlasím", "Nesouhlasím","Nevím", "Neutrální"), levels = c("Souhlasím", "Neutrální", "Nesouhlasím"))
+```
+
+Všimněme si, že popisu úrovní (`levels`) se oproti neseřazenému faktoru změnil.
+
+## Listy
+
+List představuje složitější (již ne atomový) typ vektoru.
+Jednotlivé elementy listu nemusí být stejného typy a mohou to být dokonce jiné listy. To je z nich dělá efektivní způsob pro uchovávání dat.
+
+```{r list example}
+list(numeric = c(1,2,3,4),
+     character = c("a", "b", "c"),
+     list2 = list("x", "y", "z"))
+```

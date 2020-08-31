@@ -1,0 +1,174 @@
+---
+title: "Prohlížení a manipulace s dataframem"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data and packages, echo=FALSE, include=FALSE}
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+V této části se zaměříme na prohlížení dataframů a manipulaci s ním jako celkem.
+
+## Prohlížení dataframu
+
+V R existuje několik způsobů, jak si prohlédnout nahraná data.
+Nejpřímočařejší je funkce `View()`, která zobrazí data v novém okně.
+Tento přehled připomíná Excelovský spreadsheet nebo SPSS data view:
+
+```{r View example, results='hide'}
+View(countries)
+```
+
+```{r, fig.cap="Funkce View()",echo=FALSE}
+knitr::include_graphics(here("images", "View_example.PNG"))
+```
+
+Pokud je dataframe extrémně velký, ať už počtem řádků nebo počtem sloupců, funkce `View()` může být zdlouhavá. V takovém případě jsou lepším řešením funkce `head()` a `tail()`.
+Tyto funkce vypíší do konzole prvních/posledních `n` řádků dataframu, kde `n` je argument obou funkcí. Například, pro zobrazení prvních třech řádků dataframu `countries`:
+
+```{r head example}
+head(countries, n = 3)
+```
+
+## Sumarizace dataframu
+
+Prohlédnutí celého dataframu je užitečné pro ověření, že se data importovala správně.
+Pro prohlédnutí obsahu je ovšem lepší obsah dataframu sumarizovat.
+Počet proměnných/sloupců v dataframu lze získat funkcí `ncol()`, případně funkci `length()`.
+Analogicky, pro počet pozorování/řádků můžeme využít funkci `nrow()`.
+Dataframe `countries` má 17 sloupců a 38 řádků.
+
+Jména proměnných získáme pomocí funkce `names()`:
+```{r names example}
+names(countries)
+```
+
+Pokud chceme zjistit hodnoty, kterých určitá proměnná nabývá, využijeme funkce `unique()`, která vrátí unikátní hodnoty vektoru (tedy, pokud se nějaká hodnota opakuje, bude vrácena pouze jednou). Je přitom nutné specifikovat konkrétní proměnnou:
+
+```{r unique example}
+unique(countries$maj_belief)
+```
+
+Počet unikátních hodnot, kterých proměnná nabývá získáme kombinací funkcí `unique()` a `length()`. Proměnná `maj_belief` nabývá 5 unikátních hodnot:
+
+```{r length unique example}
+unique(countries$maj_belief) %>% length()
+```
+
+Počet chybjících proměnných pro danou proměnnou získáme pomocí kombinace funkcí `is.na()` a `sum()`. Funkce `is.na()` vrátí logický vektor, kde hodnota `TRUE` reprezentuje chybějící hodnotu a `FALSE` platnou hodnotu. Protože R interpretuje logickou hodnotu `TRUE` jako `1` a `FALSE` jako `0`, můžeme využít funkce `sum()`, abychom zjistili celkový počet chybějících hodnot v sloupci. Například proměná `gdp` obsahuje tři chybějící hodnoty:
+
+```{r is_na example}
+is.na(countries$gdp) %>% sum()
+```
+
+Pro summarizaci všech proměnných najednou máme několik možností.
+Poměrně bohatý přehled nabízí funkce `summary`, která vrátí počet pozorování a chybějících hodnot pro každou proměnnou a pro numerické proměnné i minimum, maximum, první kvantil, medián, třetí kvantil a průměr.
+Pro naše data: `summary(countries)`.
+
+Funkce `str()` poskytuje popis dataframu z hlediska typů proměnných. Funkce glimpse() z balíčku `dplyr` je téměř identická s funkcí `str()`, ale jejím výsledkem je nový dataframe, což ulehčuje další práci.
+
+## Filtrování sloupců/proměnných
+
+Pro filtrování proměnných můžeme využít funkce `select()` z balíčku `dplyr` (který je součástí `tidyverse`).
+Funkce `select()` vyžaduje alespoň dva argumenty: a) `.data` je název dataframu, se kterým pracujeme a b) název sloupce, který chceme vybrat nebo pravidlo pro vybrání více sloupců.
+
+Nejjednoduší způsob využití select je vybrání jednoho sloupce, na který odkážeme jeho jménem. Například pro vybrání sloupce `gdp` z dataframu `countries`:
+
+```{r select simple example, results='hide'}
+select(.data = countries, gdp)
+```
+
+Pokud chceme vybrat více sloupců, můžeme je jeden za druhým jednoduše vypsat, oddělené čárkou:
+
+```{r select multiple example, results='hide'}
+select(.data = countries, gdp, population, area)
+```
+
+Pokud chceme vybrat všechny proměnné/sloupce *až na ty jmenované*, přidáme před jméno proměnné mínus (`-`). To se hodí v situacích, kdy se chceme zbavit již nepotřebných proměnných:
+
+```{r select negation simple example, results='hide'}
+select(.data = countries, -gdp)
+```
+
+Vypuštění více sloupců funguje stejně jako v přechdozím případně. Abychom ale nemuseli psát `-` před každou proměnnou, můžeme využít funkci `c()`:
+
+```{r select negation multiple example, results='hide'}
+select(.data = countries, -c(gdp, population, area))
+```
+
+Sloupce/proměnné nemusíme vybírat jen tím, že je jmenovitě vypíšeme.
+Můžeme využít i takzvaných *selection helpers*. Přehled selection helpers můžeme získat pomocí příkazu `?select`
+
+Pro vybrání více sloupců v určitém rozsahu můžeme využít `:`. Pro vybrání všech proměnných od `gdp` po `area` včetně:
+
+```{r select range example, results='hide'}
+select(.data = countries, gdp:area)
+```
+
+Můžeme filtrovat podle typu proměnné, pomocí kombinace *select helper funkce* `where` a jedné z funkcí kontrolujících typ proměnné (`is.numeric`, `is.character`, `is.factor`, atd.).
+Vybrání všech numerických proměnných:
+
+```{r select type, results='hide'}
+select(.data = countries, where(is.numeric))
+```
+
+Nakonec můžeme vybrat určitý znak nebo sérii znaků pomocí *select helper funkce* `contains`.
+Pro vybrání všech proměnných, jejichž název obsahuje `_`:
+
+```{r select contains, results='hide'}
+select(.data = countries, contains("_"))
+```
+
+Výše popsané příklady nepředstavují zdaleka všechny *select helper funkce* (mezi další užitečné patří např. `start_with()`, `ends_with()`, `all_of()`, `any_of()`) a funkce je možná kombinovat pomocí logických operátorů. Příklady lze najít v již zmíněné nápovědě `?select()`.
+
+## Filtrování řádků/pozorování
+
+Filtrování řádků/pozorování lze provést pomocí funkce `filter()`, taktéž pocházející z balíčku `dplyr`.
+Logika je přitom velmi podobná jako u funkce `select()`.
+Například, pokud chceme z dataframu countries vybrat pouze země, které jsou členy Evropské unie:
+
+```{r filter simple, results='hide'}
+filter(.data = countries, eu_member == "yes")
+```
+
+Funkci `filter()` je možné kombinovat s dalšími funkcemi.
+Např. pro vybrání zemí s nadprůměrným HDP (proměnná `gdp` obsahuje chybějící hodnoty a je proto nutné se jich zbavit argumentem `na.rm = TRUE`):
+
+```{r filter function combination, results='hide'}
+filter(.data = countries, gdp > mean(gdp, na.rm = TRUE))
+```
+
+Podmínky lze kombinovat pomocí logických operátorů: `==` má význam *rovná se*, `!=` je *nerovná se*,`&` je operátor *a zároveň* a `|` je operátor *nebo*. 
+Pokud bychom chtěli vybrat země s nadprůměrným HDP, které zároveň nejsou členy Evropské unie:
+
+```{r filter multiple, results='hide'}
+filter(.data = countries, gdp > mean(gdp, na.rm = TRUE) & eu_member == "no")
+```
+
+Stejně jako v případě `select()`, napověda `?filter()` obsahuje užitečné tipy a příklady využít funkce `filter()`.
+
+## Řazení dataframu
+
+Dataframe je možné řadit pomocí funkce `arrange()` z balíčku `dplyr`.
+Funkce arrange, obdobně jako select() a filter(), potřebuje alespoň dva argumenty: a) .data je název dataframu a b) název proměnné/proměnných podle které má být dataframe seřazen. Pro seřazení dataframu podle HDP:
+
+```{r arrange example, results='hide'}
+arrange(.data = countries, gdp)
+```
+
+`arrange()` řadí od numerické hodnoty od nejnižší po nejvyšší a text podle abecedy od A po Z.
+Pokud chceme řadit o opačném pořadí, využijeme pomocnou funkci desc(). Například, seřazení dataframu podle HDP od nejvyššího po nejnižší:
+
+```{r arrange desc example, results='hide'}
+arrange(.data = countries, desc(gdp))
+```

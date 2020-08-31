@@ -11,7 +11,7 @@
 
 
 
-<title>index.utf8</title>
+<title>Index</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -272,12 +272,25 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="materials.html">Materiály k výuce</a>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Materiály k přednáškám
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Úvod</li>
+    <li class="dropdown-header">Instalace R, R studia a tidyverse</li>
+    <li>
+      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
+    </li>
+    <li class="dropdown-header">Import a export dat</li>
+    <li>
+      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="atestation.html">Atestace</a>
-</li>
+<li class="dropdown-header">Atestace</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -290,6 +303,7 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Index</h1>
 
 </div>
 
