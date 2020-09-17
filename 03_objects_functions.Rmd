@@ -8,11 +8,16 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
+
+R je v základu jazyk orientovaný na objekty (_object oriented language_).
+Tím je myšleno, že centrem R jsou objekty, tedy datové struktury (jednoduše, data), na rozdíl od např. funkcionálních jazyků (které chápou programování  skrze optiku matematických funkcí) nebo procedurálních jazyků (které se zaměřují na sérii výpočetních kroků).
+Protože objekty hrají centrální úlohu při práci s R, vyplatí se znát jejich základní přehled.
 
 # Typy objektů
 
-## Atomové vektory
+## Atomový vektor
 
 Při práci s R se setkáme s řadou objektů.
 Nejzákladnějším typem objektu je takzvaný atomický vektor (*atomic vector*).
@@ -44,7 +49,7 @@ S vektory typu `complex` a `raw` se setkáme naprosto minimálně a proto se jim
 |Integer    |Celé číslo                  | 1, 17        |
 |Double     |Racionální (desetinné) číslo|2.3, 14.7     |
 |Character  |Znak                        | "a", "1", "_"|
-|Logical    |Logický stav                | TRUE, FALSE  |
+|Logical    |Logický stav                |TRUE, FALSE, NA|
 
 
 Všechny elementy atomického vektoru musí být stejného typu. Kombinace `c(1, 2, 3, 4, "a")` není platným vektorem, protože obsahuje jak čislo (konkrétně `integer`), tak znak (`character`).
@@ -53,8 +58,9 @@ Pokud chceme těchto pět vektorů zkombinovat, musí být všechny ve formátu 
 Specifickou pozoronost si zaslouží `NA`, které kóduje chybějící hodnoty.
 R chápe `NA` jako neznámé, tedy elementy, které mohou teoreticky nabýt jakkékoliv hodnoty.
 To má důležité implikace pro prováděné výpočty, viz. níže.
+`NA` také může být součástí součástí jakkéhokoliv typu atomového vektoru, ne pouze logického (přesněji řečeno, v R existuje několik typů `NA`, ty jsou ale ve většině případů přiřazeny automaticky a není nutné je řešit).
 
-## Matice (matrices) a Arrays
+## Matice (matrix) a Array
 
 Zatímco atomové vektory jsou jednodimenzionální, přidáním druhé dimenze vytvoříme matici (*matrix*):
 
@@ -69,13 +75,17 @@ Rozšířením o třetí a další dimenze získáme *array*.
 array(1:12, c(2, 3, 2))
 ```
 
-## Tabulky
+## Tabulka
 
-Tabulka je ko
+Tabulka je speciální případ matice/array, která obsahuje názvy jednotlivých sloupců a řádků. Jedná se zpravidla o frekvenční a kontingenční tabulky
 
-## Faktory
+```{r table example}
+table(c("jablko", "jablko", "jablko", "pomeranč", "pomeranč"))
+```
 
-Faktory představují speciální atomického vektoru, sloužící k uchovávání kategoriálních dat.
+## Faktor
+
+Faktory představují speciální typ objektu, sloužící k uchovávání kategoriálních dat.
 Jedná se o `integer` vektor, kde je každé číselné hodnotě přiřazen slovní název (zvaný `level`).
 
 ```{r factor example}
@@ -97,7 +107,7 @@ ordered(x = c("Souhlasím", "Nesouhlasím", "Nesouhlasím","Nevím", "Neutráln�
 
 Všimněme si, že popisu úrovní (`levels`) se oproti neseřazenému faktoru změnil.
 
-## Listy
+## List
 
 List představuje složitější (již ne atomový) typ vektoru.
 Jednotlivé elementy listu nemusí být stejného typy a mohou to být dokonce jiné listy. To je z nich dělá efektivní způsob pro uchovávání dat.
@@ -107,3 +117,266 @@ list(numeric = c(1,2,3,4),
      character = c("a", "b", "c"),
      list2 = list("x", "y", "z"))
 ```
+
+## Dataframe
+
+Dataframe je speciální typ listu, složený z vektorů stejné délky. Vektory můžou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme ho ve většina analýz.
+
+```{r dataframe example}
+data.frame(numeric = c(1,2,3,4,5),
+           character = c("a", "b", "c", NA, "e"))
+```
+
+
+# Přiřazovaní jmen objektům
+
+Pokud chceme některý objekt využívat opakovaně, je nutné mu přiřadit jméno, aby na něj bylo možné v budoucnu odkazovat.
+Jména objektům můžeme přiřadit pomocí funkce `<-`, případně `=` (v naprosté většině situací jsou ty dvě funkce identické).
+Přiřazování jmen probíhá v podobě `jméno <- objekt`, případně `jméno = objekt`.
+Například:
+
+```{r object name example}
+x <- c(1,2,3,4,5,6)
+```
+
+vytvoří atomový vektor `c(1,2,3,4,5,6)` a přiřadí mu jméno `x`.
+V budoucnu už nebudeme muset vytvářet objekt znovu, ale můžeme ho ho zavolat jménem:
+
+```{r object call example}
+x
+```
+
+Jména objektů jsou tranzitivní, můžeme tedy jednomu objektu přiřadit dvě jména, čímž ho prakticky zduplikujeme:
+
+```{r name transitivity example}
+x = c(1,2,3,4,5,6)
+y = x
+
+x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta
+```
+
+Přiřazování jmen se řídí jistými omezeními.
+Následující slova nemůžou být jmény objektu (ani funkcí): `if`, `else`, `repeat` `while`, `function`, `for`,`in`, `next`, `break`, `TRUE`, `FALSE`, `NULL`, `Inf`, `NaN`, `NA`, `NA_integer_`, `NA_real_`, `NA_complex_`,	`NA_character_` a	`…`.
+Těmto výrazům se říká rezervovaná slova a jsou využívaná pro vnitřní fungování R jako programovacího jazyka (např. `NA` je rezervováno pro vyjádření chybějící hodnoty).
+Jméno musí začínát buď písmenem nebo tečkou.
+Pokud začíná tečkou, druhý znak nesmí být číslice (např. `.2scale` není validní jméno).
+Jména také mohou obsahovat pouze znaky, číslice, tečky nebo podtržítka (`_`).
+
+# Vnořené objekty
+
+Jak jsme již viděli, některé objekty, např. dataframe nebo list, mohou obsahovat objekty jiné.
+Vytvořme například dataframe `zeme`, obsahující dvě proměnné (atomové vektory), `evropa` a `amerika`:
+
+```{r nested object}
+zeme = data.frame(evropa = c("Česko", "Slovensko", "Německo", "Francie", "Norsko"),
+                  amerika = c("USA", "Kanada", "Mexiko", "Brazílie", "Chile"))
+```
+
+Tento dataframe můžeme zavolat jeho jménem:
+
+```{r nested object df call}
+zeme
+```
+
+Co když ale chceme pouze určitou proměnnou?
+Možností je několik.
+První možností je zavolat proměnnou pomocí jejího jména.
+To lze udělat pomocí znaku dolaru, a to ve formátu `objekt$vnoreny objekt`.
+Pokud bychom chtěli z dataframu `zeme` pouze proměnnou `evropa`:
+
+```{r nested variable name call}
+zeme$evropa
+```
+
+Druhou možností je zavolat proměnnou podle jejího pořadí v objektu.
+K tomu slouží hranaté závorky, ve formátu `objekt[cislo sloupce]`
+V našem případě můžeme zavolat první proměnnou v dataframu `zeme` pomocí:
+
+```{r nested variable order call}
+zeme[1]
+```
+
+Poslední možností je odkázat pomocí maticové notace na konkrétní řádek nebo sloupec.
+I to se provádí pomocí hranatých závorek, ale ve formátu `objekt[řádek, sloupce]`.
+
+Například první řádek:
+```{r nested variable row call}
+zeme[1,]
+```
+
+První sloupec: 
+
+```{r nested variable column call}
+zeme[,1]
+```
+
+A nakonec, první řádek prvního sloupce:
+
+```{r nested variable row and column call}
+zeme[1,1]
+```
+
+# Funkce 
+
+Funkce je speciálním typem objektu, pomocí kterého lze manipulovat s jinými objekty.
+funkci poznáme zpravidla podle závorek, následujících za jméném funkce samotné (tedy `funkce()`).
+S některými funkcemi jsme se již setkali, např. `table()`, `list()` a `data.frame()`jsou funkce vytvářející objekty stejného jména.
+Dalšími funkcemi jsou například `sum()`, `mean()` a `var()`.
+Vytvořme si následující objekt `cisla`:
+
+```{r fucntion basic object}
+cisla = c(17, 28, 37, 41, 56)
+```
+
+Pokud bychom chtěli spočítat součet hodnot v tomto objektu, stačí jednoduše použít:
+
+```{r fumction simple example}
+sum(cisla)
+```
+
+Obdobně můžeme použít i funkce `mean()`, `median()` nebo `var()`.
+
+## Argumenty funkce
+
+Do většiny funkcí lze přidávat argumenty, které upravují jejich chování.
+Například funkce `sum()` má x argumenty:
+
+__...__ - numerický nebo logický vektor, jehož součet funkce počítá.
+
+__na.rm__ - logický argument řídící, jestli mají být před výpočtem součtu odstraněny chybějící hodnoty.
+
+Pro ukázku toho, jak argumenty fungují, si vytvořme nový objekt:
+
+```{r fucntion object with NA}
+cisla2 = c(17, 28, 37, 41, 56, NA)
+```
+
+Objekt `cisla2` je téměř stejný jako `cisla`, ale obsahuje navíc hodnotu `NA`.
+Pokud bychom chtěli spočítat pro něj, narazíme na problém:
+
+```{r fumction na example}
+sum(cisla2)
+```
+
+Součet těchto hodnot je neznámy. 
+Jak jsme již zmínili, R interpretuje `NA` jako existující, ale neznámé hodnotu.
+Jelikož je poslední poslední z čísel v objektu `cisla2` neznáme, může teoreticky nabývat jakkékoliv hodnoty.
+A protože poslední číslo může nabývat jakkékoliv hodnoty, i součet našich čísel může být jakkýkoliv.
+Součet `cisla2` je tedy technicky vzato neznámy.
+
+V praxi se tomuto problému můžeme jednoduše vyhnout tím, že budeme existenci chybějících hodnot ignorovat.
+K tomu slouží argument `na.rm`, která najdeme u celé řady funkcí.
+Ve výchozím nastavení funkce `sum()` je hodna argumentu `na.rm` `FALSE`, tedy chybějící hodnoty nejsou ignorovány.
+Pokud chceme aby R chybějící hodnoty ignorovalo:
+
+```{r fumction argument example example}
+sum(cisla2, na.rm = TRUE)
+```
+
+Čímž dostaneme stejný výsledek jako pokud by chybějící hodnota neexistovala.
+
+## Aplikovaní funkcí na vnořené objekty
+
+Pokud je nějaký objekt součástí jiného, například proměnné součástí dataframu, můžeme na něj způsoby, které jsme si ukázaly v kapitole __Vnořené objekty__.
+Vytvořme si nový dataframe `vyska`:
+
+```{r nested object function data}
+vyska = data.frame(muzi = c(172, 183, 187),
+                   zeny = c(174, 167, 159))
+```
+
+Pokud bychom chtěli spočítat průměr proměnné `muzi`:
+
+```{r nested object function example dollar}
+mean(vyska$muzi)
+```
+
+Případně můžeme místo názvu odkázat na sloupec podle jeho pozice v dataframu:
+
+```{r nested object function example order}
+mean(vyska[,1])
+```
+
+Stejně jako můžeme odkazovat na vnořené objekty v rámci funkcí, můžeme uložit výsledek funkce jako vnořený objekt.
+Pokud bychom například chtěli vytvořit v dataframu `vyska` novou proměnnou `rozdil`, které představuje rozdíl mezi hodnotami proměnných `muzi` a `zeny`:
+
+```{r new nested variable example}
+vyska$rozdil = vyska$muzi - vyska$zeny
+```
+## Řetězení funkcí
+
+V praxi budeme potřebovat pro naše téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme.
+Co kdybychom chtěli nejen spočítat průměr proměnné `muzi` v dataframu `vyska`, ale výsledek zaokrouhlit na celé čislo?
+Možností máme několika.
+
+První možností je si spočítaný průměr uložit do nového objektu a ten potom zaokrouhlit:
+
+```{r function chainded new object}
+prumer_muzi = mean(vyska$muzi)
+
+round(prumer_muzi)
+```
+
+Tento postup je přehledný, často ale vede k vytváření velkého množství nových objektů.
+
+Druhou možností je funkce nabalovat na sebe.
+Protože výsledkem funkce je objekt, na který lze aplikovat novou funkci, můžeme udělat následující:
+
+```{r function chained layering}
+round(mean(vyska$muzi))
+```
+
+Tento postup se na rozdíl od předchozího obejde bez vytváření nových objektů, čtení skriptu je ovšem neintuitivní a skript se rychle stává nečitelným.
+Pokud funkce nabalujeme na sebe, je nutné skript číst ze středu k vnějšku.
+Funkce `mean()` je ve středu, takže bude aplikovaná jako první, a funkce `round()` bude aplikovaná po ní.
+
+Poslední možností je využít takzvané __pipes__ (`%>%`), "fajfky" pocházející z balíčku `magrittr`, ale obsažení i v balíčku `dplyr` (který je součástí `tidyverse`).
+__Pipe__ (kterou můžeme rychle napsat pomocí klávesové zkratky __ctrl__ + __shift__ + __m__) je funkce, která vezme objekt (většinou dataframe) nalevo od ní a aplikuje na něj funkci napravo.
+Fajfky je také možné řetězit:
+
+```{r function chained pipes}
+vyska$muzi %>% mean() %>% round()
+```
+
+Hlavní výhodou fajfek/ __pipes__/`%>%` je, že jejich čtění je intuitivní.
+Skript se čte zleva do prava jako klasický text.
+V našem případě první `%>%` vezme objekt `muzi` (vnořený v dataframu `vyska`) a aplikuje na něj funkci `mean()`.
+Druhá `%>%` potom vezme výsledek funkce `mean()` a aplikuje na něj funkci `round()`.
+
+__Pipes__ mají dvě hlavní nevýhody.
+První z nich je, že jejich použití je primárně zaměřené na dataframy.
+Pokud jsou aplikované na jiné typy objektů, nemusí nutně fungovat.
+Druhou nevýhodou je, že jsou výpočetně pomalejší než ostatní postupy.
+U běžných datasetů je rozdíl neznatelný, ale u velmi velkých dat (velikostně v řádu gigabytů a větší) je už zpomalení znatelné.
+
+## Nápověda funkcí
+
+V tuto chvíli jsme si už stihli ukázat řadu funkcí.
+Co když se ale setkáme s funkcí, kterou neznáme?
+Nebo známe, ale zapomněli jsme, jaké jsou její argumenty nebo jak ji aplikovat?
+Naštěstí pro nás, R obsahuje podrobnou nápovědu pro všechny funkce, které nabízí.
+
+Nápovědu můžeme zobrazit pomocí otazníků (`?`) před jménem funkce (`?jméno funkce`).
+Například nápovědu pro funkci `sum()` můžeme zobrazit pomocí:
+
+```{help example}
+?sum()
+```
+
+Nápověda většiny funkcí má standardizovaný formát, obsahující několik oddílů. Těmito oddíly jsou:
+
+|Oddíl      |Popis                                                           |
+|:----------|:---------------------------------------------------------------|
+|Description| Základní popis toho, co funkce dělá                            |
+|Usage      | Základní nastavení funkce, resp. jejích argumentů              |
+|Argument   | Argumenty funkce a jejich popis                                |
+|Details    | Detailní popis toho, jak funkce funguje a jak je implementována|
+|Value      | Výsledek funkce, co funkce produkuje                           |
+|References | Zdroje využité v Description, zvlášť u statistických funkci užitečné pro teoretický popis jejich fungování|
+|See also| Příbuzné funkce nebo funkce, které se často používají spolu s danou funkcí|
+Examples| Příklady aplikace funkce, jak funkci používat                     |
+
+
+Pokud si tedy nejsme jistí, co funkce dělá, je nejlepší se podívat na _Description_, a případně _Details_.
+Pokud si nepamatujeme, jaké argumenty funkce má, pak samozřejmě oddíl _Arguments_.
+A nakonec, pokud si nejsme jistí, jak funkci použít, nejlepší je podívat se na do oddílu _Examples_.

@@ -17,7 +17,7 @@ library(here)
 countries = read.csv(here("data", "countries.csv"))
 ```
 
-V této části se zaměříme na prohlížení dataframů a manipulaci s ním jako celkem.
+Ve většině případů je nejvhodnějším objektem pro práci s daty dataframe. V této části se proto zaměříme na prohlížení dataframů a manipulaci s nimi jako celkem.
 
 ## Prohlížení dataframu
 
@@ -172,3 +172,12 @@ Pokud chceme řadit o opačném pořadí, využijeme pomocnou funkci desc(). Nap
 ```{r arrange desc example, results='hide'}
 arrange(.data = countries, desc(gdp))
 ```
+
+Občas můžeme chtít seřadit dataset v rámci určitých skupin.
+Pro to můžeme využít funkci `group_by()` (detailněji popsanou v kapitole _Transformace a sumarizace proměnných_) a přidáním argumentu `.by_row = TRUE` do funkce `arrange()`:
+
+```{r arrange by group example, results='hide'}
+countries %>% group_by(eu_member) %>% arrange(gdp, .by_group = TRUE)
+```
+
+Tímto způsobem můžeme nejdřív seřadit země podle toho, zda jsou postsovětské nebo ne, a poté je seřadit podle HDP od nejvyššího po nejnižší.
