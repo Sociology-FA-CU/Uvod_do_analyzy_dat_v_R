@@ -360,7 +360,9 @@ div.tocify {
     <li>
       <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
     </li>
-    <li class="dropdown-header">Import a export dat</li>
+    <li>
+      <a href="04_import_export.html">Import a export dat</a>
+    </li>
     <li>
       <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
     </li>
@@ -384,7 +386,7 @@ div.tocify {
 </div>
 
 
-<p>V této části se zaměříme na prohlížení dataframů a manipulaci s ním jako celkem.</p>
+<p>Ve většině případů je nejvhodnějším objektem pro práci s daty dataframe. V této části se proto zaměříme na prohlížení dataframů a manipulaci s nimi jako celkem.</p>
 <div id="prohlížení-dataframu" class="section level2">
 <h2>Prohlížení dataframu</h2>
 <p>V R existuje několik způsobů, jak si prohlédnout nahraná data. Nejpřímočařejší je funkce <code>View()</code>, která zobrazí data v novém okně. Tento přehled připomíná Excelovský spreadsheet nebo SPSS data view:</p>
@@ -469,6 +471,9 @@ Funkce View()
 <pre class="r"><code>arrange(.data = countries, gdp)</code></pre>
 <p><code>arrange()</code> řadí od numerické hodnoty od nejnižší po nejvyšší a text podle abecedy od A po Z. Pokud chceme řadit o opačném pořadí, využijeme pomocnou funkci desc(). Například, seřazení dataframu podle HDP od nejvyššího po nejnižší:</p>
 <pre class="r"><code>arrange(.data = countries, desc(gdp))</code></pre>
+<p>Občas můžeme chtít seřadit dataset v rámci určitých skupin. Pro to můžeme využít funkci <code>group_by()</code> (detailněji popsanou v kapitole <em>Transformace a sumarizace proměnných</em>) a přidáním argumentu <code>.by_row = TRUE</code> do funkce <code>arrange()</code>:</p>
+<pre class="r"><code>countries %&gt;% group_by(eu_member) %&gt;% arrange(gdp, .by_group = TRUE)</code></pre>
+<p>Tímto způsobem můžeme nejdřív seřadit země podle toho, zda jsou postsovětské nebo ne, a poté je seřadit podle HDP od nejvyššího po nejnižší.</p>
 </div>
 
 

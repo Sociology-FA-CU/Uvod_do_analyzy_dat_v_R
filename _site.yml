@@ -10,6 +10,7 @@ navbar:
         - text: "Objekty, proměnné a funkce"
           href: 03_objects_functions.html
         - text: "Import a export dat"
+          href: 04_import_export.html
         - text: "Prohlížení a manipulce s dataframem"
           href: 05_dataframe_manipulation.html
     - text: "Atestace"
