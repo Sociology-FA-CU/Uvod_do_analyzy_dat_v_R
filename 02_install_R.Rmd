@@ -1,0 +1,74 @@
+---
+title: "Instalace R, Rstudia a Tidyverse"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(here)
+```
+
+Před použitím R je nutné si ho nainstalovat na svůj počítač. Poté nainstalujeme Rstudio, rozhraní které práci s R usnadňuje. Nakonec nainstalujeme soubor balíčků Tidyverse, se kterými budeme pracovat. Je přitom nutné instalaci provést v tomto pořadí.
+
+# Instalace R
+
+Jako první je třeba nainstalovat R samotné. Odkaz na stažení je možné naléz na https://mirrors.nic.cz/R/ (případně jsou na hlavní stránce https://www.r-project.org/).
+
+Je třeba stáhnout verzi R odpovídající vašemu operačním systému:
+
+-	Pro Windows verzi: [Download R for Windows](https://mirrors.nic.cz/R/bin/windows/) (soubor base)
+-	Pro MacOS verzi:Download [R for (Mac) OS X](https://mirrors.nic.cz/R/bin/macosx/) (pod *Latest release* soubor s koncovkou .pkg)
+-	Pro Linux verzi: [Download R for Linux](https://mirrors.nic.cz/R/bin/linux/) (je třeba zvolit odpovídající distribuci)
+
+Po stažení se R instaluje jako jakýkoliv jiný program.
+Vyberte si adresu, kam si chcete R nainstalovat.
+Nainstalujte si verzi odpovídající vašemu systému (např. Windows 32bit vs Windows 64bit. Pokud si nejste jistí, jakou verzi Windows máte, konzultujte [nápovědu](https://support.microsoft.com/cs-cz/help/15056/windows-32-64-bit-faq)).
+Zvolte default startup možnost.
+
+Teď byste měli mít nainstalovanou základní verzi R.
+Přesvědčit se o tom můžete jeho spuštěním buď přes ikonu na ploše (pokud jste si ji zvolili během instalace), přes start menu nebo přímo ve složce, kde je R nainstalované.
+Pokud R spustíte, bude vypadat takto:
+
+```{r, fig.cap="Základní vzhled R",echo=FALSE, out.width=700}
+knitr::include_graphics(here("images", "R_install.PNG"))
+```
+
+# Instalace rozhraní Rstudio
+
+Dalším krokem je nainstalovat vývojářské prostředí Rstudio.
+Rstudio je momžné nalézt na https://rstudio.com.
+Odkazy na stažení Rstudia najdeme na https://rstudio.com/products/rstudio/download/#download.
+Znovu si pod odrážkou *All installers* vyberte verzi odpovíající vašemu operačnímu systému (Windows, Mac OS, Linux).
+
+**Důležitá poznámka**: Pokud používáte 32bitovou verzi operačního systému, je nutné si stáhnout starší verzi Rstudia [zde](https://rstudio.com/products/rstudio/older-versions/), protože ty nejnovější už 32bitové systémy nepodporuje. 
+
+Znovu nainstalujte jako jiné programy. Po instalaci se můžete přesvědčit, že je Rstudio správně nainstalováno jeho spuštěním přes ikonu nebo přímo ze složky, kam jste ho nainstalovali. Rstudio při prvním spuštění vypadá takto:
+
+```{r, fig.cap="Základní vzhled Rstudia",echo=FALSE}
+knitr::include_graphics(here("images", "Rstudio_install.PNG"))
+```
+
+# Instalace balíčků Tidyverse
+
+Posledním krokem je instalace skupiny balíčků [Tidyverse](https://www.tidyverse.org/).
+To se provádí přímo z Rstudia (resp. z R).
+Ujistěte se, že jste připojení k internetu, abyste si mohli balíčky stáhnout.
+Spusťte Rstudio a všimněte si, že na levé straně je konzole, do které můžete psát.
+Balíčky se v R instalují pomocí funkce `install.packages()`.
+Pro instalaci Tidyverse tedy do konzole napište `install.packages("tidyverse")` a stiskněte Enter, viz. obrázek:
+
+```{r, fig.cap="Instalace Tidyverse",echo=FALSE, out.width=700}
+knitr::include_graphics(here("images", "tidyverse_install.PNG"))
+```
+
+R všechny balíčky samo stáhne a nainstaluje, takže stačí trpělivě čekat. Úspěšnou instalaci poznáte podle zprávy v konzoli s textem `package …. successfully unpacked and MD5 sums checked` (zpráva se objeví několikrát, protože R bude instalovat více balíčků najednou).
+
+Nakonec si úspěšnou instalaci můžete ověřit tím, že nainstalovaný balíček nahrajete/zapojíte příkazem `library(tidyverse)`. Úspěšné nahrání bude vypadat takto:
+
+```{r, fig.cap="Úspěšné nahrání tidyverse",echo=FALSE, out.width=700}
+knitr::include_graphics(here("images", "tidyverse_load.PNG"))
+```

@@ -7,6 +7,7 @@ navbar:
       menu:
         - text: "Úvod"
         - text: "Instalace R, R studia a tidyverse"
+          href: 02_install_R.hml
         - text: "Objekty, proměnné a funkce"
           href: 03_objects_functions.html
         - text: "Import a export dat"
