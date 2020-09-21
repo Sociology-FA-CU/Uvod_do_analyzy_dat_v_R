@@ -356,7 +356,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Úvod</li>
-    <li class="dropdown-header">Instalace R, R studia a tidyverse</li>
+    <li>
+      <a href="02_install_R.hml">Instalace R, R studia a tidyverse</a>
+    </li>
     <li>
       <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
     </li>
@@ -386,7 +388,6 @@ div.tocify {
 </div>
 
 
-<pre><code>## here() starts at C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R</code></pre>
 <p>V této sekci se zaměříme na to, jak importovat a exportovat data v R a probereme základní praktiky organizace dat.</p>
 <div id="import-dat" class="section level1">
 <h1>Import dat</h1>
@@ -421,20 +422,24 @@ countries = read.csv(&quot;C:\\Users\\ales_\\Desktop\\own_projects\\Uvod_do_anal
 <div id="import-dat-z-jiných-formátů" class="section level2">
 <h2>Import dat z jiných formátů</h2>
 <p>Kromě výše zmíněných formátů je možné importovat i data z dalších populárních softwarů pro analýzu dat. Využít pro to můžeme balíček <code>haven</code> (který je součástí projektu <code>tidyverse</code>). Data z SPSS je možné importovat pomocí funkce read_spss(). Pro import dat ze softwaru Stata slouží funkce <code>read_dta()</code> a pro SAS funkce <code>read_sas()</code>. Pro data z Excelu je nutné nainstalovat samostatný balíček <code>readxl</code> (který je součástí <code>tidyverse</code>) a využít funkci <code>read_excel()</code>.</p>
+<p>U importu dat v SPSS formátu se ještě zastavíme. Přestože balíček <code>haven</code> dokáže importovat .sav soubory, má dvě omezení. Zaprvé je nutné ručně specifikovat encoding .sav souborů pocházejících z české verze SPSS (argument <code>encoding = "Windows-1250"</code>) a zadruhé proměnné načítá v atypickém <code>labelled</code> formátu. V mnoha případech je pohodlnější použít balíček <code>foreign</code></p>
+<p>Balíček <code>foregin</code> nejen lépe zvládá český encoding, ale i automaticky převede labely na hodnoty. Data cvvm_cerven_2019.sav můžeme nahrát pomocí funkce:</p>
+<pre class="r"><code>cvvm = read.spss(&quot;cvvm_cerven_2019.sav&quot;, to.data.frame = TRUE, reencode = TRUE)</code></pre>
+<p>Argument <code>to.data.frame = TRUE</code> importuje data jako dataframe (jinak bude výsledkem list) a argument <code>reencode = TRUE</code> převede encoding tak, aby byly všechny znaky zobrazeny správně.</p>
 </div>
 <div id="import-dat-z-internetu" class="section level2">
 <h2>Import dat z internetu</h2>
 <p>Data nemusíme nutně importovat pouze z našeho počítače. Pokud jsou data ke stažení na internetu, je možné je stáhnout do R rovnou. Například data o zemích jsou uložena na Githubu na adrese <a href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv" class="uri">https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv</a>. Pro jejich stažení stačí použít:</p>
-<pre class="import"><code>countries = read.csv(&quot;https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv&quot;)</code></pre>
+<pre class="r"><code>countries = read.csv(&quot;https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv&quot;)</code></pre>
 </div>
 </div>
 <div id="export-dat" class="section level1">
 <h1>Export dat</h1>
 <p>Export dat probíhá velmi podobně jako jejich import. Funkce pro export zpravidla začínájí slovem <code>write</code>, případně <code>save</code>. Pro uložení dat v .csv formátu slouží funkce <code>write.csv()</code>, která potřebuje dva argumenty. <code>x</code> je jméno objektu, který chceme exportovat a <code>file</code> je cesta, kam má být objekt uložen:</p>
-<pre class="write"><code>write.csv(x = countries, file = &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.csv&quot;)</code></pre>
+<pre class="r"><code>write.csv(x = countries, file = &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.csv&quot;)</code></pre>
 <p>Na konci cesty je název souboru, do kterého budou data exportovány (v našem případě <code>countries.csv</code>). Nesmíme také zapomenout na koncovku souboru (<em>.csv</em>), jinak se soubor exportuje bez ní a bude nutné jí později přidávat manuálně. Můžeme také ručně nastavit seperátor sloupc pomocí argumenty sep (ve výchozím nastavení <code>,</code>) a oddělovač desetinných čísel (ve výchozím nastavení <code>.</code>). Encoding je možné nastavit pomocí argumentu <code>fileEncoding</code> (standardně <code>UTF-8</code>).</p>
 <p>Uložení do .rds probíhá pomocí funkce <code>saveRDS()</code>. Stejně jako v předchozím případě je nutné specifikovat, jaký objekt má být exportován (argument <code>object</code>) a cesta, kam má být soubor uložen (argument <code>file</code>):</p>
-<pre class="writing"><code>write.csv(object = countries, file = &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.rds&quot;)</code></pre>
+<pre class="r"><code>write.csv(object = countries, file = &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.rds&quot;)</code></pre>
 </div>
 <div id="pracovní-adresář-working-directory" class="section level1">
 <h1>Pracovní adresář (<em>working directory</em>)</h1>
@@ -443,9 +448,9 @@ countries = read.csv(&quot;C:\\Users\\ales_\\Desktop\\own_projects\\Uvod_do_anal
 <pre class="r"><code>getwd()</code></pre>
 <pre><code>## [1] &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
 <p>Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci <code>setwd()</code> (<em>set working directory</em>):</p>
-<pre class="set"><code>setwd(&quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data)</code></pre>
+<pre class="r"><code>setwd(&quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data)</code></pre>
 <p>Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a ukládat do výše zmíněné složky. Například, pokud bychom chtěli importovat .csv soubor, který ve složce je v pracovním adresáři, stačí:</p>
-<pre class="wd"><code>countries = read.csv(&quot;countries.csv&quot;)</code></pre>
+<pre class="r"><code>countries = read.csv(&quot;countries.csv&quot;)</code></pre>
 <p>Na rozdíl od předchozích případů už nemmusíme vypisovat celou adresu do funkce read.csv(). Pokud se v pracovním adresáři nachází soubor <code>countries.csv</code>, R si ho najde samo. obdobně můžeme použít i funkce <code>readRDS()</code> nebo <code>write.csv()</code>.</p>
 <p>Toto nastavení pracovního adresáře platí pouze pro do konce sezení. Pokud bychom R vypnuli a zapnuli, vrátí se pracovní adresář na původní adresu. Pokud bychom chtěli adresu pracovního adresáře změnit permanentně, můžeme to udělat pomocí nastevení Rstudia. V záložce <strong>Tools</strong> zvolíme <strong>Global Options…</strong> . Hned v záložce <strong>General</strong> je možnost <strong>Default working directory (when not in a project)</strong>, kde můžeme nastavit permanentní adresu našeho pracovního adresáře.</p>
 </div>
@@ -464,7 +469,7 @@ countries = read.csv(&quot;C:\\Users\\ales_\\Desktop\\own_projects\\Uvod_do_anal
 <p>Už jsme si ukázali dva způsoby importování a exportování souborů: buď můžeme určit adresu souboru v rámci funkce pro import/export nebo můžeme na začátku nastavit adresu pracovního adresáře. Oba tyto způsoby ale mají jednu nevýhodu: Adresy souborů, případně složek, jsou definované staticky. Například funkce <code>setwd("C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R)</code> bude fungovat pouze pokud požíváme operační systém Windows, uživatelský účet se jmenuje <code>ales_</code>, na ploše existuje složka <code>own_project</code> a v ní existuje složka <code>Uvod_do_analyzy_dat_v_R</code>. To znamená, že funkce nebude fungovat na žádném jiném počítačí nebo pokud by se někdy názvy složek změnily. Naštěstí existuje způsob, jak nastavit pracovní adresář dynamicky, tak aby se vždy přizpůsobil konkrétní situaci.</p>
 <p>Řešením je balíček <code>here</code>. Tento balíček dynamicky upravuje cestu k pracovnímu adresáři tak, aby fungoval bez ohledu na to, na jakém počítači a v jaké složce se skript nachází. Velmi dobře přitom spolupracuje s Rstudio projekty.</p>
 <p>nejdříve je nutné si balíček <code>here</code> stáhnout:</p>
-<pre class="here"><code>install.packages(&quot;here&quot;)</code></pre>
+<pre class="r"><code>install.packages(&quot;here&quot;)</code></pre>
 <p>Když máme balíček stažený, stačí ho vždy nahrát na začátku skriptu pomocí funkce <code>library()</code>:</p>
 <pre class="r"><code>library(here)</code></pre>
 <p>Když balíček poprvé nahrajeme, zobrazí se zpráva <code>here() starts at...</code> následováná adresou. To znamená, že balíček nastavil pracovní adresář tam, kde pracujeme.</p>
@@ -479,7 +484,7 @@ countries = read.csv(&quot;C:\\Users\\ales_\\Desktop\\own_projects\\Uvod_do_anal
 </ol>
 <p>Pro nás je zajímavý zejména bod 2. <code>here</code> nastaví pracovní adresář tam, kde kde se nachází nejbližší soubor <code>.Rproj</code> (pokud dříve nenajde <code>.here</code>). Soubor <code>.Rproj</code> vzniká vytvořením Rstudio projektu. Jinak řečeno, pracovní adresář je vždy nastaven na současný Rstudio projekt. To znamená, že bez ohledu na to, kam složku s Rstudio projekt přesuneme, ať už na našem vlastním počítači nebo jiném jiném, pracovní adresář bude vždy nastaven správně.</p>
 <p>Po tom, co jsme aktivovaly balíček <code>here</code> pomocí <code>library(here)</code>, můžeme použí funkci <code>here()</code> uvnitř funkcí pro export a import dat:</p>
-<pre class="here"><code>countries = read.csv(here(&quot;countries.csv&quot;))</code></pre>
+<pre class="r"><code>countries = read.csv(here(&quot;countries.csv&quot;))</code></pre>
 <p>Tímto způsobem můžeme importovat data, aniž bychom museli vypisovat přesnou adresu nebo nastavovat pracovní adresář ručně. POkud by data nebyla přímo v pracovním adresáři, ale ve složce uvnitř pracovního adresáře, můžeme ji jednoduše specifikovat. Například, pokud by soubor <code>countries.csv</code> byl ve složce <code>data</code>, která se nachází v pracovní adresáři:</p>
 <pre class="r"><code>countries = read.csv(here(&quot;data&quot;, &quot;countries.csv&quot;))</code></pre>
 <p>Pokud je náš skript uložený uvnitř Rstudio projektu, balíček here zaručuje, že skript bude fungovat vždy bez ohledu na to, kam ho přesuneme.</p>
