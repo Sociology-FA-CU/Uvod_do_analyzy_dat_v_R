@@ -1,7 +1,7 @@
 ---
-title: "Anotace kurzu"
-output: html_document
 ---
+
+## Anotace kurzu
 
 **Vyučující**: Jaromír Mazák PhD, Mgr. Aleš Vomáčka
 
