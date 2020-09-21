@@ -5,9 +5,10 @@ navbar:
   left:
     - text: "Materiály k přednáškám"
       menu:
-        - text: "Úvod"
+        - text: "Představení R"
+          href: 01_intro_R.html
         - text: "Instalace R, R studia a tidyverse"
-          href: 02_install_R.hml
+          href: 02_install_R.html
         - text: "Objekty, proměnné a funkce"
           href: 03_objects_functions.html
         - text: "Import a export dat"
@@ -15,6 +16,9 @@ navbar:
         - text: "Prohlížení a manipulce s dataframem"
           href: 05_dataframe_manipulation.html
     - text: "Atestace"
+      href: atestation.html
+    - text: "Data"
+      href: course_data.html
 output:
   html_document:
     theme: paper

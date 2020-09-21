@@ -11,7 +11,7 @@
 
 
 
-<title>Instalace R, Rstudia a Tidyverse</title>
+<title>Představení R, Rstudio a Tidyverse</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -390,59 +390,31 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Instalace R, Rstudia a Tidyverse</h1>
+<h1 class="title toc-ignore">Představení R, Rstudio a Tidyverse</h1>
 
 </div>
 
 
-<p>Před použitím R je nutné si ho nainstalovat na svůj počítač. Poté nainstalujeme Rstudio, rozhraní které práci s R usnadňuje. Nakonec nainstalujeme soubor balíčků Tidyverse, se kterými budeme pracovat. Je přitom nutné instalaci provést v tomto pořadí.</p>
-<div id="instalace-r" class="section level1">
-<h1>Instalace R</h1>
-<p>Jako první je třeba nainstalovat R samotné. Odkaz na stažení je možné naléz na <a href="https://mirrors.nic.cz/R/" class="uri">https://mirrors.nic.cz/R/</a> (případně jsou na hlavní stránce <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>).</p>
-<p>Je třeba stáhnout verzi R odpovídající vašemu operačním systému:</p>
+<p>R je volně šiřitelný, otevřený programovací jazyk zaměřený specificky na vizualizaci a statistickou analýzu dat. Jeho počátky sahají do poloviny 90. let minulého století, kdy začal být vytvářen dvěma pracovníky Aucklandské university, Rossem Ihakem a Robertem Gentlemanem. Od té doby se stal stal jedním z nejpopulárnějších jazyků pro analýzu dat a drží se mezi nejpopulárnějšími jazyky vůbec. R je široce využívané jak pro akademický výzkum, tak v komerční i veřejné sféře.</p>
+<p>Zatímco funkčnost jiných statistické programů, jako například SPSS nebo Excel, je omezená na předpřipravené nástroje a postupy, možnosti R jsou téměř neomezené. Kromě základních i pokročilých statistických analýz je možné R využít k psaní <a href="https://bookdown.org/">knih</a>, <a href="https://rmarkdown.rstudio.com/">článků</a>, webových stránek (včetně této) nebo <a href="https://shiny.rstudio.com/gallery/">aplikací</a>. R je také využíváno řadou předních statistiků, jejichž práce se týká i sociálněvědního výzkumu.</p>
+<p>Cenou za široké možnosti R jsou vyšší nároky na jeho naučení. Na rozdíl od programů s grafickým rozhraním vyžaduje práce s R alespoň základní znalosti programování. Naštěstí dnes již existuje řada zdrojů a komunit, které mohou s tímto problémem pomoci. Pro inspiraci můžeme zmínit blog <a href="https://www.r-bloggers.com/">R-bloggers</a>, skupinu <a href="https://rladies.org/">Rladies</a> nebo komunitní projekt a podcast <a href="https://www.tidytuesday.com/">Tidytuesday</a>.</p>
+<div id="rstudio" class="section level1">
+<h1>Rstudio</h1>
+<p>Jedno z věcí, která může práci s R výrazně zjednodušit, je použití vývojářského prostředí, jako je Rstudio. Rstudio je integrované vývojářské prostředí (<em>integrated development environmet</em>), tedy program, který poskytuje funkce nad rámec samotného R. Jeho cílem je co nejvíce usnadnit každodenní práci. Nabízí vytváření skriptů, spellcheck, zvýrazňování kódu, automatické hledání chyb, nástroje pro export grafů a mnoho dalšího. Rstudio není jediným vývojářským prostředí pro (zmínit můžeme například <a href="https://www.vim.org/scripts/script.php?script_id=2628">Vim</a> nebo <a href="https://ess.r-project.org/">ESS Emacs</a>), představuje však představuje výbornou rovnováhu mezi výkonem a uživatelskou přívětivostí.</p>
+</div>
+<div id="tidyverse" class="section level1">
+<h1>Tidyverse</h1>
+<p>Existuje mnoho balíčků a rozšíření, které přináší do R nespočet dalších funkcí nad rámec základní instalace. <a href="https://www.tidyverse.org/">Tidyverse</a> je rodinou takovýchto rozšiřujících balíčků. Balíčky Tidyverse rozšiřují možnosti R zejména v oblastech manipulace a vizualizace dat. Mnoho úkonů, které se v základním R provádí velmi zdlouhavě nebo krkolomně, jsou v Tidyverse velmi jednoduché. Další velkou výhodou je, že všechny současti Tidyverse jsou designováni tak, aby si spolu rozuměli a využívali stejnou logiku kódu. Jednou z nevýhod otevřenosti R je, řada autorů má řadu různých představ o psání počítačového kódu. To vede k mnoha různým konvencím, které jsou pro běžného uživatele matoucí (např. mají funkce začínat velkým nebo malým písmenem? mají se slova oddělovat potržítkem nebo tečkou?). Všechny balíčky Tidyverse se drží jednotného principu programování a je proto velice jednoduché jejich funkce kombinovat, bez zbytečných zmatků. Jedná se tak o další způsob, jak ulehčit ponoření do R.</p>
+<p>Je nutné zmínit, že využívání Tidyverse není striktně nutné. Tidyverse vzniklo dávno po vznikem R a do dneška existuje mnoho uživatelů, pro které představuje základní R (nebo jiné balíčky pro analýzu dat) ideální pracovní prostředí. Nicméně, stejně jako u Rstudio, Tidyverse představuje rovnováhu mezi uživatelskou přívětivostí a flexibilitou práce.</p>
+</div>
+<div id="závěrem-proč-nepoužíváme-grafická-rozhraní" class="section level1">
+<h1>Závěrem: Proč nepoužíváme grafická rozhraní?</h1>
+<p>Na začátku jsme zmínili, že R je programovací jazyk a pro práci s ním je nutné znát základy programování. Protože je ovšem v R udělat téměř vše, je možné pro něj vytvořit i grafické rozhraní, jako má například SPSS. Těchto rozhraní je celá řada, nejpopulárnější jsou pravděpodobně <a href="https://www.jamovi.org/">Jamovi</a> a <a href="https://www.rcommander.com/">R commander</a>. S využitím těchto rozhraní je možné analýzy “naklikávat” místo psaní programovacího kódu. Tím se výrazně snižuje obtížnost práce s R. Grafická rozhraní ale mají tři velké slabiny, které dříve nebo později převáží nad jakýmikoliv výhodami:</p>
 <ul>
-<li>Pro Windows verzi: <a href="https://mirrors.nic.cz/R/bin/windows/">Download R for Windows</a> (soubor base)</li>
-<li>Pro MacOS verzi:Download <a href="https://mirrors.nic.cz/R/bin/macosx/">R for (Mac) OS X</a> (pod <em>Latest release</em> soubor s koncovkou .pkg)</li>
-<li>Pro Linux verzi: <a href="https://mirrors.nic.cz/R/bin/linux/">Download R for Linux</a> (je třeba zvolit odpovídající distribuci)</li>
+<li><p><strong>Grafická rozhraní nikdy nepokryjí vše, co R nabízí a co mi potřebujeme</strong>: přestože většina grafických rozhraní obsahuje možnosti pro jednoduchou manipulaci s daty a základní statistické postupy, v žádném z nich nenaklikáte složitější úkony jako cyklické aplikace funkce (“<em>loopy</em>”) ani nevytvoříte složité psychometrické modely. Jinak řečeno, pokud se rozhodnee vážněji zabývat kvantitativní analýzou, dříve nebo později se alespoň lehkému programování nevyhneme. A čas ztrávený v grafických rozhraních v tu chvíli nebude příliš přinosný.</p></li>
+<li><p><strong>Grafické rozhraní jsou časově neefektivní</strong>: I kdyby všechny funkce, které pro naši práci potřebujeme, byly obsaženy v některém grafickém rozhraní, práce s nimi by vždy byla pomalejší. Jedním z největších výhod, které počítače přinášejí, je možnost automatizace. Není třeba ručně vytvářet tucet kontingenčních tabulek nebo kontrolovat desítky proměnných, pokud to může počítač udělat za nás. Práce se skriptem umožňuje zadat počítači příkaz a nechat ho, ať ho sám zopakuje na jakkoliv velkém počtu případů, což výrazně šetří čas. Takovéto efektivity s grafickými rozhraními nikdy nedosáhneme.</p></li>
+<li><p><strong>Klikání svádí k nereprodukovatelnosti</strong>: velkou výhodou práce skrze psaní skriptu je, že tento skript slouží jako záznam toho, co se stalo. Kdokoliv, ať už mi sami nebo lidé se zájmem o naši práci, se mohou v budoucnu podívat, jak jsme při analýze postupovali a případně se naší prací inspirovat nebo ji vylepšit. Práce v grafickém rozhraní svádí k rychlému naklikávání, po kterém často nezůstane ani stopa.</p></li>
 </ul>
-<p>Po stažení se R instaluje jako jakýkoliv jiný program. Vyberte si adresu, kam si chcete R nainstalovat. Nainstalujte si verzi odpovídající vašemu systému (např. Windows 32bit vs Windows 64bit. Pokud si nejste jistí, jakou verzi Windows máte, konzultujte <a href="https://support.microsoft.com/cs-cz/help/15056/windows-32-64-bit-faq">nápovědu</a>). Zvolte default startup možnost.</p>
-<p>Teď byste měli mít nainstalovanou základní verzi R. Přesvědčit se o tom můžete jeho spuštěním buď přes ikonu na ploše (pokud jste si ji zvolili během instalace), přes start menu nebo přímo ve složce, kde je R nainstalované. Pokud R spustíte, bude vypadat takto:</p>
-<div class="figure">
-<img src="images/R_install.png" alt="Základní vzhled R" width="700" />
-<p class="caption">
-Základní vzhled R
-</p>
-</div>
-</div>
-<div id="instalace-rozhraní-rstudio" class="section level1">
-<h1>Instalace rozhraní Rstudio</h1>
-<p>Dalším krokem je nainstalovat vývojářské prostředí Rstudio. Rstudio je momžné nalézt na <a href="https://rstudio.com" class="uri">https://rstudio.com</a>. Odkazy na stažení Rstudia najdeme na <a href="https://rstudio.com/products/rstudio/download/#download" class="uri">https://rstudio.com/products/rstudio/download/#download</a>. Znovu si pod odrážkou <em>All installers</em> vyberte verzi odpovíající vašemu operačnímu systému (Windows, Mac OS, Linux).</p>
-<p><strong>Důležitá poznámka</strong>: Pokud používáte 32bitovou verzi operačního systému, je nutné si stáhnout starší verzi Rstudia <a href="https://rstudio.com/products/rstudio/older-versions/">zde</a>, protože ty nejnovější už 32bitové systémy nepodporuje.</p>
-<p>Znovu nainstalujte jako jiné programy. Po instalaci se můžete přesvědčit, že je Rstudio správně nainstalováno jeho spuštěním přes ikonu nebo přímo ze složky, kam jste ho nainstalovali. Rstudio při prvním spuštění vypadá takto:</p>
-<div class="figure">
-<img src="images/Rstudio_install.PNG" alt="Základní vzhled Rstudia" width="960" />
-<p class="caption">
-Základní vzhled Rstudia
-</p>
-</div>
-</div>
-<div id="instalace-balíčků-tidyverse" class="section level1">
-<h1>Instalace balíčků Tidyverse</h1>
-<p>Posledním krokem je instalace skupiny balíčků <a href="https://www.tidyverse.org/">Tidyverse</a>. To se provádí přímo z Rstudia (resp. z R). Ujistěte se, že jste připojení k internetu, abyste si mohli balíčky stáhnout. Spusťte Rstudio a všimněte si, že na levé straně je konzole, do které můžete psát. Balíčky se v R instalují pomocí funkce <code>install.packages()</code>. Pro instalaci Tidyverse tedy do konzole napište <code>install.packages("tidyverse")</code> a stiskněte Enter, viz. obrázek:</p>
-<div class="figure">
-<img src="images/tidyverse_install.PNG" alt="Instalace Tidyverse" width="700" />
-<p class="caption">
-Instalace Tidyverse
-</p>
-</div>
-<p>R všechny balíčky samo stáhne a nainstaluje, takže stačí trpělivě čekat. Úspěšnou instalaci poznáte podle zprávy v konzoli s textem <code>package …. successfully unpacked and MD5 sums checked</code> (zpráva se objeví několikrát, protože R bude instalovat více balíčků najednou).</p>
-<p>Nakonec si úspěšnou instalaci můžete ověřit tím, že nainstalovaný balíček nahrajete/zapojíte příkazem <code>library(tidyverse)</code>. Úspěšné nahrání bude vypadat takto:</p>
-<div class="figure">
-<img src="images/tidyverse_load.PNG" alt="Úspěšné nahrání tidyverse" width="700" />
-<p class="caption">
-Úspěšné nahrání tidyverse
-</p>
-</div>
 </div>
 
 
