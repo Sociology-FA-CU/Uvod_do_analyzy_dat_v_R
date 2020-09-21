@@ -8,3 +8,25 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Atestace
+
+Pro úspěšné splnění předmětu je nutné splnit následující úkol:
+
+V červnu roku 2019 provedlo [Centrum pro výzkum veřejného mínění](cvvm.soc.cas.cz/) průzkum zaměřený na to, jak veřejnost hodnotí závažnost vybraných celospolečenských hrozeb a připravenost České republiky na ně. Respondenti byly dotazováni na zhruba 26 hrozeb a pro každou z nich určili, jak je podle nich závažná a jak dobře jsme na ni připravení.
+Celá zpráva s názvem *Celospolečenské hrozby podle veřejnosti* je k nalezení [zde](https://cvvm.soc.cas.cz/media/com_form2content/documents/c2/a5077/f9/po191223.pdf)
+
+Pro získání zápočtu splňte **jedno** z následujících:
+
+1) Replikujte Tabulku 1 a Tabulku 2 ve zprávě. Výsledkem by měli být dva objekty (ideálně dataframy), z nichž každý bude obsahovat čtyři sloupce: *Název hrozby*, *Průměrná hodnota*, *Směrodatná odchylka* a *% odpovědí nevím*. Pořadí hrozeb by mělo být seřazeno sestupně podle *Průměrné hodnoty*. Název tabulky ani poznámky pod čarou replikovat nemusíte.
+
+2) Replikujte Graf 1. Drobné odchylky od originálu nevadí (např. odstín barev, font a velikost písma), ale graf by měl obsahovat všechny důležité aspekty, jako popisky os, barevné rozlišení bodů, legendu, atd. Nezapomeňtě ani na název a popis grafu.
+
+V obou případech odevzdejte skript, který musí být plně funkční, tedy musí proběhnout bez chyby od začátku do konce bez vnějších zásahů.
+
+
+Data pro vypracování úkolu jsou k nalezení buď v [Českém sociálněvědním datovém archivu](https://archiv.soc.cas.cz/), nebo ke stažení rovnou [zde](https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/cvvm_cerven_2019.rds).
+
+Případně stáhnout rovnou v R pomocí funkce:
+
+```{r csv data, eval=FALSE}
+cvvm = read.csv("https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/cvvm_cerven_2019.csv")
+```
