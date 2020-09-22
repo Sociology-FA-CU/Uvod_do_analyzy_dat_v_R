@@ -34,4 +34,4 @@ Data obsahují následující proměnné:
 |foundation_date|Datum vzniku/zformování země                                     |Wikipedie            |
 |maj_belief     |Největší náboženská skupina v zemi (2018)                        |Pew Researcher Center|
 
-Pro práci v kurzu doporučuji stáhnout data v obou formátech (`.csv` i `.rds`) a uložit si je do podsložky `data` v složce s ostatními materiály ke kurzu.
+Pro práci v kurzu doporučujeme stáhnout data v obou formátech (`.csv` i `.rds`) a uložit si je do podsložky `data` ve složce s ostatními materiály ke kurzu.

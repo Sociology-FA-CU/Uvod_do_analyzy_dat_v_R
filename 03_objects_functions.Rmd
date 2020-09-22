@@ -4,6 +4,8 @@ output:
   html_document:
     toc: true
     toc_float: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -94,7 +96,7 @@ factor(x = c("Souhlasím", "Nesouhlasím", "Nesouhlasím","Nevím", "Neutrální
 
 Faktory mohou nabývat pouze předem definovaných hodnot.
 Všimněme si, že předposlední hodnota v příkladu výše je `<NA>`.
-To proto, že jsme nikdy nedefinovaly level *Nevím*.
+To proto, že jsme nikdy nedefinovali level *Nevím*.
 Tato vlastnost se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála souhlasu) a všechny ostatní hodnoty musí být nutně chybné.
 
 
@@ -120,7 +122,7 @@ list(numeric = c(1,2,3,4),
 
 ## Dataframe
 
-Dataframe je speciální typ listu, složený z vektorů stejné délky. Vektory můžou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme ho ve většina analýz.
+Dataframe je speciální typ listu, složený z atomových vektorů stejné délky. Vektory v data framu mohou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme s ním pracovat ve většině analýz. Dataframe je obdobou toho, co se v SPSS nazývá datovou maticí.
 
 ```{r dataframe example}
 data.frame(numeric = c(1,2,3,4,5),
@@ -303,9 +305,16 @@ Pokud bychom například chtěli vytvořit v dataframu `vyska` novou proměnnou 
 ```{r new nested variable example}
 vyska$rozdil = vyska$muzi - vyska$zeny
 ```
+
+Následně můžeme na tuto novou proměnnou odkazovat, například spočítat průměrný rozdíl v páru:
+
+```{r new variable usage example}
+mean(vyska$rozdil)
+```
+
 ## Řetězení funkcí
 
-V praxi budeme potřebovat pro naše téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme.
+V praxi budeme potřebovat pro naše účely téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme.
 Co kdybychom chtěli nejen spočítat průměr proměnné `muzi` v dataframu `vyska`, ale výsledek zaokrouhlit na celé čislo?
 Možností máme několika.
 

@@ -32,14 +32,14 @@ Existuje mnoho balíčků a rozšíření, které přináší do R nespočet dal
 [Tidyverse](https://www.tidyverse.org/) je rodinou takovýchto rozšiřujících balíčků.
 Balíčky Tidyverse rozšiřují možnosti R zejména v oblastech manipulace a vizualizace dat.
 Mnoho úkonů, které se v základním R provádí velmi zdlouhavě nebo krkolomně, jsou v Tidyverse velmi jednoduché.
-Další velkou výhodou je, že všechny současti Tidyverse jsou designováni tak, aby si spolu rozuměli a využívali stejnou logiku kódu.
-Jednou z nevýhod otevřenosti R je, řada autorů má řadu různých představ o psání počítačového kódu.
-To vede k mnoha různým konvencím, které jsou pro běžného uživatele matoucí (např. mají funkce začínat velkým nebo malým písmenem? mají se slova oddělovat potržítkem nebo tečkou?).
+Další velkou výhodou je, že všechny současti Tidyverse jsou designováni tak, aby si spolu rozuměly a využívaly stejnou logiku kódu.
+Jednou z nevýhod otevřenosti R je, že řada autorů má řadu různých představ o psání počítačového kódu.
+To vede k mnoha různým konvencím, které jsou pro běžného uživatele matoucí (např. mají funkce začínat velkým, nebo malým písmenem? mají se slova oddělovat potržítkem, nebo tečkou?).
 Všechny balíčky Tidyverse se drží jednotného principu programování a je proto velice jednoduché jejich funkce kombinovat, bez zbytečných zmatků.
 Jedná se tak o další způsob, jak ulehčit ponoření do R.
 
 Je nutné zmínit, že využívání Tidyverse není striktně nutné.
-Tidyverse vzniklo dávno po vznikem R a do dneška existuje mnoho uživatelů, pro které představuje základní R (nebo jiné balíčky pro analýzu dat) ideální pracovní prostředí.
+Tidyverse vzniklo dlouho po vzniku samotného R a do dneška existuje mnoho uživatelů, pro které představuje základní R (nebo jiné balíčky pro analýzu dat) ideální pracovní prostředí.
 Nicméně, stejně jako u Rstudio, Tidyverse představuje rovnováhu mezi uživatelskou přívětivostí a flexibilitou práce.
 
 # Závěrem: Proč nepoužíváme grafická rozhraní?
@@ -50,9 +50,9 @@ Těchto rozhraní je celá řada, nejpopulárnější jsou pravděpodobně [Jamo
 S využitím těchto rozhraní je možné analýzy "naklikávat" místo psaní programovacího kódu.
 Tím se výrazně snižuje obtížnost práce s R. Grafická rozhraní ale mají tři velké slabiny, které dříve nebo později převáží nad jakýmikoliv výhodami:
 
-- **Grafická rozhraní nikdy nepokryjí vše, co R nabízí a co mi potřebujeme**: přestože většina grafických rozhraní obsahuje možnosti pro jednoduchou manipulaci s daty a základní statistické postupy, v žádném z nich nenaklikáte složitější úkony jako cyklické aplikace funkce ("*loopy*") ani nevytvoříte složité psychometrické modely.
+- **Grafická rozhraní nikdy nepokryjí vše, co R nabízí a co my potřebujeme**: přestože většina grafických rozhraní obsahuje možnosti pro jednoduchou manipulaci s daty a základní statistické postupy, v žádném z nich nenaklikáte složitější úkony jako cyklické aplikace funkce ("*loopy*") ani nevytvoříte složité psychometrické modely.
 Jinak řečeno, pokud se rozhodnee vážněji zabývat kvantitativní analýzou, dříve nebo později se alespoň lehkému programování nevyhneme. A čas ztrávený v grafických rozhraních v tu chvíli nebude příliš přinosný.
 
-- **Grafické rozhraní jsou časově neefektivní**: I kdyby všechny funkce, které pro naši práci potřebujeme, byly obsaženy v některém grafickém rozhraní, práce s nimi by vždy byla pomalejší. Jedním z největších výhod, které počítače přinášejí, je možnost automatizace. Není třeba ručně vytvářet tucet kontingenčních tabulek nebo kontrolovat desítky proměnných, pokud to může počítač udělat za nás. Práce se skriptem umožňuje zadat počítači příkaz a nechat ho, ať ho sám zopakuje na jakkoliv velkém počtu případů, což výrazně šetří čas. Takovéto efektivity s grafickými rozhraními nikdy nedosáhneme.
+- **Grafické rozhraní jsou časově neefektivní**: I kdyby všechny funkce, které pro naši práci potřebujeme, byly obsaženy v některém grafickém rozhraní, práce s nimi by vždy byla pomalejší ve srovnání se sběhlým uživatelem kódu. Jedním z největších výhod, které počítače přinášejí, je možnost automatizace. Není třeba ručně vytvářet tucet kontingenčních tabulek nebo kontrolovat desítky proměnných, pokud to může počítač udělat za nás. Práce se skriptem umožňuje zadat počítači příkaz a nechat ho, ať ho sám zopakuje na jakkoliv velkém počtu případů, což výrazně šetří čas. Takovéto efektivity s grafickými rozhraními nikdy nedosáhneme.
 
 - **Klikání svádí k nereprodukovatelnosti**: velkou výhodou práce skrze psaní skriptu je, že tento skript slouží jako záznam toho, co se stalo. Kdokoliv, ať už mi sami nebo lidé se zájmem o naši práci, se mohou v budoucnu podívat, jak jsme při analýze postupovali a případně se naší prací inspirovat nebo ji vylepšit. Práce v grafickém rozhraní svádí k rychlému naklikávání, po kterém často nezůstane ani stopa.
