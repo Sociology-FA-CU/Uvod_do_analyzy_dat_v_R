@@ -1,0 +1,177 @@
+---
+title: "Transformace a sumarizace proměnných"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+# Transformace proměnných
+
+pro trasfomarci proměnných Tidyverse způsobem se využívá funkce `mutate()`.
+Tato funkce umožňuje přidávat nebo měnit určité proměnné v dataframu a zároveň zachovat ostatní proměnné.
+Obecně se využívá ve formě `dataframe %>% mutate(nova promenna = funkce(stara promena))`.
+Pokud bychom například chtěli spočitat HDP na hlavu:
+
+```{r mutate simple example, eval=FALSE}
+countries %>% mutate(gpc_pc = gdp / population)
+```
+
+Tento příkaz vezme dataframe `countries` a pomocí funkce `mutate()` vytvoří novou proměnou `gdp_pc` tak, že spočítá `gdp` děleno `population`.
+Všimněme si, že nová proměnná sice byla vytvořene, ale v dataframu není:
+
+```{r mutate without dataframe}
+names(countries)
+```
+
+Dataframe s nově vytvořenou proměnnou je nový objekt a pokud ho chceme zachovat je nutné mu přiřadit jméno:
+
+```{r mutate simple example save results}
+countries = countries %>% mutate(gdp_pc = gdp / population)
+```
+
+Tento příkaz je skoro identický s předchozím, ale na začátek jsme přidali `countries = `.
+Výsledek funkcí `countries %>% mutate(gpc_pc = gdp / population)` tedy bude uložený do objektu `countries`.
+Prakticky to znamená, že námi vytvořená proměnná bude uložena do dataframe `countries`.
+
+```{r mutate simple example names}
+names(countries)
+```
+
+Teď už vidíme naši proměnou `gdp_pc` na konci dataframu.
+
+V rámci jedné mutate() funkce můžeme provést několik transformací najednou:
+
+```{r mutate several, eval=FALSE}
+countries %>% mutate(gdp_pc = gdp / population,
+                     gdp_rank = rank(gdp) )
+```
+
+Tímto způsobem vytvoříme najednou dvě proměnné, `gdp_pc` a `gdp_rank` (`gdp_rank` je pořadí zemí podle jejich HDP, od nejmenšho po největší).
+Je dokonce možné tranformovat proměnnou vytvořenou uvnitř stejné `mutate()` funkce:
+
+```{r mutate sequential, eval=FALSE}
+countries %>% mutate(gdp_pc = gdp / population,
+                     gdp_pc_rank = rank(gdp_pc) )
+```
+
+Takto můžeme například vytvořit proměnou `gdp_pc` (HDP na hlavu) a rovnou spočítat i `gdp_pc_rank` (Pořadí zemí podle HDP na hlavu).
+
+# Sumarizace proměnných
+
+Kromě vytváření nových proměných nebo jejich transformací budeme také často naše proměnné sumarizovat.
+Sumarizací je myšleno shrnutí informací o proměnné určitým způsobem (např. pomocí průměru nebo počtu) a je k ní možné využít funkci `summarise()` z balíčku `dplyr`.
+Syntax funkce `summarise()` je téměř identický s funkcí `mutate()`, tedy ve formátu `dataframe %>% summarise(nova promenna = funkce(stara promenna))`. 
+Například pokud bychom chtěli sumarizovat proměnou podle průměru:
+
+```{r summarise exampel simple}
+countries %>% summarise(prumer = mean(gdp, na.rm = TRUE))
+```
+
+Argument na.rm = TRUE používáme, abychom se zbavili chybějících hodnot (viz. materiály ke kapitole *Objekty, proměnné a funkce*).
+Výše uvedaná funkce je v podstatě ekvivalentem `mean(countries$gdp, na.rm = TRUE)`.
+`summarise()` má ovšem dvě potencionální výhody: jejím výsledkem je dataframe a stejně jako v případě `mutate()` můžeme aplikovat více funkcí najednou:
+
+```{r summarise multiple example}
+countries %>% summarise(prumer = mean(gdp, na.rm = TRUE),
+                        smer_odchylka = sd(gdp, na.rm = TRUE))
+```
+
+jak je vidět v tomto případu, kde jsme spočítali jak průměr, tak směrodatnou odchylku `gdp`.
+Funkce mutate() a summarise() je možné kombinovat v jakémkoliv pořadí.
+Pokud bychom chtěli například spočít průměr a směrodatnou odchylku `gdp` a poté průměr zaokrouhlit na celé číslo:
+
+```{r summarise mutate exaple}
+countries %>% summarise(prumer = mean(gdp, na.rm = TRUE),
+                        smer_odchylka = sd(gdp, na.rm = TRUE)) %>% 
+              mutate(prumer = round(prumer))
+```
+
+# Transformace a sumarizace proměných po skupinách
+
+Ukázali jsme si, jak transformovat nebo sumarizovat proměnnou jako celek, co když ale chceme porovnat určité 
+podskupiny mezi sebou?
+Například, co kdybychom chtěli spočítat průměr a směrodatnou odchylku pro členské země Evropské unie a zbytek?
+K tomu slouží funkce `group_by()`.
+Tato funkce přidá do dataframu informaci, že funkce `mutate()` a `summarise()` mají být aplikované po skupiných.
+Funkce `group_by()` se obecně aplikuje ve tvaru `group_by(promena)`, v našem případě tedy:
+
+```{r group by summarise}
+countries %>% group_by(postsoviet) %>% summarise(prumer = mean(gdp, na.rm = TRUE),
+                                                 smer_odchylka = sd(gdp, na.rm = TRUE))
+```
+
+Výsledkem je dataframe, kde první řádek představují údaje o zemích, které nebyly součástí východního bloku (hodnota `postsoviet` je `no`) a druhý řádek představuje postsovětské země (hodnota proměnné `postsoviet` je `yes`).
+Jak můžeme vidět, země bývalého východního bloku mají v průměru o polovinu menší HDP než západní země.
+
+Obdobně můžeme aplikovat `group_by()` v rámci `mutate()`. Pokud bychom například chtěli spočítat pořadí zemí podle HDP zvlášť pro západní a postsovětské země:
+
+```{r group by mutate, eval= FALSE}
+countries %>% group_by(postsoviet) %>% mutate(gdp_rank = rank(gdp))
+```
+
+S funkcí `group_by()` se pojí jedna zákeřnost.
+Jakmile je použita na dataframe, zůstane aplikovaná až do jejího zrušení.
+Všechny další funkce budou aplikovaný na jednotlivé skupiny zvlášť.
+To může vést k nechtěným chybám.
+Pro zrušení `group_by()` je tedy dobré na konec příkazu přidat funkci `ungroup()`, která rozdělení zruší:
+
+```{r ungroup example, eval=FALSE}
+countries %>% group_by(postsoviet) %>% mutate(gdp_rank = rank(gdp)) %>% ungroup()
+```
+
+# Transformace a sumarizace více proměnných
+
+Proměnné nemusíme transformovat a sumarizovat jednu po druhé.
+Pokud chceme funkce aplikovat napříč více proměnnými najednou, můžeme pro to využít funkci `across()`.
+Funkce across() má dva hlavní argumenty: `.cols` jsou proměnné/sloupce na které chceme funkce aplikovat a a `.fns` jsou funkce samotné.
+Funkce `across()` je zpravidla vnořená uvnitř `mutate()`/`summarise()`, ve formátu `dataframe %>% mutate(across(promenne, funkce))`.
+Pokud bychom například chtěli například zaokrouhlit proměnné `gpd_pc` a `life_exp` v dataframu `countries` na celá čísla:
+
+```{r, across simpel example, eval=FALSE}
+countries %>% mutate(across(c("gdp_pc", "life_exp"),  round) )
+```
+
+Názvy proměnných musí být součástí jednoho vektoru, proto jsou ve tvaru `c("gdp_pc", "life_exp")`.
+Proměnné nemusíme vypisovat jmenovitě, můžeme využít *select helper* funkcí.
+Se *select helper* funkcemi jsme se již setkali při filtrování dataframů, případně můžeme zobrazit jejich nápovědu pomocí `?dplyr_tidy_select`.
+Pokud bychom například chtěli zakrouhlit všechny numerické proměnné v dataframe, můžeme využít funkci where().
+Tato funkce aplikuje transformaci na všechny proměnné, které splňují logickou podmínku:
+
+```{r across select hepler, eval=FALSE}
+countries %>% mutate(across(where(is.numeric), round) )
+```
+
+Funkce `is.numeric` kontroluje zda je proměnná numerická či nikoliv.
+Pokud ano, bude na ní aplikovaná funkce `round()`.
+
+Obdobně můžeme across() využít v kombinaci se summarise().
+Pokud bychom chtěli spočítat průměr všech numerických proměnných:
+
+```{r across summarise}
+countries %>% summarise(across(where(is.numeric), mean ))
+```
+
+Znovu se musíme vypořádat s chybějícími hodnotami pomocí argumentu `na.rm = TRUE`.
+Ten můžeme přidat do funkce `across()`:
+
+```{r across summarise multiple variables}
+countries %>% summarise(across(where(is.numeric), mean, na.rm = TRUE ))
+```
+
+Pokud bychom chtěli mít jednotlivé proměnné v řádcích místo v sloupcích, stačí převést dataframe do širokého formátu pomocí funkce `pivot_longer()`.
+Převést chceme všechny sloupce, využíjeme tedy funkci `everything()`:
+
+```{r across summarise multiple long}
+countries %>% summarise(across(where(is.numeric), mean, na.rm = TRUE )) %>%
+  pivot_longer(cols = everything(), values_to = "mean")
+```
