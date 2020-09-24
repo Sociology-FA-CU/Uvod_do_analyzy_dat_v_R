@@ -15,6 +15,8 @@ library(here)
 countries = read.csv(here("data", "countries.csv"))
 ```
 
+Tato část je zaměřena na dvě z nejčastějších aktivit při práci s daty: transformace proměnných a jejich sumarizace.
+
 # Transformace proměnných
 
 pro trasfomarci proměnných Tidyverse způsobem se využívá funkce `mutate()`.
@@ -175,3 +177,54 @@ Převést chceme všechny sloupce, využíjeme tedy funkci `everything()`:
 countries %>% summarise(across(where(is.numeric), mean, na.rm = TRUE )) %>%
   pivot_longer(cols = everything(), values_to = "mean")
 ```
+
+Je také možné aplikovat několik funkcí na několik proměnných na jednou, s výsledkem se ovšem nepracuje úplně jednoduše.
+Pro spojení funkcí do jednoho argumentu využijeme funkci `lst()`, což je `dplyr` ekvivalent funkce `list()`, který se lépe funguje s funkcemi `mutate()` a `summarise()`:
+
+```{r summarise multiple functions}
+countries %>% summarise(across(where(is.numeric), lst(mean, sd, min, max), na.rm = TRUE))
+```
+
+Výsledkem je dlouhý dataframe, kde každý sloupec je jedna hodnota.
+Přestože je možné tento dataframe přetransformovat do použitelnější podoby, v praxi se často vyplatí alternativní přístup.
+Nejdříve vybereme proměnné, se kterými chcem pracovat, pomocí funkce `select()`.
+Poté dataframe převedeme do dlouhého formátu pomocí funkce `pivot_longer()`.
+Třetím krokem je rozdělení dataframu na jednotlivé proměnné pomocí `group_by()`.
+Nakonec využijeme `summarise()` v jeho jednoduché podobě.
+
+Například, pokud bychom chtěli pro všechny numerické proměnné spočítat průměr a směrodatnou odchylku:
+
+```{r summarise multiple function alternative}
+countries %>% select(where(is.numeric)) %>% pivot_longer(cols = everything()) %>% 
+  group_by(name) %>% summarise(prumer = mean(value, na.rm = TRUE),
+                               odchylka = sd(value, na.rm = TRUE))
+```
+
+
+# Transformace a sumarizace po řádcích
+
+R standardně provádí po sloupcích.
+Například následující funkce spočítá průměr všech hodnot `poverty_risk` a `material_dep` a jejím výsledkem je jedno číslo, průměr všech naměřených hodnot v obou proměnných:
+
+```{r mutate columnwise, eval=FALSE}
+countries %>% mutate(prumer = mean(c(poverty_risk, material_dep), na.rm = TRUE))
+```
+
+Co kdybychom ale chtěli spočítat průměrnou hodnotu `poverty_risk` a `material_dep` pro každou zemi zvlášť, jako kdyby se jednalo o škálu?
+K tomu slouží funkce `rowwise()`.
+Funkce `rowwise()` je velice podobná funkci `group_by()`.
+Sama o sobě nemá znatelný efekt, ale všechny funkce po ní následující budou aplikovány pro každý řádek dataframu zvlášť:
+
+```{r mutate rowwise, eval=FALSE}
+countries %>% rowwise() %>% mutate(prumer = mean(c(poverty_risk, material_dep)))
+```
+
+S funkcí `rowwise()` se také váže funkce `c_across()`, velice podobná klasické funkci `c()`, ale uzpůsobená práci se *select helper* funkcemi:
+
+```{r mutate rowwise select helper, eval=FALSE}
+countries %>% rowwise() %>% mutate(prumer = mean(c_across(poverty_risk:material_dep)))
+```
+
+Pozor, klasické `c()` u výše zmíněho příkladu nebude fungovat.
+
+

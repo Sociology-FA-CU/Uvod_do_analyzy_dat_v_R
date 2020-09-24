@@ -442,8 +442,8 @@ div.tocify {
 <pre><code>##   prumer smer_odchylka
 ## 1 484601      793692.6</code></pre>
 </div>
-<div id="sumarizace-a-transformace-proměných-po-skupinách" class="section level1">
-<h1>Sumarizace a transformace proměných po skupinách</h1>
+<div id="transformace-a-sumarizace-proměných-po-skupinách" class="section level1">
+<h1>Transformace a sumarizace proměných po skupinách</h1>
 <p>Ukázali jsme si, jak transformovat nebo sumarizovat proměnnou jako celek, co když ale chceme porovnat určité podskupiny mezi sebou? Například, co kdybychom chtěli spočítat průměr a směrodatnou odchylku pro členské země Evropské unie a zbytek? K tomu slouží funkce <code>group_by()</code>. Tato funkce přidá do dataframu informaci, že funkce <code>mutate()</code> a <code>summarise()</code> mají být aplikované po skupiných. Funkce <code>group_by()</code> se obecně aplikuje ve tvaru <code>group_by(promena)</code>, v našem případě tedy:</p>
 <pre class="r"><code>countries %&gt;% group_by(postsoviet) %&gt;% summarise(prumer = mean(gdp, na.rm = TRUE),
                                                  smer_odchylka = sd(gdp, na.rm = TRUE))</code></pre>
@@ -495,6 +495,54 @@ div.tocify {
 ##  9 hdi                 0.874 
 ## 10 dem_index           7.64  
 ## 11 gdp_pc              0.0315</code></pre>
+<p>Je také možné aplikovat několik funkcí na několik proměnných na jednou, s výsledkem se ovšem nepracuje úplně jednoduše. Pro spojení funkcí do jednoho argumentu využijeme funkci <code>lst()</code>, což je <code>dplyr</code> ekvivalent funkce <code>list()</code>, který se lépe funguje s funkcemi <code>mutate()</code> a <code>summarise()</code>:</p>
+<pre class="r"><code>countries %&gt;% summarise(across(where(is.numeric), lst(mean, sd, min, max), na.rm = TRUE))</code></pre>
+<pre><code>##   X_mean     X_sd X_min X_max gdp_mean   gdp_sd gdp_min gdp_max population_mean
+## 1   19.5 11.11306     1    38 484600.8 793692.6 10734.7 3386000        16754743
+##   population_sd population_min population_max area_mean area_sd area_min
+## 1      24110721          38114       82792351  156018.6  189008      160
+##   area_max life_exp_mean life_exp_sd life_exp_min life_exp_max uni_prc_mean
+## 1   783562      79.57838    2.824313         74.8         83.3    0.2914857
+##   uni_prc_sd uni_prc_min uni_prc_max poverty_risk_mean poverty_risk_sd
+## 1 0.07739903       0.155       0.405          0.240303      0.08024162
+##   poverty_risk_min poverty_risk_max material_dep_mean material_dep_sd
+## 1            0.122            0.416         0.1798788       0.1253041
+##   material_dep_min material_dep_max  hdi_mean     hdi_sd hdi_min hdi_max
+## 1            0.042            0.481 0.8739474 0.05390379    0.76    0.95
+##   dem_index_mean dem_index_sd dem_index_min dem_index_max gdp_pc_mean
+## 1       7.639189     1.302498          4.37          9.87    0.031527
+##    gdp_pc_sd  gdp_pc_min gdp_pc_max
+## 1 0.02238073 0.004440439 0.09778856</code></pre>
+<p>Výsledkem je dlouhý dataframe, kde každý sloupec je jedna hodnota. Přestože je možné tento dataframe přetransformovat do použitelnější podoby, v praxi se často vyplatí alternativní přístup. Nejdříve vybereme proměnné, se kterými chcem pracovat, pomocí funkce <code>select()</code>. Poté dataframe převedeme do dlouhého formátu pomocí funkce <code>pivot_longer()</code>. Třetím krokem je rozdělení dataframu na jednotlivé proměnné pomocí <code>group_by()</code>. Nakonec využijeme <code>summarise()</code> v jeho jednoduché podobě.</p>
+<p>Například, pokud bychom chtěli pro všechny numerické proměnné spočítat průměr a směrodatnou odchylku:</p>
+<pre class="r"><code>countries %&gt;% select(where(is.numeric)) %&gt;% pivot_longer(cols = everything()) %&gt;% 
+  group_by(name) %&gt;% summarise(prumer = mean(value, na.rm = TRUE),
+                               odchylka = sd(value, na.rm = TRUE))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 11 x 3
+##    name                prumer      odchylka
+##    &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;
+##  1 area           156019.       189008.    
+##  2 dem_index           7.64          1.30  
+##  3 gdp            484601.       793693.    
+##  4 gdp_pc              0.0315        0.0224
+##  5 hdi                 0.874         0.0539
+##  6 life_exp           79.6           2.82  
+##  7 material_dep        0.180         0.125 
+##  8 population   16754743      24110721.    
+##  9 poverty_risk        0.240         0.0802
+## 10 uni_prc             0.291         0.0774
+## 11 X                  19.5          11.1</code></pre>
+</div>
+<div id="transformace-a-sumarizace-po-řádcích" class="section level1">
+<h1>Transformace a sumarizace po řádcích</h1>
+<p>R standardně provádí po sloupcích. Například následující funkce spočítá průměr všech hodnot <code>poverty_risk</code> a <code>material_dep</code> a jejím výsledkem je jedno číslo, průměr všech naměřených hodnot v obou proměnných:</p>
+<pre class="r"><code>countries %&gt;% mutate(prumer = mean(c(poverty_risk, material_dep), na.rm = TRUE))</code></pre>
+<p>Co kdybychom ale chtěli spočítat průměrnou hodnotu <code>poverty_risk</code> a <code>material_dep</code> pro každou zemi zvlášť, jako kdyby se jednalo o škálu? K tomu slouží funkce <code>rowwise()</code>. Funkce <code>rowwise()</code> je velice podobná funkci <code>group_by()</code>. Sama o sobě nemá znatelný efekt, ale všechny funkce po ní následující budou aplikovány pro každý řádek dataframu zvlášť:</p>
+<pre class="r"><code>countries %&gt;% rowwise() %&gt;% mutate(prumer = mean(c(poverty_risk, material_dep)))</code></pre>
+<p>S funkcí <code>rowwise()</code> se také váže funkce <code>c_across()</code>, velice podobná klasické funkci <code>c()</code>, ale uzpůsobená práci se <em>select helper</em> funkcemi:</p>
+<pre class="r"><code>countries %&gt;% rowwise() %&gt;% mutate(prumer = mean(c_across(poverty_risk:material_dep)))</code></pre>
+<p>Pozor, klasické <code>c()</code> u výše zmíněho příkladu nebude fungovat.</p>
 </div>
 
 

@@ -15,6 +15,10 @@ navbar:
           href: 04_import_export.html
         - text: "Prohlížení a manipulce s dataframem"
           href: 05_dataframe_manipulation.html
+        - text: "Manipulace a sumarizace proměnných"
+          href: 06_variables_mutate_summarise.html
+        - text: "Práce s faktory"
+          href: 07_factors.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"

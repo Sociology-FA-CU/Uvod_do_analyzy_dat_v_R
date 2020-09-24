@@ -1,0 +1,182 @@
+---
+title: "Práce s faktory"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+V této části se zaměříme na práci s faktory, typem proměnných využívaných pro práci kategoriálními proměnnými.
+
+# Vytvoření a prohlížení faktorů
+
+Kategoriální proměnné jsou zpravidla nahrány jako character vektor.
+To si můžeme ověřit pomocí funkce `str()`, která slouží k popsání R objektu:
+
+```{r check type char}
+str(countries$maj_belief)
+```
+
+Zkratka `chr` značí character.
+Pro transformaci character proměnných na faktor je možné využít funkci `as.factor()`. Výsledek si rovnou uložíme:
+
+```{r as factor}
+countries = countries %>% mutate(maj_belief = as.factor(maj_belief))
+```
+
+To, že proměnná je teď faktorem si můžeme ověřit znovu proměnnou str():
+
+```{r check type factor}
+str(countries$maj_belief)
+```
+
+Proměnná `maj_belief` je nyní faktorem a s pěti úrovněmi (`Factor w/ 5 levels`).
+Zde je užitečné si připomenou, co faktor vlastně je.
+Jedná se o integer proměnnou, jejíž každá hodnota má slovní popis/label, zvaný `level`.
+Proto jak vidíme jsou ve výčtu funkce `str()` celá číslá (`1 4 3 5 1 3 1 4 1 1 ...`)
+
+Pokud bych chtěli zjistit, jaké levely faktor obsahuje, můžeme k tomu využít funkci `levels()`.
+Jak vidíme, faktor `maj_belief` má pět úrovní:
+
+```{r factor levels}
+levels(countries$maj_belief)
+```
+
+# Pořadí levelů faktoru
+
+Pořadí levelů ve faktoru je fixní.
+Například levely v proměnné maj_belief budou zobrazeny v pořadí: `"catholic"`, `"islam"`, `"nonbelief"`, `"orthodox"`, `"protestantism"`.
+Někdy, například při vytváření grafu, chceme pořadí změnit.
+Pro to máme několik možností.
+
+## Manuální určení pořadí
+
+První z nich je změnit pořadí levelů ručně, pomocí funkce `fct_relevel()`.
+Pokud bychom například chtěli, aby `level` other byl na první místě:
+
+```{r relevel first,eval=FALSE}
+countries %>% mutate(maj_belief = fct_relevel(maj_belief, "other"))
+```
+
+Pokud bychom chtěli level `nonbelief` na druhém místě, můžeme využít argumentu `after`:
+
+```{r relevel second, eval=FALSE}
+countries %>% mutate(maj_belief = fct_relevel(maj_belief, "nonbelief", after = 2))
+```
+
+A pokud bychom chtěli level `nonbelief` jako poslední v pořadí:
+
+```{r relevel last, eval=FALSE}
+countries %>% mutate(maj_belief = fct_relevel(maj_belief, "nonbelief", after = Inf))
+```
+
+Je možné přesunout i více levelů najednou:
+
+```{r relevel multiple, eval=FALSE}
+countries %>% mutate(maj_belief = fct_relevel(maj_belief, "nonbelief", "Islam"))
+```
+
+## Řazení podle frekvence výskytu
+
+Další možností je řazení podle toho, jak často se každý level vyskytuje v datech.
+Toho je možné docílit pomocí funkce `fct_infreq()`:
+
+```{r infreq example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_infreq(maj_belief))
+```
+
+## Řazení podle jiné proměnné
+
+K seřazení faktoru podle jiné proměnné slouží fct_reorder().
+Můžeme přitom řadit podle řady funkcí, specifikovaných argumentem `.fun`.
+Například, pokud bychom chtěli seřadit maj_podle průměrné hodnoty hdi:
+
+```{r reorder example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_reorder(maj_belief, hdi, .fun = mean))
+```
+
+Funkce fct_reorder() také často najde využití v kombinaci s group_by() summarise().
+V tomto případě neřadíme podle nějaké funkce, a nemusíme tedy využít argument `.fun`.
+Levely budou seřazeny podle pořadí hodnot řadící proměnné.
+Pokud bychom chtěli například dataframe rozdělit podle `maj_belief` a sumarizovat průměrem `hdi`,
+můžeme poté `maj_belief` seřadit podle průměrné hodnoty `hdi`:
+
+```{r reorder summarise}
+countries %>% group_by(maj_belief) %>% summarise(mean_hdi = mean(hdi, na.rm = TRUE)) %>% 
+  mutate(maj_belief = fct_reorder(maj_belief, mean_hdi))
+```
+
+Všimněmi si, že dataframe samotný není seřazený od podle `mean_hdi`, pouze levely `maj_belief`.
+
+## Obrácení pořadí levelů
+
+Nakonec, občas potřebujeme pouze obrátit pořadí levelů
+K tomu jednoduše poslouží funkce fct_rev():
+
+```{r rev example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_rev(maj_belief))
+```
+
+# Transformace levelů
+
+Pokud chceme změnit jména existujích levelů, máme znovu několik možností podle toho, jakým způsobem toho cheme docílit.
+
+## Manuální transformace levelů
+
+První možností je přepsat názvy levelů ručně.
+K tomu lze využít funkci `fct_recode()`.
+Ta má obecně tvat `dataframe %>% mutate(faktor = fct_recode(faktor, "novy level" = "stary level"))`.
+Například, pokud bychom chtěli změnit level `nonbelief` na `ateist/agnostic`:
+
+```{r recode example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_recode(maj_belief, "ateist/agnostic" = "nonbelief"))
+```
+
+Funkcí `fct_reorder()` je možné změnit více levelů najednou:
+
+```{r recode multiple example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_recode(maj_belief,
+                                             "ateist/agnostic" = "nonbelief",
+                                             "eastern christian" = "orthodox"))
+```
+
+## Seskupování levelů
+
+Další často prováděnou operací je seskupení levelů do menšího počtu.
+K tomu můžeme využít funkci fct_collapse(), která má obecný formát `dataframe %>% mutate(faktor = fct_collapse(faktor, "novy level" = c("stary level 1", "stary level 2")))`.
+
+Pro seskupení `catholic`, `protestant` a `orthodox` do nového levelu `christian`:
+
+```{r collapse example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_collapse(maj_belief,
+                                               "christian" = c("catholic", "protestantism", "orthodox")))
+```
+
+## Seskupování levelů podle frekvence výskytu
+
+Pokud máme velký počet zřídka se vyskytujících levelů, můžeme ty nejméně zastoupené z nich sloučit do jedné zbytkové skupiny.
+K tomu slouží skupina funkci `fct_lump()`.
+
+Funkce `fct_lump_min()` sloučí všechny levely, které mají menší absolutní četnost.
+Pokud bychom chtěli ve faktoru `maj_belief` sloučit všechny levely, které se v datech vyskystují méně než 5krát:
+
+```{r lump min example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_lump_min(maj_belief, min = 5))
+```
+
+Obdobně funguje i funkce `fct_lump_prop()`, ale místo absolutních četností slučuje na základě relativních (procent).
+Pro sloučení všech kategorií ve faktoru `maj_belief`, které tvoří méně než 10 procent případů:
+
+```{r lump prop example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_lump_prop(maj_belief, prop = 0.1))
+```
+
