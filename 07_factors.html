@@ -487,7 +487,20 @@ div.tocify {
 <pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_lump_min(maj_belief, min = 5))</code></pre>
 <p>Obdobně funguje i funkce <code>fct_lump_prop()</code>, ale místo absolutních četností slučuje na základě relativních (procent). Pro sloučení všech kategorií ve faktoru <code>maj_belief</code>, které tvoří méně než 10 procent případů:</p>
 <pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_lump_prop(maj_belief, prop = 0.1))</code></pre>
+<p>Pokud bychom chtěli zachovat jen určitý počet levelů s největším zastoupením, můžeme využít funkci: <code>fct_lump_n()</code>. Pro zachování pouze dvou nejpočetnějších kategorií v proměnné maj_belief (zbytek bude překodován do zbytkové kategorie):</p>
+<pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_lump_n(maj_belief, n = 2))</code></pre>
+<p>Nakonec, občas chceme zvolit sami jméno zbytkového levelu, místo výchozího <code>other</code>. V takovém případě stačí do výše popsaných funkcí přidat argument <code>other_level =</code>. Například:</p>
+<pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_lump_min(maj_belief, min = 5, other_level = &quot;Jiné&quot;))</code></pre>
 </div>
+</div>
+<div id="přidávání-a-odebírání-levelů" class="section level1">
+<h1>Přidávání a odebírání levelů</h1>
+<p>Občas budeme chtít přidat do faktor level, který se nevyskytuje v datech (například proto, že se jedná o možnou odpověď na otázku v dotazníku, kterou nikdo nezvolil). K tomu slouží funkce <code>fct_expand()</code>. Pokud bychom chtěli přidat do proměnné <code>maj_belief</code> levely <code>hinduism</code> a <code>budhism</code>:</p>
+<pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_expand(maj_belief, &quot;hinduism&quot;, &quot;budhism&quot;))</code></pre>
+<p>Naopak pro odebrání levelů, které nejsou zastoupené v datech, slouží funkce <code>fct_drop()</code>. Buď můžeme odebrat konkrétní level pomocí argumentu <code>only</code>:</p>
+<pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_drop(maj_belief, only = &quot;hinduism&quot;))</code></pre>
+<p>Pro odebrání všech nepoužíváných levelů stačí vynechat argument <code>only</code>:</p>
+<pre class="r"><code>countries %&gt;% mutate(maj_belief = fct_drop(maj_belief))</code></pre>
 </div>
 
 

@@ -180,3 +180,41 @@ Pro sloučení všech kategorií ve faktoru `maj_belief`, které tvoří méně 
 countries %>% mutate(maj_belief = fct_lump_prop(maj_belief, prop = 0.1))
 ```
 
+Pokud bychom chtěli zachovat jen určitý počet levelů s největším zastoupením, můžeme využít funkci:
+`fct_lump_n()`.
+Pro zachování pouze dvou nejpočetnějších kategorií v proměnné maj_belief (zbytek bude překodován do zbytkové kategorie):
+
+```{r lump most frequent, eval=FALSE}
+countries %>% mutate(maj_belief = fct_lump_n(maj_belief, n = 2))
+```
+
+Nakonec, občas chceme zvolit sami jméno zbytkového levelu, místo výchozího `other`.
+V takovém případě stačí do výše popsaných funkcí přidat argument `other_level =`. 
+Například:
+
+```{r other_level example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_lump_min(maj_belief, min = 5, other_level = "Jiné"))
+```
+
+# Přidávání a odebírání levelů
+
+Občas budeme chtít přidat do faktor level, který se nevyskytuje v datech (například proto, že se jedná o možnou odpověď na otázku v dotazníku, kterou nikdo nezvolil).
+K tomu slouží funkce `fct_expand()`.
+Pokud bychom chtěli přidat do proměnné `maj_belief` levely `hinduism` a `budhism`:
+
+```{r factor expand, eval=FALSE}
+countries %>% mutate(maj_belief = fct_expand(maj_belief, "hinduism", "budhism"))
+```
+
+Naopak pro odebrání levelů, které nejsou zastoupené v datech, slouží funkce `fct_drop()`.
+Buď můžeme odebrat konkrétní level pomocí argumentu `only`:
+
+```{r drop only example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_drop(maj_belief, only = "hinduism"))
+```
+
+Pro odebrání všech nepoužíváných levelů stačí vynechat argument `only`:
+
+```{r drop all example, eval=FALSE}
+countries %>% mutate(maj_belief = fct_drop(maj_belief))
+```
