@@ -30,24 +30,20 @@ countries = read.csv(file = "C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy
 Cestu k souboru můžeme ve Windows podržením klávesy __shift__ a __kliknutím pravým tlačítkem myši__ na soubor v našem počítači.
 Potom zvolíme možnost _copy as path_ a zkopírovanou adresu vložíme do R klasicky pomocí __ctrl__ + __c__.
 
-Pokud používáme operační systém Windows, je třeba si dát pozor ještě na jednu věc.
+V některých operačních systémech je třeba si dát pozor ještě na jednu věc.
 Zkopírovaná adresa souboru bude obsahovat __backslash__ (`\`), R ale v adrese očekává __forwardslash__ (`/`), případně dvojité __backslash__ (`\\`).
 Pokud bychom zkusili ve funkci read.csv() použít adresu, tak jak je, dostaneme chybu:
 
-```{csv import incorrect path}
+```{r csv import incorrect path, eval =FALSE}
 countries = read.csv("C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.csv")
 ```
 
-Lomítka musíme ručně nahradit:
+Naštěstí pro to existuje relativně jednoduchá oprava.
+Před cestu k souboru napíšem `r` a cestu samotnou (uvnitř úvozovek!) dáme do kulatých závorek:
 
 ```{r csv import correct path}
-countries = read.csv("C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries.csv")
-
-countries = read.csv("C:\\Users\\ales_\\Desktop\\own_projects\\Uvod_do_analyzy_dat_v_R\\data\\countries.csv")
-# obě varianty vedou ke stejnému výsledku
+countries = read.csv(r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.csv)")
 ```
-
-Ruční nahrazování lomítek je dost otravné, ale za chvíli si ukážeme, jak se mu vyhnout.
 
 ### Argumenty read.csv() - sep, dec a encoding
 
@@ -81,11 +77,11 @@ Na rozdíl od prostého `.csv` souboru, může .rds uchovávat další informace
 
 Import `.rds` dat je téměř identický s importem `.csv` souborů:
 
-```{importing rds example}
-countries = readRDS(file = "C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries.rds")
+```{r importing rds example, eval=FALSE}
+countries = readRDS(file = r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.rds)")
 ```
 
-Platí přitom stejná omezení, co se týče lomítek, tedy adresa k souboru musí obsahovat _forwardslash_ (`/`), ne _backslash_ (`\`).
+Platí přitom stejná omezení, co se týče lomítek, tedy je třeba přidat `r` před cestu k souboru a závorky okolo cesty samotné (unvitř úvozovek).
 Není ovšem nutné řešit separátory sloupců a ani encoding.
 
 ## Import dat z jiných formátů
@@ -127,7 +123,7 @@ Pro uložení dat v .csv formátu slouží funkce `write.csv()`, která potřebu
 `x` je jméno objektu, který chceme exportovat a `file` je cesta, kam má být objekt uložen:
 
 ```{r write csv example, eval=F}
-write.csv(x = countries, file = "C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.csv")
+write.csv(x = countries, file = r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries_backup.csv)")
 ```
 
 Na konci cesty je název souboru, do kterého budou data exportovány (v našem případě `countries.csv`).
@@ -138,12 +134,12 @@ Encoding je možné nastavit pomocí argumentu `fileEncoding` (standardně `UTF-
 Uložení do .rds probíhá pomocí funkce `saveRDS()`. Stejně jako v předchozím případě je nutné specifikovat, jaký objekt má být exportován (argument `object`) a cesta, kam má být soubor uložen (argument `file`):
 
 ```{r writing rds backup example, eval=F}
-write.csv(object = countries, file = "C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries_backup.rds")
+saveRDS(object = countries, file = r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries_backup.rds)")
 ```
 
 # Pracovní adresář (*working directory*)
 
-Přestože je možné při importu a exportu dat explicitně určit cestu k souboru v rámci dané funkce, opakované vypisování cesty (a opravování lomítek) je nepohodlné.
+Přestože je možné při importu a exportu dat explicitně určit cestu k souboru v rámci dané funkce, opakované vypisování cesty je nepohodlné.
 Místu toho můžeme určitý adresář určit jako pracovní adresář (`working directory`).
 Pracovní adresář je místo, odkud bude R automaticky importovat a kam bude exportovat soubory, pokud neřekneme jinak.
 
@@ -156,7 +152,7 @@ getwd()
 Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci `setwd()` (*set working directory*):
 
 ```{r set wd example, eval=F}
-setwd("C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data)
+setwd(r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data)")
 ```
 
 Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a ukládat do výše zmíněné složky.
@@ -275,8 +271,8 @@ Skripty mohou zůstat v hlavní složce.
 
 ## 3) Využívejte balíčku here
 
-Import a export dat může být překvapivě zdlouhavou záležitostí. Jednak je tu absurdně hloupý problém se špatnými lomítky ve Windows (`\` místo `/`), a druhek je nutn0 cesty k souborům měnit pokaždé, když složku s projektem přesuneme. 
-Oba tyto problémy se ovšem dají vyřešit pomocí balíčku `here`, který cesty k souborům kontroluje za nás.
+Import a export dat může být překvapivě zdlouhavou záležitostí.Cesty k souborům měnit pokaždé, když složku s projektem přesuneme. 
+Tento problém se ovšem dá vyřešit pomocí balíčku `here`, který cesty k souborům kontroluje za nás.
 
 Tyto typy by měly výrazně ulehčit práci s R a umožnit hladký průběh analýzy.
 Pro představu, složka projektu, ve kterém pracujeme by měla vypadat nějak takto:
