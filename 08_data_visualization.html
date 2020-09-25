@@ -11,7 +11,7 @@
 
 
 
-<title>index.utf8</title>
+<title>Vizaulizace dat</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -249,6 +252,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -256,6 +322,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -320,22 +396,47 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Vizaulizace dat</h1>
 
 </div>
 
 
-<div id="anotace-kurzu" class="section level2">
-<h2>Anotace kurzu</h2>
-<p><strong>Katedra sociologie Filozofické fakulty Univerzity Karlovy</strong></p>
-<p><strong>Vyučující</strong>: Mgr. Jaromír Mazák, Ph.D., Mgr. Aleš Vomáčka</p>
-<p>Kurz je úvodem do programovacího jazyka R vyvinutého pro statistickou analýzu dat. V kurzu není předpokládána předchozí znalost jazyka R, ale podmínkou je základní znalost statistiky a výhodou jsou předchozí zkušenosti s analýzou dat. Minimálním vstupním předpokladem pro je absolvování kurzů prvního ročníku Statistika 1 (ASG100117), Seminář ke statistice 1 (ASG100118) a doporučujeme si ho tedy nechat nejdříve do 2. ročníku bakalářského studia.</p>
-<p>V kurzu vycházíme z moderního přístupu k analýze dat v R pomocí vývojového prostředí R Studio a “gramatiky” Tidyverse. Tento přístup dnes mezi uživatelskou komunitou pravděpodobně převažuje.</p>
-<p>Učit se R je běh na dlouhou trať. Je to cesta, která znamená mnohem větší časovou investici než zvládnutí softwaru s GUI, jako je například SPSS. Odměnou je mnohem větší flexibilita a v ruce univerzální nástroj pro zpracování dat, analýzu, vizualizaci, ale i programování a automatizaci. Přestože v kurzu se tak daleko nedostaneme, v R je dnes díky dostupným knihovnám a nástrojům možné vytvářet také interaktivní grafické aplikace, webové stránky (tato webová stránka byla vytvořena v R), prezentace a kromě standardní statistické analýzy jsou dostupné také nástroje tzv. strojového učení. Tento kurz má smysl především pro ty studenty, kteří se chtějí ve své sociologické dráze zaměřovat kvantitativně a kteří jsou připraveni k samostudiu a dalšímu rozvoji skromných základů, které jim kurz nabídne.</p>
-<p>Účast na výuce předpokládá vlastní notebook s připojením k internetu.</p>
+<p>V této sekci se zaměříme na jednu z nejdůležitějších částí analýzy dat a to jejich vizualizace. K tomu využijeme balíček <code>ggplot2</code>.</p>
+<div id="logika-balíčku-ggplot2" class="section level1">
+<h1>Logika balíčku ggplot2</h1>
+<p>Vytváření grafů pomocí ggplot2 probíhá po vrstvách. Vytváření grafů probíhá formou nanášení vrstev a jejich upravování. Každá část grafu je součástí vrstvy a každou vrstvu je možné upravovat nezávisle na ostatních:</p>
+<p><img src="08_data_visualization_files/figure-html/graph%20layers%20example-1.png" width="672" /></p>
+<p>Kombinací všech vrstev získámí finální graf:</p>
+<p><img src="08_data_visualization_files/figure-html/whole%20graph%20example-1.png" width="672" /></p>
+</div>
+<div id="rychlé-vytváření-grafů" class="section level1">
+<h1>Rychlé vytváření grafů</h1>
+<p>Pokud si chceme data rychle graficky prohlédnou, a nepořebujeme řešit vzhled, můžeme využít využít funkci <code>qplot()</code>. Tato funkce potřebuje jednak specifikovat, jaké proměnné mají být použity na jednotlivých osách grafu (argumenty <code>x</code> a <code>y</code>) a dále dataframe, ve kterou se proměnné nachází (argument <code>data</code>). Tato funkce se pokusí odhadnout, jaký typ graf je pro naše vhodný, na základě typů proměnných. Například aplikace qplot() na kategoriální proměnnou vede ke sloupcovému grafu:</p>
+<pre class="r"><code>qplot(x = maj_belief, data = countries)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/qplot%20example%20categorical-1.png" width="672" /></p>
+<p>Naopak dvě intervalové proměnné vedou ke bodovému grafu (scatterplotu):</p>
+<pre class="r"><code>qplot(x = hdi, y = life_exp, data = countries)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/qplot%20example%20interval-1.png" width="672" /></p>
+</div>
+<div id="podrobnější-vytváření-grafů" class="section level1">
+<h1>Podrobnější vytváření grafů</h1>
+<div id="mapování-dat-na-graf-a-definování-dimenzí-grafu" class="section level2">
+<h2>Mapování dat na graf a definování dimenzí grafu</h2>
+<p>Pokud chceme vytvářet komplexnější nebo vizuálně atraktivnější grafy, vyplatí se vytvořit každou vrstvu zvlášť. Centrální je pro vytváření grafů pomocí balíčku <code>ggplo2</code> je funkce <code>aes()</code>. Funkce <code>aes()</code>, zkratka pro <em>aesthetics</em>, mapuje data na objekty v grafu. Mapováním je myšleno propojením dat, tedy konkrétních hodnot v dataframe, s jednotlivými součástmi grafu. Například funkce <code>aes(x = hdi, y = life_exp)</code> spojí osu <em>x</em> s proměnnou <code>hdi</code> a osu <em>y</em> s proměnnou <code>life_exp</code>.</p>
+<p>Každý <code>ggplot2</code> graf začíná funkcí <code>ggplot()</code>. Funkce <code>ggplot()</code> definuje dimenze grafu a představuje jeho nejnižší vrstvu. Je v ní třeba definovat dva argumenty: <code>mapping</code>, která je spojená s funkcí <code>aes()</code> a <code>data</code>, které definuje s jakým dataframem pracujeme. Například pokud je naším cílem vytvořit graf pro proměnné <code>hdi</code> a <code>life_exp</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp))</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot-1.png" width="672" /></p>
+</div>
+<div id="geomy-geoms" class="section level2">
+<h2>Geomy (<em>geoms</em>)</h2>
+<p>Všimněme si, že graf, který jsem udělali výše sice má popisky os, ale jinak je prázdný. To proto, že jsem ještě R neřekli, jak mají být data graficky reprezentována. Objekty které v ggplot2 reprezentují data, se nazývají geomy (<em>geoms</em>).</p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -368,6 +469,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

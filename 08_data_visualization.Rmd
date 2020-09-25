@@ -1,0 +1,104 @@
+---
+title: "Vizaulizace dat"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(patchwork)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+V této sekci se zaměříme na jednu z nejdůležitějších částí analýzy dat a to jejich vizualizace.
+K tomu využijeme balíček `ggplot2`.
+
+# Logika balíčku ggplot2
+
+Vytváření grafů pomocí ggplot2 probíhá po vrstvách.
+Vytváření grafů probíhá formou nanášení vrstev a jejich upravování.
+Každá část grafu je součástí vrstvy a každou vrstvu je možné upravovat nezávisle na ostatních:
+
+```{r graph layers example, echo=FALSE}
+
+countries = countries %>% filter(!is.na(hdi) & !is.na(life_exp))
+
+plot_dimension = countries %>% ggplot(aes(x = hdi, y = life_exp)) + theme(axis.text = element_blank())
+
+plot_axis = countries %>% ggplot(aes(x = hdi, y = life_exp)) + theme(axis.title = element_blank(),
+                                                         rect = element_blank())
+
+plot_labs = countries %>% ggplot(aes(x = hdi, y = life_exp)) + labs(title = "Graph of HDI vs Life expectancy",
+                                                        caption = "European countries, data from Eurostat") +
+  theme(rect = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
+
+plot_geoms = countries %>% ggplot(aes(x = hdi, y = life_exp)) + geom_point() + theme_void()
+
+plot_dimension + plot_axis + plot_labs +plot_geoms + plot_annotation(tag_levels = "1", tag_suffix = ". vrstva", tag_sep = "")
+```
+
+
+
+Kombinací všech vrstev získámí finální graf:
+
+
+
+```{r whole graph example, echo=FALSE}
+countries %>% ggplot(aes(x = hdi, y = life_exp)) + 
+  geom_point() +
+  labs(title = "Celkový graf",
+       subtitle = "Graph of HDI vs Life expectancy",
+       caption = "European countries, data from Eurostat")
+```
+
+
+# Rychlé vytváření grafů
+
+Pokud si chceme data rychle graficky prohlédnou, a nepořebujeme řešit vzhled, můžeme využít využít funkci `qplot()`.
+Tato funkce potřebuje jednak specifikovat, jaké proměnné mají být použity na jednotlivých osách grafu (argumenty `x` a `y`) a dále dataframe, ve kterou se proměnné nachází (argument `data`).
+Tato funkce se pokusí odhadnout, jaký typ graf je pro naše vhodný, na základě typů proměnných.
+Například aplikace qplot() na kategoriální proměnnou vede ke sloupcovému grafu:
+
+```{r qplot example categorical}
+qplot(x = maj_belief, data = countries)
+```
+
+Naopak dvě intervalové proměnné vedou ke bodovému grafu (scatterplotu):
+
+```{r qplot example interval}
+qplot(x = hdi, y = life_exp, data = countries)
+```
+
+# Podrobnější vytváření grafů
+
+## Mapování dat na graf a definování dimenzí grafu
+
+Pokud chceme vytvářet komplexnější nebo vizuálně atraktivnější grafy, vyplatí se vytvořit každou vrstvu zvlášť.
+Centrální je pro vytváření grafů pomocí balíčku `ggplo2` je funkce `aes()`.
+Funkce `aes()`, zkratka pro *aesthetics*, mapuje data na objekty v grafu.
+Mapováním je myšleno propojením dat, tedy konkrétních hodnot v dataframe, s jednotlivými součástmi grafu.
+Například funkce `aes(x = hdi, y = life_exp)` spojí osu *x* s proměnnou `hdi` a osu *y* s proměnnou `life_exp`.
+
+Každý `ggplot2` graf začíná funkcí `ggplot()`.
+Funkce `ggplot()` definuje dimenze grafu a představuje jeho nejnižší vrstvu.
+Je v ní třeba definovat dva argumenty: `mapping`, která je spojená s funkcí `aes()` a `data`, které definuje s jakým dataframem pracujeme.
+Například pokud je naším cílem vytvořit graf pro proměnné `hdi` a `life_exp`:
+
+```{r ggplot }
+countries %>% ggplot(aes(x = hdi, y = life_exp))
+```
+
+## Geomy (*geoms*)
+
+Všimněme si, že graf, který jsem udělali výše sice má popisky os, ale jinak je prázdný.
+To proto, že jsem ještě R neřekli, jak mají být data graficky reprezentována.
+Objekty které v ggplot2 reprezentují data, se nazývají geomy (*geoms*).

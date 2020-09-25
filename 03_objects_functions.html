@@ -370,6 +370,12 @@ div.tocify {
     <li>
       <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
     </li>
+    <li>
+      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
+    </li>
+    <li>
+      <a href="07_factors.html">Práce s faktory</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -479,7 +485,7 @@ div.tocify {
 <pre class="r"><code>factor(x = c(&quot;Souhlasím&quot;, &quot;Nesouhlasím&quot;, &quot;Nesouhlasím&quot;,&quot;Nevím&quot;, &quot;Neutrální&quot;), levels = c(&quot;Souhlasím&quot;, &quot;Neutrální&quot;, &quot;Nesouhlasím&quot;))</code></pre>
 <pre><code>## [1] Souhlasím   Nesouhlasím Nesouhlasím &lt;NA&gt;        Neutrální  
 ## Levels: Souhlasím Neutrální Nesouhlasím</code></pre>
-<p>Faktory mohou nabývat pouze předem definovaných hodnot. Všimněme si, že předposlední hodnota v příkladu výše je <code>&lt;NA&gt;</code>. To proto, že jsme nikdy nedefinovaly level <em>Nevím</em>. Tato vlastnost se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála souhlasu) a všechny ostatní hodnoty musí být nutně chybné.</p>
+<p>Faktory mohou nabývat pouze předem definovaných hodnot. Všimněme si, že předposlední hodnota v příkladu výše je <code>&lt;NA&gt;</code>. To proto, že jsme nikdy nedefinovali level <em>Nevím</em>. Tato vlastnost se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála souhlasu) a všechny ostatní hodnoty musí být nutně chybné.</p>
 <p>Speciální typem faktoru je seřazaný faktor (<em>ordered factor</em>). V seřazeném faktoru mají hodnoty pevně dané pořadí a hodí se proto uchovávání ordinálních proměnných.</p>
 <pre class="r"><code>ordered(x = c(&quot;Souhlasím&quot;, &quot;Nesouhlasím&quot;, &quot;Nesouhlasím&quot;,&quot;Nevím&quot;, &quot;Neutrální&quot;), levels = c(&quot;Souhlasím&quot;, &quot;Neutrální&quot;, &quot;Nesouhlasím&quot;))</code></pre>
 <pre><code>## [1] Souhlasím   Nesouhlasím Nesouhlasím &lt;NA&gt;        Neutrální  
@@ -510,7 +516,7 @@ div.tocify {
 </div>
 <div id="dataframe" class="section level2">
 <h2>Dataframe</h2>
-<p>Dataframe je speciální typ listu, složený z vektorů stejné délky. Vektory můžou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme ho ve většina analýz.</p>
+<p>Dataframe je speciální typ listu, složený z atomových vektorů stejné délky. Vektory v data framu mohou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme s ním pracovat ve většině analýz. Dataframe je obdobou toho, co se v SPSS nazývá datovou maticí.</p>
 <pre class="r"><code>data.frame(numeric = c(1,2,3,4,5),
            character = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, NA, &quot;e&quot;))</code></pre>
 <pre><code>##   numeric character
@@ -608,10 +614,13 @@ x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta</code></pr
 <pre><code>## [1] 180.6667</code></pre>
 <p>Stejně jako můžeme odkazovat na vnořené objekty v rámci funkcí, můžeme uložit výsledek funkce jako vnořený objekt. Pokud bychom například chtěli vytvořit v dataframu <code>vyska</code> novou proměnnou <code>rozdil</code>, které představuje rozdíl mezi hodnotami proměnných <code>muzi</code> a <code>zeny</code>:</p>
 <pre class="r"><code>vyska$rozdil = vyska$muzi - vyska$zeny</code></pre>
+<p>Následně můžeme na tuto novou proměnnou odkazovat, například spočítat průměrný rozdíl v páru:</p>
+<pre class="r"><code>mean(vyska$rozdil)</code></pre>
+<pre><code>## [1] 14</code></pre>
 </div>
 <div id="řetězení-funkcí" class="section level2">
 <h2>Řetězení funkcí</h2>
-<p>V praxi budeme potřebovat pro naše téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme. Co kdybychom chtěli nejen spočítat průměr proměnné <code>muzi</code> v dataframu <code>vyska</code>, ale výsledek zaokrouhlit na celé čislo? Možností máme několika.</p>
+<p>V praxi budeme potřebovat pro naše účely téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme. Co kdybychom chtěli nejen spočítat průměr proměnné <code>muzi</code> v dataframu <code>vyska</code>, ale výsledek zaokrouhlit na celé čislo? Možností máme několika.</p>
 <p>První možností je si spočítaný průměr uložit do nového objektu a ten potom zaokrouhlit:</p>
 <pre class="r"><code>prumer_muzi = mean(vyska$muzi)
 
