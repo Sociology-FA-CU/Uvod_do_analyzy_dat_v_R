@@ -11,7 +11,7 @@
 
 
 
-<title>Vizaulizace dat</title>
+<title>Vizaulizace dat - Logika ggplot2 a typy grafů</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -396,7 +396,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Vizaulizace dat</h1>
+<h1 class="title toc-ignore">Vizaulizace dat - Logika ggplot2 a typy grafů</h1>
 
 </div>
 
@@ -411,7 +411,7 @@ div.tocify {
 </div>
 <div id="rychlé-vytváření-grafů" class="section level1">
 <h1>Rychlé vytváření grafů</h1>
-<p>Pokud si chceme data rychle graficky prohlédnou, a nepořebujeme řešit vzhled, můžeme využít využít funkci <code>qplot()</code>. Tato funkce potřebuje jednak specifikovat, jaké proměnné mají být použity na jednotlivých osách grafu (argumenty <code>x</code> a <code>y</code>) a dále dataframe, ve kterou se proměnné nachází (argument <code>data</code>). Tato funkce se pokusí odhadnout, jaký typ graf je pro naše vhodný, na základě typů proměnných. Například aplikace qplot() na kategoriální proměnnou vede ke sloupcovému grafu:</p>
+<p>Pokud si chceme data rychle graficky prohlédnou, a nepořebujeme řešit vzhled, můžeme využít využít funkci <code>qplot()</code>. Tato funkce potřebuje jednak specifikovat, jaké proměnné mají být použity na jednotlivých osách grafu (argumenty <code>x</code> a <code>y</code>) a dále dataframe, ve kterou se proměnné nachází (argument <code>data</code>). Tato funkce se pokusí odhadnout, jaký typ graf je pro naše vhodný, na základě typů proměnných. Například aplikace <code>qplot()</code> na kategoriální proměnnou vede ke sloupcovému grafu:</p>
 <pre class="r"><code>qplot(x = maj_belief, data = countries)</code></pre>
 <p><img src="08_data_visualization_files/figure-html/qplot%20example%20categorical-1.png" width="672" /></p>
 <p>Naopak dvě intervalové proměnné vedou ke bodovému grafu (scatterplotu):</p>
@@ -425,12 +425,231 @@ div.tocify {
 <p>Pokud chceme vytvářet komplexnější nebo vizuálně atraktivnější grafy, vyplatí se vytvořit každou vrstvu zvlášť. Centrální je pro vytváření grafů pomocí balíčku <code>ggplo2</code> je funkce <code>aes()</code>. Funkce <code>aes()</code>, zkratka pro <em>aesthetics</em>, mapuje data na objekty v grafu. Mapováním je myšleno propojením dat, tedy konkrétních hodnot v dataframe, s jednotlivými součástmi grafu. Například funkce <code>aes(x = hdi, y = life_exp)</code> spojí osu <em>x</em> s proměnnou <code>hdi</code> a osu <em>y</em> s proměnnou <code>life_exp</code>.</p>
 <p>Každý <code>ggplot2</code> graf začíná funkcí <code>ggplot()</code>. Funkce <code>ggplot()</code> definuje dimenze grafu a představuje jeho nejnižší vrstvu. Je v ní třeba definovat dva argumenty: <code>mapping</code>, která je spojená s funkcí <code>aes()</code> a <code>data</code>, které definuje s jakým dataframem pracujeme. Například pokud je naším cílem vytvořit graf pro proměnné <code>hdi</code> a <code>life_exp</code>:</p>
 <pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp))</code></pre>
-<p><img src="08_data_visualization_files/figure-html/ggplot-1.png" width="672" /></p>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20dimensions-1.png" width="672" /></p>
 </div>
 <div id="geomy-geoms" class="section level2">
 <h2>Geomy (<em>geoms</em>)</h2>
-<p>Všimněme si, že graf, který jsem udělali výše sice má popisky os, ale jinak je prázdný. To proto, že jsem ještě R neřekli, jak mají být data graficky reprezentována. Objekty které v ggplot2 reprezentují data, se nazývají geomy (<em>geoms</em>).</p>
+<p>Všimněme si, že graf, který jsem udělali výše sice má popisky os, ale jinak je prázdný. To proto, že jsem ještě R neřekli, jak mají být data graficky reprezentována.</p>
+<p>Objekty které v <code>ggplot2</code> reprezentují data, se nazývají geomy (<em>geoms</em>). Ke grafu je můžeme připojit pomocí funkce, která má obecný tvat <code>geom_nazev()</code>. Jeden graf může obsahovat více než jeden geom. Není například neobvyklé mít bodovy graf (scatterplot) a proložený regresní přímkou.</p>
+<p>Geomů existuje celá řada, je dokonce i možné si vytvářet vlastní. Pro většinu grafů nám ale poslouží několik základních:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">geom</th>
+<th align="left">popis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>geom_point()</code></td>
+<td align="left">Bod, zpravidla ve scatterplotu</td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom_col()</code></td>
+<td align="left">Sloupec ve sloupcovém grafu</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geom_hist()</code></td>
+<td align="left">Sloupec ve scatterplotu</td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom_boxplot()</code></td>
+<td align="left">Boxplot</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geom_line()</code></td>
+<td align="left">Křivka</td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom_density()</code></td>
+<td align="left">Křivka grafu hustoty</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geom_smooth()</code></td>
+<td align="left">Regresní křivka/přímka</td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom_vline()</code></td>
+<td align="left">Vertikální přímka</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geom_hline()</code></td>
+<td align="left">Horizontální přímka</td>
+</tr>
+<tr class="even">
+<td align="left"><code>geom_abline()</code></td>
+<td align="left">Přímka s volitelným počátkem a sklonem</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geom_text()</code></td>
+<td align="left">Text</td>
+</tr>
+</tbody>
+</table>
+<p>Popíšeme si využítí každého z nich.</p>
 </div>
+</div>
+<div id="typy-grafů" class="section level1">
+<h1>Typy grafů</h1>
+<div id="bodový-graf-scatterplot" class="section level2">
+<h2>Bodový graf (<em>Scatterplot</em>)</h2>
+<p>Bodový graf je možné vytvořit přidáním funkce <code>geom_point()</code> k objektu vytvořeného pomocí <code>ggplot()</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp)) +
+              geom_point()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20scatterplot-1.png" width="672" /></p>
+<p>Pokud bychom chtěli body pro lepší identifikaci nahradit textem, je třeba k funkci <code>aes()</code> přidat argument label, který definuje textové popisky a využít funkce `geom_text(). Například v našem grafu můžeme využít ISO kódy jednotlivých zemí:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp, label = code)) +
+              geom_text()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20scatterplot%20labels-1.png" width="672" /></p>
+</div>
+<div id="regresní-přímky-a-křivky" class="section level2">
+<h2>Regresní přímky a křivky</h2>
+<p>Pro vizualizaci jednoduchých regresních modelů je možné využít funkci <code>geom_smooth()</code>. Tu je často možné kombinovat s funkcí <code>geom_point()</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp)) +
+              geom_point() +
+              geom_smooth()</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20smooth-1.png" width="672" /></p>
+<p>Funkce geom_smooth() ve svém výchozím nastavení využívá takzvaný <em>locally estimated scatterplot smoothing</em>, známy pod zkratkou <em>loess</em> (argument <code>method = "loess"</code>) a přidá 95% intervaly spolehlivosti (argument <code>level = 0.95</code>). Pokud bychom chtěli klasickou lineární regresi, odhadnutou pomocí metody nejmenších čtverců, změníme argument <code>method</code> na <code>method = "lm"</code>. K odebrání intervalů spolehlivosti slouží argument <code>se = FALSE</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp)) +
+              geom_point() +
+              geom_smooth(method = &quot;lm&quot;, se = FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20smooth%20linear-1.png" width="672" /></p>
+<p>Můžeme také specifikovat jinou podobu modelu než je přímka, pomocí argumentu <code>formula</code>. Výchozí nastavení definuje model jako <code>y ~ x</code>, tedy předpokládá lineární vztah mezi proměnou na ose <code>x</code> a <code>y</code>. Pokud bychom místo přímky chtěli například kubickou regresi:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp)) +
+              geom_point() +
+              geom_smooth(method = &quot;lm&quot;, se = FALSE, formula = y ~ poly(x, 3))</code></pre>
+<p><img src="08_data_visualization_files/figure-html/ggplot%20smooth%20cubic-1.png" width="672" /></p>
+</div>
+<div id="sloupcový-graf-barplot" class="section level2">
+<h2>Sloupcový graf (barplot)</h2>
+<p>Pro jednorozměrnou vizualizaci kategorických proměnných můžeme využít starý známy sloupcový graf. Rychlou verzi sloupcového grafu můžeme vytvořit pomocí namapování proměnné na osu x pomocí funkc <code>aes()</code> a využití funkce <code>geom_bar()</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet)) + geom_bar()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/barplot%20simple-1.png" width="672" /></p>
+<p>Tento graf nám ukáže absolutní četnosti kategorií, v tomto případě, proměnné <code>postsoviet</code>. Tento způsob vytváření sloupcové grafu je ale nešikovný, pokud bychom chtěli na ose y mít jiné hodnoty, než absolutní četnosti. V mnoha případech se proto vyplatí spočítat hodnoty pro osu y dopředu. K tomu je možné využít funkce <code>count()</code> (která je sama kombinací funkcí <code>group_by()</code> a <code>summarise()</code>). Pokud bychom si například chtěli spočítat počet zemí v každé kategorii proměnné <code>postsoviet</code>:</p>
+<pre class="r"><code>countries %&gt;% count(postsoviet)</code></pre>
+<pre><code>##   postsoviet  n
+## 1         no 21
+## 2        yes 16</code></pre>
+<p>Tímto způsobem získáme dataframe s dvěmi proměnnými. První proměnná obsahuje názvy kategorií a druhá proměnná, zvaná <code>n</code>, jejich absolutní frekvenci. Z tohoto dataframu můžeme vytvořit sloupcový graf namapováním proměnné <code>postsoviet</code> na osu <em>x</em> a proměnné <code>n</code> na osu <em>y</em>. Následně přidáme funkci geom_col(), cože je obecná funkce pro zobrazení dat jako sloupce:</p>
+<pre class="r"><code>countries %&gt;% count(postsoviet) %&gt;% 
+  ggplot(aes(x = postsoviet, y = n)) +
+  geom_col()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/count%20to%20barplot-1.png" width="672" /></p>
+<p>Jak vidíme, tento graf je shodný s předchozím. Výhodou tohoto delšího přístupu, že můžeme lépe kontrolovat hodnoty na ose <em>y</em>. Pokud bychom například chtěli relativní četnosti (tj. procenta), můžeme si nejdříve vytvořit novou proměnnou freq pomocí funkce <code>mutate()</code> a poté ji namapovat na osu <em>y</em>:</p>
+<pre class="r"><code>countries %&gt;% count(postsoviet) %&gt;% 
+  mutate(freq = n/sum(n)) %&gt;% 
+  ggplot(aes(x = postsoviet, y = freq)) +
+  geom_col()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/count%20freq%20to%20barplot-1.png" width="672" /></p>
+<p>Proměná freq je definované jako <code>n/sum(n)</code>, tedy počet pozorování v dané kategorii děleno celkovým počtem pozorování. Jak můžeme vidět, zhruba 40 % zemí v našich datech byly součástí Východního bloku.</p>
+<p>Obdobným způsobem můžeme na osu y dosazovat další statistiky. Co kdybychom chtěli porovnat průměrný Index lidského rozvoje zemí bývalého Východního a Západního bloku? Nejdříve je nutné vytvořit dataframe, který bude obsahovat průměrnou hodnotu <code>hdi</code> pro každou kategorii proměnné <code>postsoviet</code>:</p>
+<pre class="r"><code>countries %&gt;% group_by(postsoviet) %&gt;% 
+  summarise(mean_hdi = mean(hdi, na.rm = TRUE) )</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   postsoviet mean_hdi
+##   &lt;chr&gt;         &lt;dbl&gt;
+## 1 no            0.898
+## 2 yes           0.839</code></pre>
+<p>V kódu výše jsme nejdříve využili funkce <code>group_by()</code>, abychom řekli R že všechny následující funkce má aplikovat pro každou kategorii <code>postsoviet</code> zvlášť. Poté jsme pomocí kombinace funkcí <code>summarise()</code> a <code>mean()</code> spočítali průměrnou hodnotu hdi pro každou skupinu zemí a výsledek uložili do proměnné s názvem <code>hdi_mean</code>.</p>
+<p>Teď už jen stačí namapovat proměnnou postsoviet na osu x a proměnnou hdi_mean na osu y. Data zobrazíme jako sloupce pomocí již známe funkce geom_col(). Jak vidíme, země bez sovětské minulosti mají v průměru o něco vyšší index lidského rozvoje:</p>
+<pre class="r"><code>countries %&gt;% group_by(postsoviet) %&gt;% 
+  summarise(mean_hdi = mean(hdi, na.rm = TRUE) ) %&gt;% 
+  ggplot(aes(x = postsoviet, y = mean_hdi)) +
+  geom_col()</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/mean%20summarise%20barplot-1.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level2">
+<h2>Boxplot</h2>
+<p>Přestože, jak jsme si ukázali výše, můžeme sumarizovat intervalé proměnné napříč skupinami pomocí sloupcových grafů, jak jsme si ukázali výše, nejedná se příliš efektivní postup. Tyto grafy totiž zobrazují pouze střední hodnoty proměnné (např. pouze průměr <code>hdi</code> jednotlivých kategorií <code>postsoviet</code>), ale ne jejich variabilitu. Ta je přitom neméně důležitou statistikou. Pro vizualizaci intervalových proměných, ať už napříč daty jako celkem nebo po skupinách, je proto lepší využít boxplotu. K tomuto cíli slouží funkce geom_boxplot():</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet, y = hdi)) +
+              geom_boxplot()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/boxplot%20simple%20example-1.png" width="672" /></p>
+<p>Jak vidíme, postsovětské země mají nejen zpravidla nižší hodnotu Indexu lidského rozvoje, ale existují mezi nimi i o něco větší rozdíly. Délku fousů můžeme upravovat pomocí argumentu <code>coef</code>. Standardní délka je 1.5 násobek IQR (tedy coef = <code>1.5</code>)</p>
+</div>
+<div id="histogram-a-graf-hustoty-density-plot" class="section level2">
+<h2>Histogram a graf hustoty (<em>density plot</em>)</h2>
+<p>Pro jednorozměrnou vizualizaci intervalových proměnných máme několik možností. První z nich je klasický histogram, tedy sloupcový graf zobrazující kategorizovanou verzi intervalové proměnné. K vytvoření histogramu namapujeme proměnnou na osu x a využijeme funkci <code>geom_histogram()</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi)) +
+              geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="08_data_visualization_files/figure-html/histogram%20example-1.png" width="672" /></p>
+<p>Graf výše zobrazuje rozdělení proměnné hdi, seskupené podle výchozího nastavení do 30 intervalů. Počet intervalů můžeme určit pomocí argumentu bins. Pokud bychom chtěli pouze 10 intervalů:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi)) +
+              geom_histogram(bins = 10)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/histogram%20custom%20bins-1.png" width="672" /></p>
+<p>Alternativně můžeme místo celkového počtu intervalů určit šířku jednoho intervalu, a to pomocí argumentu <code>binwidth</code>. Například pokud bychom chtěli, aby každý interval měl šířku 0.05:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi)) +
+              geom_histogram(binwidth = 0.05)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/histogram%20custom%20binwidth-1.png" width="672" /></p>
+<p>Alternativou pro histogram, jehož vzhled závísí na arbitrární volbě počtu intervalů, je graf hustoty. Jeho vytvoření je velice podobné histogramu, ale funkci <code>geom_histogram()</code> nahradíme funkcí <code>geom_density()</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi)) +
+              geom_density()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/density-1.png" width="672" /></p>
+<p>Graf hustoty se hodí zejména pro větší data (u malých datasetů může být křivka “krkolomná”), lépe ale popisuje rozdělení opravdu spojitých proměnných. V našem případě například vidíme, že nejvíce zemí má hodnotu <code>hdi</code> kolem 0.9 a že rozdělení proměnné je negativně šikmé.</p>
+</div>
+</div>
+<div id="dimenze-barvy-color-a-fill" class="section level1">
+<h1>Dimenze barvy (<em>color</em> a <em>fill</em>)</h1>
+<p>Do teď jsme pracovali pouze s dvěma dimenzemi, osou x a osou y. Data je ale možné namapovat na graf i jinými způsoby. Jednou z oblíbených “dimenzí” je barva. Ta umožňuje zobrazit v dvourozměrném grafu tři proměnné najednou.</p>
+<p><code>ggplot2</code> umožňuje mapovat barvu dvěma způsoby. Barva obrysu objektu je určená pomocí argumentu <code>color</code> a barva výplně objektu je určena pomocí argumentu <code>fill</code>. Například pro nastavení barvy obrysu sloupců ve sloupcovém grafu:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet)) +
+              geom_bar(color = &quot;orange&quot;)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/color%20example-1.png" width="672" /></p>
+<p>V praxi ale nás ale u sloupcových grafých zajímá spíše barva výplně sloupce, použijeme tedy argument fill:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet)) +
+              geom_bar(fill = &quot;orange&quot;)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/fill%20example-1.png" width="672" /></p>
+<div id="barvy-v-bodovém-grafu" class="section level2">
+<h2>Barvy v bodovém grafu</h2>
+<p>v bodovém grafu můžeme pomocí různých barev rozlišit různé kategorie určité proměnné. Toho je možné docílit pomocí namapování barev na hodnoty proměnné v rámcí funkce <code>aes()</code>. Například pro rozlišení postsovětských a západních zemí v našem bodobém grafu <code>hdi</code> a <code>life_exp</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp, color = postsoviet)) +
+              geom_point()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/scatterplot%20color-1.png" width="672" /></p>
+</div>
+<div id="barvy-ve-sloupcovém-grafu" class="section level2">
+<h2>Barvy ve sloupcovém grafu</h2>
+<p>U sloupcových grafů je možné využít barvu několika způsoby. Konkrétní podobu grafu můžeme určit pomocí argumentu <code>position</code>. Prvním způsobem je takzvaný <em>stacked bar</em>, kde jsou jednotlivé kategorie naskládané na sebe (toto je výchozí nastavení). Ten můžeme vytvořit pomocí argumentu <code>position = "stack"</code> uvnitř funkce <code>geom_bar()</code>. Z následujícího grafu můžeme například vidět, že v našich datech převažují západní země a že v obou kategoriích (jak u západních, tak postsovětských zemí) je většina členem Evropské únie:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet, fill = eu_member)) +
+              geom_bar(position = &quot;stack&quot;)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/barplot%20stack-1.png" width="672" /></p>
+<p>Alternativou k <em>stacked barplotu</em> je <em>filled barplot</em>. Tento graf vypadá velmi podobně, ale na ose <em>y</em> je relativní frekvence. Nevyčteme tedy z něj velikost jednotlivých skupin na ose <em>x</em>, ale jo možné lépe porovnat složení skupin. <em>Filled barplot</em> získáme pomoci argumentu <code>position = "fill"</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet, fill = eu_member)) +
+              geom_bar(position = &quot;fill&quot;)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/barplot%20fill-1.png" width="672" /></p>
+<p>Poslední možností je <em>grouped/dodged barplot</em>, ve kterém jsou sloupce vedle sebe místo na sobě. Tento graf získáme pomocí argumentu <code>position = "dodge"</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = postsoviet, fill = eu_member)) +
+              geom_bar(position = &quot;dodge&quot;)</code></pre>
+<p><img src="08_data_visualization_files/figure-html/barplot%20dodge-1.png" width="672" /></p>
+</div>
+<div id="barvy-u-ostatních-typů-grafů" class="section level2">
+<h2>Barvy u ostatních typů grafů</h2>
+<p>U ostatních typů grafu (ať už se jedná o histrogram, boxplot nebo jiný) funguje mapování barev stejné u těch výše zmíněných.</p>
+</div>
+</div>
+<div id="tvar-shape-a-velikost-size" class="section level1">
+<h1>Tvar (<em>shape</em>) a velikost (<em>size</em>)</h1>
+<p>Kromě dvou a barev je možné využít ještě dimenzí tvaru a velikosti. Tyto dvě dimenze jsou víceméně výlučně využívané u bodových grafů. Na proměnné se mapují obdobně jako ostatní dimenze, tedy pomocí argumentů <code>shape</code> a <code>size</code> v rámci funkce <code>aes()</code>.</p>
+<p>Dimenze tvaru se hodí pro kategoriální proměnné, obodobně jako barva. Napříkad země bývalého Západního a Východního bloku můžeme rozlišit tvarem bodu:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp, shape = postsoviet)) +
+              geom_point()</code></pre>
+<p><img src="08_data_visualization_files/figure-html/scatterplot%20shape-1.png" width="672" /></p>
+<p>Velikost umožňuje vizualizaci i spojitých proměnných Pro vizualizaci vztahu nejen <code>hdi</code> a <code>life_exp</code>, ale i <code>gdp</code>:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp, size = gdp)) +
+              geom_point()</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="08_data_visualization_files/figure-html/scatterplot%20size-1.png" width="672" /></p>
+</div>
+<div id="kombinace-dimenzí" class="section level1">
+<h1>Kombinace dimenzí</h1>
+<p>Jednotlivé dimenze lze kombinovat navzájem. Teoreticky je tedy možné v jednom dvourozměrném grafu zobrazi vztahy mezi a ž pěti proměnnými, dvěmi kategoriálními (dimenze barvy a tvaru) a třemi intervalovými (osa <em>x</em>, osa <em>y</em> a velikost). Ovšem takový graf je už většinou dost nepřehledný:</p>
+<pre class="r"><code>countries %&gt;% ggplot(aes(x = hdi, y = life_exp, size = gdp, color = eu_member, shape = postsoviet)) +
+              geom_point()</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="08_data_visualization_files/figure-html/scatterplot%20all-1.png" width="672" /></p>
 </div>
 
 
