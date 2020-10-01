@@ -19,6 +19,8 @@ navbar:
           href: 06_variables_mutate_summarise.html
         - text: "Práce s faktory"
           href: 07_factors.html
+        - text: "Vytváření grafů"
+          href: 08_data_visualization.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"
