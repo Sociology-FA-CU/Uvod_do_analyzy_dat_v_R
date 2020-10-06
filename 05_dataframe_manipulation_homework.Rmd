@@ -1,0 +1,53 @@
+---
+title: "Prohlížení a manipulace s dataframem - Domácí úkoly"
+output:
+  html_document:
+    code_foldin: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+### 1. úkol
+
+Zobrazte posledních 10 řádku dataframu `countries`.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 1, eval=FALSE}
+tail(countries, n = 10)
+```
+
+### 2. úkol
+
+Kolik unikátních hodnot obsahuje proměnná `di_cat`?
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 2, eval=FALSE}
+unique(countries$di_cat) %>% length()
+```
+
+### 3. úkol
+
+Kolik chybějích hodnot obsahuje proměnná `di_cat`?
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 3, eval=FALSE}
+is.na(countries$di_cat) %>% sum() #proměnná di_cat obsahuje 1 chybějící hodnotu
+```
+
+### 4. úkol
+
+Vyfiltrujte všechny proměnné, které *nejsou* numerické.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 4, eval=FALSE}
+select(.data = countries, !where(is.numeric))
+```

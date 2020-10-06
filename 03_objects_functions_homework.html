@@ -11,7 +11,7 @@
 
 
 
-<title>Podmínky atestace</title>
+<title>Objekty, proměnné a funkce - Domácí úkoly</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,6 +20,7 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -246,6 +247,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -336,25 +340,50 @@ $(document).ready(function () {
 
 <div class="fluid-row" id="header">
 
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Podmínky atestace</h1>
+
+<h1 class="title toc-ignore">Objekty, proměnné a funkce - Domácí úkoly</h1>
 
 </div>
 
 
-<p>Pro úspěšné splnění předmětu je nutné splnit následující úkol:</p>
-<p>V červnu roku 2019 provedlo <a href="cvvm.soc.cas.cz/">Centrum pro výzkum veřejného mínění</a> průzkum zaměřený na to, jak veřejnost hodnotí závažnost vybraných celospolečenských hrozeb a připravenost České republiky na ně. Respondenti byly dotazováni na zhruba 26 hrozeb a pro každou z nich určili, jak je podle nich závažná a jak dobře jsme na ni připravení. Celá zpráva s názvem <em>Celospolečenské hrozby podle veřejnosti</em> je k nalezení <a href="https://cvvm.soc.cas.cz/media/com_form2content/documents/c2/a5077/f9/po191223.pdf">zde</a></p>
-<p>Pro získání zápočtu splňte <strong>jedno</strong> z následujících:</p>
-<ol style="list-style-type: decimal">
-<li><p>Replikujte Tabulku 1 a Tabulku 2 ve zprávě. Výsledkem by měli být dva objekty (ideálně dataframy), z nichž každý bude obsahovat čtyři sloupce: <em>Název hrozby</em>, <em>Průměrná hodnota</em>, <em>Směrodatná odchylka</em> a <em>% odpovědí nevím</em>. Pořadí hrozeb by mělo být seřazeno sestupně podle <em>Průměrné hodnoty</em>. Název tabulky ani poznámky pod čarou replikovat nemusíte.</p></li>
-<li><p>Replikujte Graf 1. Drobné odchylky od originálu nevadí (např. odstín barev, font a velikost písma), ale graf by měl obsahovat všechny důležité aspekty, jako popisky os, barevné rozlišení bodů, legendu, atd. Nezapomeňtě ani na název a popis grafu.</p></li>
-</ol>
-<p>V obou případech odevzdejte skript, který musí být plně funkční, tedy musí proběhnout bez chyby od začátku do konce bez vnějších zásahů.</p>
-<p>Data pro vypracování úkolu jsou k nalezení buď v <a href="https://archiv.soc.cas.cz/">Českém sociálněvědním datovém archivu</a>, nebo ke stažení rovnou <a href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/cvvm_cerven_2019.rds">zde</a>.</p>
-<p>Případně stáhnout rovnou v R pomocí funkce:</p>
-<pre class="r"><code>cvvm = read.csv(&quot;https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/cvvm_cerven_2019.csv&quot;)</code></pre>
-<p>Dotazník s popisem otázek je možné stejně jako data stáhout v Datovém archivu, případně <a href="https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/documentation/V1906.pdf">zde</a>.</p>
+<div id="úkol" class="section level3">
+<h3>1. úkol</h3>
+<p>Vytvořte numerický vektor jménem <code>numbers</code>, který bude obsahovat následující hodnoty: <em>2</em>, <em>7</em>, <em>14</em>, <em>7</em> a <em>64</em>.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>numbers = c(2, 7, 14, 7, 64)</code></pre>
+</div>
+<div id="úkol-1" class="section level3">
+<h3>2. úkol</h3>
+<p>Spočítejte průměr a medián objektu <code>numbers</code>:</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>mean(numbers)
+
+median(numbers)</code></pre>
+</div>
+<div id="úkol-2" class="section level3">
+<h3>3. úkol</h3>
+<p>Podívejte se na nápovědu funkce weighted.mean().</p>
+<p>K čemu funkce slouží?</p>
+<p>Jaké má funkce <code>weighted.mean()</code> argumenty?</p>
+<p>K čemu je argument <code>w</code>?</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>?weighted.mean() #Zobrazí nápovědu funkce weighted.mean()
+
+#Funkce počítá vážený průměr hodnot
+
+#Fukce weighted.mean() má tři argumenty: x, w, na.rm
+
+#argument w jsou váhy jednotlivých hodnot</code></pre>
+</div>
 
 
 
@@ -389,6 +418,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
