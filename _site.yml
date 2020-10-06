@@ -21,10 +21,16 @@ navbar:
           href: 07_factors.html
         - text: "Vytváření grafů"
           href: 08_data_visualization.html
+    - text: "Domácí úkoly"
+      menu:
+        - text: "Objekty, proměnné a funkce"
+          href: 03_objects_functions_homework.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"
       href: course_data.html
+    - text: "Literatura"
+      href: literature.html
 output:
   html_document:
     theme: paper

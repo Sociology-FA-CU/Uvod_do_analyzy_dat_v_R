@@ -1,0 +1,12 @@
+---
+title: "Transformace a sumarizace proměnných - Domácí úkoly"
+output:
+  html_document:
+    code_foldin: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
