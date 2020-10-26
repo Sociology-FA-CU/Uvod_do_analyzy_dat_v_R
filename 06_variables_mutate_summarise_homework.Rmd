@@ -9,4 +9,55 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+
+### 1. úkol
+
+vytvořte nový objekt jménem demokracie_v_eu, kde budou jen proměnné country, dem_index a di_cat a pouze země, které jsou členy EU (zvažte v jakém pořadí je potřeba příkazy řetězit?)
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 1, eval=FALSE}
+demokracie_v_eu <- countries %>% filter(eu_member == "yes") %>% select(country, dem_index, di_cat)
+```
+
+### 2. úkol
+
+Sařaďte pozorování (řádky) v tomto novém objektu podle velikosti demokratického indexu od největšího.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 2, eval=FALSE}
+demokracie_v_eu %>% arrange(desc(dem_index))
+```
+
+### 3. úkol
+
+Pracujte s demokracie_v_eu a vytvořte novou proměnnou dem_index_100, která bude analogická k dem_index, ale bude nabývat hodnoty od 0 do 100 (nikoliv od 0 do 10 jako dem_index)
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 3, eval=FALSE}
+demokracie_v_eu %>% mutate(dem_index_100 = dem_index*10)
+```
+
+### 4. úkol
+
+Pomocí funkce summarise vyjádřete prostý (tj. ne vážený) aritmetický průměr naděje na dožití ve všech zemích v datech (tj. 38 zemí, nikoliv pouze EU).
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 4, eval=FALSE}
+df %>% summarise(mean = mean(life_exp, na.rm = TRUE))
+```
+
+### 5. úkol
+
+Pomocí kombince funkcí group_by a summarise vyjádřete maximum naděje na dožití zvlášť pro postsovětské a ostatní země v celém data setu.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 4, eval=FALSE}
+df %>% group_by(postsoviet) %>% summarise(maximum = max(life_exp, na.rm = TRUE))
 ```

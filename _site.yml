@@ -25,6 +25,10 @@ navbar:
       menu:
         - text: "Objekty, proměnné a funkce"
           href: 03_objects_functions_homework.html
+        - text: "Import a export"
+          href: 04_import_export_homework.html
+        - text: "Dplyr 1 - funkce mutate, summarise atd."
+          href: 06_variables_mutate_summarise_homework.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"
