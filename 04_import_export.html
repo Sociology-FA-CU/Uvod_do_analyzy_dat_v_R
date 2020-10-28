@@ -391,6 +391,21 @@ div.tocify {
     <li>
       <a href="03_objects_functions_homework.html">Objekty, proměnné a funkce</a>
     </li>
+    <li>
+      <a href="04_import_export_homework.html">Import a export</a>
+    </li>
+    <li>
+      <a href="05_dataframe_manipulation_homework.html">Prohlížení data framu</a>
+    </li>
+    <li>
+      <a href="06_variables_mutate_summarise_homework.html">Dplyr 1 - funkce mutate, summarise atd.</a>
+    </li>
+    <li>
+      <a href="06_c_dplyr_warmup.html">Dplyr 1.5 - warm-up from class</a>
+    </li>
+    <li>
+      <a href="06_b_variables_mutate_summarise_homework.html">Dplyr 2 - funkce mutate, summarise atd.</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -473,7 +488,7 @@ div.tocify {
 <p>Přestože je možné při importu a exportu dat explicitně určit cestu k souboru v rámci dané funkce, opakované vypisování cesty je nepohodlné. Místu toho můžeme určitý adresář určit jako pracovní adresář (<code>working directory</code>). Pracovní adresář je místo, odkud bude R automaticky importovat a kam bude exportovat soubory, pokud neřekneme jinak.</p>
 <p>Adresu současného pracovního adresáře zjistíme pomocí funkce <code>getwd()</code>, zkratka pro <em>get working directory</em> :</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
+<pre><code>## [1] &quot;C:/rwd_main/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
 <p>Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci <code>setwd()</code> (<em>set working directory</em>):</p>
 <pre class="r"><code>setwd(r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data)&quot;)</code></pre>
 <p>Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a ukládat do výše zmíněné složky. Například, pokud bychom chtěli importovat .csv soubor, který ve složce je v pracovním adresáři, stačí:</p>

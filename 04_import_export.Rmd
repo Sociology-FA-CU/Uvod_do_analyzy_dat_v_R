@@ -23,7 +23,7 @@ CSV soubory je možné importovat pomocí funkce `read.csv()`.
 Tato funkce vyžaduje alespoň jeden argument, `file`, což je cesta k datasetu.
 Výsledek rovnou uložíme do nového dataframu:
 
-```{r csv import simple}
+```{r csv import simple, eval =FALSE}
 countries = read.csv(file = "C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries.csv")
 ```
 
@@ -41,7 +41,7 @@ countries = read.csv("C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_
 Naštěstí pro to existuje relativně jednoduchá oprava.
 Před cestu k souboru napíšem `r` a cestu samotnou (uvnitř úvozovek!) dáme do kulatých závorek:
 
-```{r csv import correct path}
+```{r csv import correct path, eval =FALSE}
 countries = read.csv(r"(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.csv)")
 ```
 
@@ -247,7 +247,7 @@ countries = read.csv(here("countries.csv"))
 
 Tímto způsobem můžeme importovat data, aniž bychom museli vypisovat přesnou adresu nebo nastavovat pracovní adresář ručně. POkud by data nebyla přímo v pracovním adresáři, ale ve složce uvnitř pracovního adresáře, můžeme ji jednoduše specifikovat. Například, pokud by soubor `countries.csv` byl ve složce `data`, která se nachází v pracovní adresáři:
 
-```{r here nested import example}
+```{r here nested import example, eval =FALSE}
 countries = read.csv(here("data", "countries.csv"))
 ```
 

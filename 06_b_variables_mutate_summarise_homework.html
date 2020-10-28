@@ -11,7 +11,7 @@
 
 
 
-<title>Transformace a sumarizace proměnných - Domácí úkoly</title>
+<title>Transformace a sumarizace proměnných 2 - Domácí úkoly</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -365,40 +365,51 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Transformace a sumarizace proměnných - Domácí úkoly</h1>
+<h1 class="title toc-ignore">Transformace a sumarizace proměnných 2 - Domácí úkoly</h1>
 
 </div>
 
 
 <div id="úkol" class="section level3">
 <h3>1. úkol</h3>
-<p>vytvořte nový objekt jménem demokracie_v_eu, kde budou jen proměnné country, dem_index a di_cat a pouze země, které jsou členy EU (zvažte v jakém pořadí je potřeba příkazy řetězit?)</p>
+<p>Vyberte z datasetu countries všechny proměnné, které jsou typu “character” a obsahují podtržítko</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>demokracie_v_eu &lt;- countries %&gt;% filter(eu_member == &quot;yes&quot;) %&gt;% select(country, dem_index, di_cat)</code></pre>
+<pre class="r"><code>countries %&gt;% select(where(is.character) &amp; contains(&quot;_&quot;))</code></pre>
 </div>
 <div id="úkol-1" class="section level3">
 <h3>2. úkol</h3>
-<p>Sařaďte pozorování (řádky) v tomto novém objektu podle velikosti demokratického indexu od největšího.</p>
+<p>Všechny numerické proměnné zaokrouhlete na 2 desetinná místa</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>demokracie_v_eu %&gt;% arrange(desc(dem_index))</code></pre>
+<pre class="r"><code>countries %&gt;% mutate(across(where(is.numeric), round, 2))</code></pre>
 </div>
 <div id="úkol-2" class="section level3">
 <h3>3. úkol</h3>
-<p>Pracujte s demokracie_v_eu a vytvořte novou proměnnou dem_index_100, která bude analogická k dem_index, ale bude nabývat hodnoty od 0 do 100 (nikoliv od 0 do 10 jako dem_index)</p>
+<p>Pro všechny numerické proměnné najděte směrodatnou odchylku</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>demokracie_v_eu %&gt;% mutate(dem_index_100 = dem_index*10)</code></pre>
+<pre class="r"><code>countries %&gt;% summarise(across(where(is.numeric), sd, na.rm = TRUE))</code></pre>
 </div>
 <div id="úkol-3" class="section level3">
 <h3>4. úkol</h3>
-<p>Pomocí funkce summarise vyjádřete prostý (tj. ne vážený) aritmetický průměr naděje na dožití ve všech zemích v datech (tj. 38 zemí, nikoliv pouze EU).</p>
+<p>Pro proměnné gdp, population a area najděte průměr</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% summarise(mean = mean(life_exp, na.rm = TRUE))</code></pre>
+<pre class="r"><code>countries %&gt;% summarise(across(c(&quot;gdp&quot;, &quot;population&quot;, &quot;area&quot;),
+                               mean, na.rm = TRUE))</code></pre>
 </div>
 <div id="úkol-4" class="section level3">
 <h3>5. úkol</h3>
-<p>Pomocí kombince funkcí group_by a summarise vyjádřete maximum naděje na dožití zvlášť pro postsovětské a ostatní země v celém data setu.</p>
+<p>Vytvořte v datasetu tři nové proměnné uni_prc_di_cat_mean, poverty_risk_di_cat_mean a material_dep_di_cat_mean, které budou mít hodnotu průměru dané původní proměnné pro podskupinu zemí podle di_cat například na řádku Dánska, Němekca atp. bude průměrná hodnota ze zemí, které jsou Full democracy na řádcích Bulharska, Belgie a Česka bude průměrná hodnota ze zemí Flawed democracy atp.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% group_by(postsoviet) %&gt;% summarise(maximum = max(life_exp, na.rm = TRUE))</code></pre>
+<pre class="r"><code>countries %&gt;% group_by(di_cat) %&gt;% 
+  mutate(across(.cols = c(&quot;uni_prc&quot;, &quot;poverty_risk&quot;, &quot;material_dep&quot;),
+                .fns = mean,
+                na.rm = TRUE,
+                .names = &quot;{col}_di_cat_mean&quot;))</code></pre>
+</div>
+<div id="úkol-5" class="section level3">
+<h3>6. úkol</h3>
+<p>Vyberte všechny proměnné z datasetu countries, které začínají písmenem “p” (bez pojmenování jednotlivých proměnných začínajících na “p”). Pro správný tvar pomocné funkce můžete použít online nápovědu.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% select(starts_with(&quot;p&quot;))</code></pre>
 </div>
 
 

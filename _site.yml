@@ -27,8 +27,14 @@ navbar:
           href: 03_objects_functions_homework.html
         - text: "Import a export"
           href: 04_import_export_homework.html
+        - text: "Prohlížení data framu"
+          href: 05_dataframe_manipulation_homework.html
         - text: "Dplyr 1 - funkce mutate, summarise atd."
           href: 06_variables_mutate_summarise_homework.html
+        - text: "Dplyr 1.5 - warm-up from class"
+          href: 06_c_dplyr_warmup.html
+        - text: "Dplyr 2 - funkce mutate, summarise atd."
+          href: 06_b_variables_mutate_summarise_homework.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"

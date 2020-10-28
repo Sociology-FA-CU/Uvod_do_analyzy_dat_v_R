@@ -42,12 +42,3 @@ Pro odpověď klikněte na tlačítko **code**:
 ```{r question 3, eval=FALSE}
 is.na(countries$di_cat) %>% sum() #proměnná di_cat obsahuje 1 chybějící hodnotu
 ```
-
-### 4. úkol
-
-Vyfiltrujte všechny proměnné, které *nejsou* numerické.
-
-Pro odpověď klikněte na tlačítko **code**:
-```{r question 4, eval=FALSE}
-select(.data = countries, !where(is.numeric))
-```
