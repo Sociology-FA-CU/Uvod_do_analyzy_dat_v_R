@@ -11,7 +11,7 @@
 
 
 
-<title>Dplyr warm-up - úkoly ze začátku semináře 27-10-2020</title>
+<title>Transformace a sumarizace proměnných 3 - Domácí úkoly</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -368,56 +368,66 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Dplyr warm-up - úkoly ze začátku semináře 27-10-2020</h1>
+<h1 class="title toc-ignore">Transformace a sumarizace proměnných 3 - Domácí úkoly</h1>
 
 </div>
 
 
 <div id="úkol" class="section level3">
 <h3>1. úkol</h3>
-<ul>
-<li>1.1 select variables country, uni_prc, life_exp and only observations</li>
-<li>1.2 do the same but only for countries with dem_index bigger than 6</li>
-<li>1.3 and last time the same, but only for countries with dem_index below median dem_index and show from highest life_exp</li>
-<li>1.4 how can we find the one which has median dem_index?</li>
-</ul>
+<p>Najděte pro proměnné uni_prc a poverty_risk následující hodnoty - median, mezikvartilové rozpětí, rozptyl (některé funkce možná budete muset dohledat).</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% select(country, uni_prc, life_exp) # 1.1
-
-countries %&gt;% filter(dem_index &gt; 6) %&gt;% select(country, uni_prc, life_exp) # 1.2
-
-countries %&gt;% filter(dem_index &lt; median(dem_index, na.rm = TRUE)) %&gt;% 
-  select(country, uni_prc, life_exp) %&gt;% arrange(desc(life_exp)) #1.3
-
-countries %&gt;% filter(dem_index == median(dem_index, na.rm = TRUE)) #1.4</code></pre>
+<pre class="r"><code>countries %&gt;% 
+  summarise(across(c(&quot;uni_prc&quot;, &quot;poverty_risk&quot;),
+                               lst(median, IQR, var),
+                               na.rm = TRUE))</code></pre>
 </div>
 <div id="úkol-1" class="section level3">
 <h3>2. úkol</h3>
-<ul>
-<li>2.1 what is the max dem_index and min dem_index?</li>
-<li>2.2 what is the max and min dem_index in each maj_belief category</li>
-</ul>
+<p>Napište funkci, která pro proměnnou di_cat vrátí počet unikátních hodnot, kterých proměnná nabývá. Poradíme, že sumarizační funkce, kterou potřeujete, se jmenuje n_distinct (více lze dohledat v nápovědě). Pozor, nejprve odfiltrujte chybějící hodnoty, jinak to jako jednu unikátní hodnotu započítá i NA (což může být v některých situacích žádoucí, ale v tomto úkolu NA odstraňte).</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% summarise(maximum = max(dem_index, na.rm = TRUE),
-                        minimum = min(dem_index, na.rm = TRUE)) #2.1
-
-countries %&gt;% group_by(maj_belief) %&gt;%
-  summarise(maximum = max(dem_index, na.rm = TRUE), minimum = min(dem_index, na.rm = TRUE)) #2.2</code></pre>
+<pre class="r"><code>countries %&gt;%
+  filter(!is.na(di_cat)) %&gt;% 
+  summarise(pocet_unikatnich_hodnot = n_distinct(di_cat))</code></pre>
 </div>
 <div id="úkol-2" class="section level3">
 <h3>3. úkol</h3>
-<ul>
-<li>3.1 create new variable - uni_prc_100</li>
-<li>3.2 create new variable - difference from mean life_exp within post_soviet</li>
-</ul>
+<p>Najděte, které tři unikátní hodnoty to jsou. Způsobů řešení je určitě celá řada.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% mutate(uni_prc_100 = uni_prc*100) %&gt;%
-  select(code, uni_prc, uni_prc_100) # 3.1
-
-countries %&gt;% group_by(postsoviet) %&gt;% 
-  mutate(life_exp_within_postsovier = mean(life_exp, na.rm=TRUE),
-         life_exp_diff_within_postsoviet = life_exp - mean(life_exp, na.rm = TRUE)) %&gt;% 
-  select(code, life_exp,life_exp_within_postsovier, life_exp_diff_within_postsoviet) # 3.2</code></pre>
+<pre class="r"><code>countries %&gt;% 
+  count(di_cat) %&gt;% 
+  select(di_cat) %&gt;% 
+  filter(!is.na(di_cat))</code></pre>
+</div>
+<div id="úkol-3" class="section level3">
+<h3>4. úkol</h3>
+<p>Pro všechny numerické proměnné v datasetu kromě proměnné X vraťte následující hodnoty: minimum, median, mean, maximum, sd, IQR, var. Výsledný objekt přetvořte do dlouhého formátu (dva sloupce) tak, že názvy funkcí budou pojmenovány descriptive_stats a samotné hodnoty budou pojmenovány results. Výsledek uložte do svého prostředí (environment) jako nový objekt s názvem descriptives</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>descriptives &lt;-
+  countries %&gt;% 
+  summarise(across(where(is.numeric) &amp; !X,
+                   lst(min, median, mean, max, sd, IQR, var),
+                   na.rm=TRUE)) %&gt;% 
+  pivot_longer(cols = everything(),
+               names_to = &quot;descriptive_stats&quot;,
+               values_to = &quot;results&quot;)</code></pre>
+</div>
+<div id="úkol-4" class="section level3">
+<h3>5. úkol</h3>
+<p>Pro proměnné dem_index a life_exp vyjádřete jejich minimum, median a maximum v rámci podskupin dle toho, jaké je v zemi hlavní náboženství. Výsledný objekt uložte do environment jako stats_by_relig</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>stats_by_relig &lt;-
+countries %&gt;% 
+  group_by(maj_belief) %&gt;% 
+  summarise(across(c(&quot;dem_index&quot;, &quot;life_exp&quot;),
+                   lst(min, median, max),
+                   na.rm=TRUE))</code></pre>
+</div>
+<div id="úkol-5" class="section level3">
+<h3>6. úkol</h3>
+<p>Nový objekt stats_by_relig transformujte do dlouhého formátu. Pozor, na rozdíl od situací, se kterými jsme se už setkali, je zde přítomen popisný sloupec maj_belief (popisuje skupinu), který neobsahuje hodoty - ten proto musíte z argumentu cols funkce pivot_longer vyjmout.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>stats_by_relig %&gt;% pivot_longer(cols = !maj_belief)</code></pre>
 </div>
 
 

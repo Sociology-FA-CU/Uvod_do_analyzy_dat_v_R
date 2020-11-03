@@ -1,0 +1,101 @@
+---
+title: "Transformace a sumarizace proměnných 3 - Domácí úkoly"
+output:
+  html_document:
+    code_foldin: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+
+### 1. úkol
+
+Najděte pro proměnné uni_prc a poverty_risk následující hodnoty - median, mezikvartilové rozpětí, rozptyl (některé funkce možná budete muset dohledat).
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-1, eval=FALSE}
+countries %>% 
+  summarise(across(c("uni_prc", "poverty_risk"),
+                               lst(median, IQR, var),
+                               na.rm = TRUE))
+```
+
+### 2. úkol
+
+Napište funkci, která pro proměnnou di_cat vrátí počet unikátních hodnot, kterých proměnná nabývá. Poradíme, že sumarizační funkce, kterou potřeujete, se jmenuje n_distinct (více lze dohledat v nápovědě). Pozor, nejprve odfiltrujte chybějící hodnoty, jinak to jako jednu unikátní hodnotu započítá i NA (což může být v některých situacích žádoucí, ale v tomto úkolu NA odstraňte).
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-2, eval=FALSE}
+countries %>%
+  filter(!is.na(di_cat)) %>% 
+  summarise(pocet_unikatnich_hodnot = n_distinct(di_cat))
+```
+
+### 3. úkol
+
+Najděte, které tři unikátní hodnoty to jsou. Způsobů řešení je určitě celá řada.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-3, eval=FALSE}
+countries %>% 
+  count(di_cat) %>% 
+  select(di_cat) %>% 
+  filter(!is.na(di_cat))
+```
+
+### 4. úkol
+
+Pro všechny numerické proměnné v datasetu kromě proměnné X vraťte následující hodnoty:
+minimum, median, mean, maximum, sd, IQR, var. 
+Výsledný objekt přetvořte do dlouhého formátu (dva sloupce) tak, 
+že názvy funkcí budou pojmenovány descriptive_stats a samotné hodnoty budou pojmenovány results. 
+Výsledek uložte do svého prostředí (environment) jako nový objekt s názvem descriptives
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-4, eval=FALSE}
+descriptives <-
+  countries %>% 
+  summarise(across(where(is.numeric) & !X,
+                   lst(min, median, mean, max, sd, IQR, var),
+                   na.rm=TRUE)) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "descriptive_stats",
+               values_to = "results")
+```
+
+### 5. úkol
+
+Pro proměnné dem_index a life_exp vyjádřete jejich minimum, median a maximum v rámci podskupin dle toho, 
+jaké je v zemi hlavní náboženství. Výsledný objekt uložte do environment jako stats_by_relig 
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-5, eval=FALSE}
+stats_by_relig <-
+countries %>% 
+  group_by(maj_belief) %>% 
+  summarise(across(c("dem_index", "life_exp"),
+                   lst(min, median, max),
+                   na.rm=TRUE))
+```
+
+
+### 6. úkol
+
+Nový objekt stats_by_relig transformujte do dlouhého formátu. 
+Pozor, na rozdíl od situací, se kterými jsme se už setkali, je zde přítomen popisný sloupec 
+maj_belief (popisuje skupinu), který neobsahuje hodoty - ten proto musíte z argumentu cols funkce 
+pivot_longer vyjmout.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 6-6, eval=FALSE}
+stats_by_relig %>% pivot_longer(cols = !maj_belief)
+```

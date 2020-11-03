@@ -35,6 +35,8 @@ navbar:
           href: 06_c_dplyr_warmup.html
         - text: "Dplyr 2 - funkce mutate, summarise atd."
           href: 06_b_variables_mutate_summarise_homework.html
+        - text: "Dplyr 3 - funkce mutate, summarise atd."
+          href: 06_d_variables_mutate_summarise_homework.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"
