@@ -1,0 +1,156 @@
+---
+title: "Práce s faktory v balíku forcats - Domácí úkoly"
+output:
+  html_document:
+    code_foldin: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+
+### 1. úkol
+
+Převeďte proměnnou di_cat na faktor a změnu uložte do stávajícího objektu countries.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-1, eval=FALSE}
+countries <-
+  countries %>% 
+  mutate(di_cat = as_factor(di_cat))
+```
+
+### 2. úkol
+
+Zmeňte pořadí "levels" u nově vytvořeného faktoru di_cat od nejvíce po nejméně demokratickou úroveň a výsledek opět uložte do objektu countries.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-2, eval=FALSE}
+countries <-
+  countries %>% 
+  mutate(di_cat = fct_relevel(di_cat, "Full democracy", "Flawed democracy", "Hybrid regime"))
+```
+
+### 3. úkol
+
+Na proměnnou di_cat použijte generickou vizualizační funkci plot().
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-3, eval=FALSE}
+countries %>% pull(di_cat) %>% plot()
+```
+
+### 4. úkol
+
+Nyní otočte pořadí levels (z prvního poslední atd.) a podívejte se na rozdíl výsledku pomocí plot().
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-4, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_rev(di_cat)) %>% 
+  pull(di_cat) %>% 
+  plot()
+```
+
+### 5. úkol
+
+Spojte úrovně "Flawed democracy" a "full democracy" do jedné ("democracy") a zároveň úroveň "Hybrid regime" přejmenujte na "Non-democracy". A na proměnnou se podívejte pomocí pull, ať se přesvědčíte, že se stalo, co jste chtěli.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-5, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_collapse(di_cat, 
+                               "democracy" = c ("Flawed democracy", "Full democracy"),
+                               "non-democracy" = "Hybrid regime")) %>% 
+  pull(di_cat)
+```
+
+
+### 6. úkol
+
+Přidejte do proměnné "di_cat" úroveň (level) s názvem "Mordor". Výsledek opět zobrazte pomocí plot().
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-6, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_expand(di_cat, "Mordor")) %>% 
+  pull(di_cat) %>% plot()
+```
+
+
+### 7. úkol
+
+Změňte pořadí "levels" podle průměrné hodnoty gdp. Na výsledek se podívejte.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-7, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_reorder(.f = di_cat, 
+                              .x = gdp, 
+                              .fun = mean, 
+                              na.rm=TRUE)) %>% 
+  pull(di_cat)
+```
+
+
+### 8. úkol
+
+kontrolujte, že průměr gdp jednotlivých podskupin zemí podle faktoru di_cat opravdu odpovídá výsledku výše.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-8, eval=FALSE}
+countries %>% 
+  group_by(di_cat) %>% 
+  summarise(mean(gdp,na.rm = TRUE))
+```
+
+### 9. úkol
+
+A co pokud byste chtěli úrovně di_cat seřadit podle průměrného pořadí obráceně, tedy sestupně?
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-9, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_reorder(di_cat, gdp, mean, na.rm=TRUE, .desc = TRUE)) %>% 
+  pull(di_cat) # Všimněte si, že tentokrát jsme v kódu vynechali pojmenování argumentů. Pokud dodržíme pořadí, je pojmenování nepovinné. 
+
+```
+
+### 10. úkol
+
+V R často můžete udělat jednu věci několika způsoby. Pokuste se seřadit úrovně di_cat opět sestupně podle podle gdp, ale bez použití argumentu .desc. Poradíme, že můžete využít kombinaci fct_reorder a fct_rev.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-10, eval=FALSE}
+countries %>% 
+  mutate(di_cat = fct_reorder(di_cat, gdp, mean, na.rm=TRUE),
+         di_cat = fct_rev(di_cat)) %>% 
+  pull(di_cat)
+
+```
+
+### 11. úkol
+
+Vytvořte nový faktor povery_risk_halves, který bude mít hodnotu "lower-half" pro země s ohrožením chudobou nižším než medián, hodnotu "median" pro země (zemi) přesně s mediánovou hodnotou, a hodnotu "upper-half" pro země s ohrožením chudobou větším než medián. Na závěr si vedle sebe prohledněte proměnné proverty_risk a povery_risk_halves, jestli výsledek dává smysl. 
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7-11, eval=FALSE}
+
+countries %>% 
+  mutate(povery_risk_halves = if_else(poverty_risk < median(poverty_risk, na.rm = TRUE), # zadej podmínku
+                                      "lower-half", # co udělat, pokud pravda
+                                      if_else(poverty_risk == median(poverty_risk, na.rm = TRUE), # když neprava, ješte vnořená podmínka
+                                              "median", # když vnořená podmínka pravda
+                                              "upper-half"))) %>% # když nepravda (tedy všechna zbývající pozorování)
+  select(poverty_risk, povery_risk_halves) %>% 
+  print(n = Inf)
+
+```

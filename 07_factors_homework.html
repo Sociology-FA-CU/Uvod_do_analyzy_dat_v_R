@@ -11,7 +11,7 @@
 
 
 
-<title>Prohlížení a manipulace s dataframem - Domácí úkoly</title>
+<title>Práce s faktory v balíku forcats - Domácí úkoly</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -371,28 +371,108 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Prohlížení a manipulace s dataframem - Domácí úkoly</h1>
+<h1 class="title toc-ignore">Práce s faktory v balíku forcats - Domácí úkoly</h1>
 
 </div>
 
 
 <div id="úkol" class="section level3">
 <h3>1. úkol</h3>
-<p>Zobrazte posledních 10 řádku dataframu <code>countries</code>.</p>
+<p>Převeďte proměnnou di_cat na faktor a změnu uložte do stávajícího objektu countries.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>tail(countries, n = 10)</code></pre>
+<pre class="r"><code>countries &lt;-
+  countries %&gt;% 
+  mutate(di_cat = as_factor(di_cat))</code></pre>
 </div>
 <div id="úkol-1" class="section level3">
 <h3>2. úkol</h3>
-<p>Kolik unikátních hodnot obsahuje proměnná <code>di_cat</code>?</p>
+<p>Zmeňte pořadí “levels” u nově vytvořeného faktoru di_cat od nejvíce po nejméně demokratickou úroveň a výsledek opět uložte do objektu countries.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>unique(countries$di_cat) %&gt;% length()</code></pre>
+<pre class="r"><code>countries &lt;-
+  countries %&gt;% 
+  mutate(di_cat = fct_relevel(di_cat, &quot;Full democracy&quot;, &quot;Flawed democracy&quot;, &quot;Hybrid regime&quot;))</code></pre>
 </div>
 <div id="úkol-2" class="section level3">
 <h3>3. úkol</h3>
-<p>Kolik chybějích hodnot obsahuje proměnná <code>di_cat</code>?</p>
+<p>Na proměnnou di_cat použijte generickou vizualizační funkci plot().</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>is.na(countries$di_cat) %&gt;% sum() #proměnná di_cat obsahuje 1 chybějící hodnotu</code></pre>
+<pre class="r"><code>countries %&gt;% pull(di_cat) %&gt;% plot()</code></pre>
+</div>
+<div id="úkol-3" class="section level3">
+<h3>4. úkol</h3>
+<p>Nyní otočte pořadí levels (z prvního poslední atd.) a podívejte se na rozdíl výsledku pomocí plot().</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_rev(di_cat)) %&gt;% 
+  pull(di_cat) %&gt;% 
+  plot()</code></pre>
+</div>
+<div id="úkol-4" class="section level3">
+<h3>5. úkol</h3>
+<p>Spojte úrovně “Flawed democracy” a “full democracy” do jedné (“democracy”) a zároveň úroveň “Hybrid regime” přejmenujte na “Non-democracy”. A na proměnnou se podívejte pomocí pull, ať se přesvědčíte, že se stalo, co jste chtěli.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_collapse(di_cat, 
+                               &quot;democracy&quot; = c (&quot;Flawed democracy&quot;, &quot;Full democracy&quot;),
+                               &quot;non-democracy&quot; = &quot;Hybrid regime&quot;)) %&gt;% 
+  pull(di_cat)</code></pre>
+</div>
+<div id="úkol-5" class="section level3">
+<h3>6. úkol</h3>
+<p>Přidejte do proměnné “di_cat” úroveň (level) s názvem “Mordor”. Výsledek opět zobrazte pomocí plot().</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_expand(di_cat, &quot;Mordor&quot;)) %&gt;% 
+  pull(di_cat) %&gt;% plot()</code></pre>
+</div>
+<div id="úkol-6" class="section level3">
+<h3>7. úkol</h3>
+<p>Změňte pořadí “levels” podle průměrné hodnoty gdp. Na výsledek se podívejte.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_reorder(.f = di_cat, 
+                              .x = gdp, 
+                              .fun = mean, 
+                              na.rm=TRUE)) %&gt;% 
+  pull(di_cat)</code></pre>
+</div>
+<div id="úkol-7" class="section level3">
+<h3>8. úkol</h3>
+<p>kontrolujte, že průměr gdp jednotlivých podskupin zemí podle faktoru di_cat opravdu odpovídá výsledku výše.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  group_by(di_cat) %&gt;% 
+  summarise(mean(gdp,na.rm = TRUE))</code></pre>
+</div>
+<div id="úkol-8" class="section level3">
+<h3>9. úkol</h3>
+<p>A co pokud byste chtěli úrovně di_cat seřadit podle průměrného pořadí obráceně, tedy sestupně?</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_reorder(di_cat, gdp, mean, na.rm=TRUE, .desc = TRUE)) %&gt;% 
+  pull(di_cat) # Všimněte si, že tentokrát jsme v kódu vynechali pojmenování argumentů. Pokud dodržíme pořadí, je pojmenování nepovinné. </code></pre>
+</div>
+<div id="úkol-9" class="section level3">
+<h3>10. úkol</h3>
+<p>V R často můžete udělat jednu věci několika způsoby. Pokuste se seřadit úrovně di_cat opět sestupně podle podle gdp, ale bez použití argumentu .desc. Poradíme, že můžete využít kombinaci fct_reorder a fct_rev.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(di_cat = fct_reorder(di_cat, gdp, mean, na.rm=TRUE),
+         di_cat = fct_rev(di_cat)) %&gt;% 
+  pull(di_cat)</code></pre>
+</div>
+<div id="úkol-10" class="section level3">
+<h3>11. úkol</h3>
+<p>Vytvořte nový faktor povery_risk_halves, který bude mít hodnotu “lower-half” pro země s ohrožením chudobou nižším než medián, hodnotu “median” pro země (zemi) přesně s mediánovou hodnotou, a hodnotu “upper-half” pro země s ohrožením chudobou větším než medián. Na závěr si vedle sebe prohledněte proměnné proverty_risk a povery_risk_halves, jestli výsledek dává smysl.</p>
+<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
+<pre class="r"><code>countries %&gt;% 
+  mutate(povery_risk_halves = if_else(poverty_risk &lt; median(poverty_risk, na.rm = TRUE), # zadej podmínku
+                                      &quot;lower-half&quot;, # co udělat, pokud pravda
+                                      if_else(poverty_risk == median(poverty_risk, na.rm = TRUE), # když neprava, ješte vnořená podmínka
+                                              &quot;median&quot;, # když vnořená podmínka pravda
+                                              &quot;upper-half&quot;))) %&gt;% # když nepravda (tedy všechna zbývající pozorování)
+  select(poverty_risk, povery_risk_halves) %&gt;% 
+  print(n = Inf)</code></pre>
 </div>
 
 
