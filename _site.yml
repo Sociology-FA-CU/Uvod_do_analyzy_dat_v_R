@@ -21,6 +21,8 @@ navbar:
           href: 07_factors.html
         - text: "Vytváření grafů"
           href: 08_data_visualization.html
+        - text: "Vzhled grafů"
+          href: 09_plot_format.html      
     - text: "Domácí úkoly"
       menu:
         - text: "Objekty, proměnné a funkce"

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Vizualizace dat - vzhled grafů</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Úvod do analýzy dat v R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Materiály k přednáškám
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01_intro_R.html">Představení R</a>
+    </li>
+    <li>
+      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
+    </li>
+    <li>
+      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
+    </li>
+    <li>
+      <a href="04_import_export.html">Import a export dat</a>
+    </li>
+    <li>
+      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
+    </li>
+    <li>
+      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
+    </li>
+    <li>
+      <a href="07_factors.html">Práce s faktory</a>
+    </li>
+    <li>
+      <a href="08_data_visualization.html">Vytváření grafů</a>
+    </li>
+    <li>
+      <a href="09_plot_format.html">Vzhled grafů</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Domácí úkoly
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="03_objects_functions_homework.html">Objekty, proměnné a funkce</a>
+    </li>
+    <li>
+      <a href="04_import_export_homework.html">Import a export</a>
+    </li>
+    <li>
+      <a href="05_dataframe_manipulation_homework.html">Prohlížení data framu</a>
+    </li>
+    <li>
+      <a href="06_variables_mutate_summarise_homework.html">Dplyr 1 - funkce mutate, summarise atd.</a>
+    </li>
+    <li>
+      <a href="06_c_dplyr_warmup.html">Dplyr 1.5 - warm-up from class</a>
+    </li>
+    <li>
+      <a href="06_b_variables_mutate_summarise_homework.html">Dplyr 2 - funkce mutate, summarise atd.</a>
+    </li>
+    <li>
+      <a href="06_d_variables_mutate_summarise_homework.html">Dplyr 3 - funkce mutate, summarise atd.</a>
+    </li>
+    <li>
+      <a href="07_factors_homework.html">Forcats - práce s faktory</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="atestation.html">Atestace</a>
+</li>
+<li>
+  <a href="course_data.html">Data</a>
+</li>
+<li>
+  <a href="literature.html">Literatura</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Vizualizace dat - vzhled grafů</h1>
+
+</div>
+
+
+<p>Tyto materiály popisují upravování vzhledů grafů vytvořených pomocí balíčku ggplot2.</p>
+<div id="vlastnosti-geomů" class="section level1">
+<h1>Vlastnosti geomů</h1>
+<p>Většina geomů má argumenty, kterými můžeme kontrolovat jejich vzhled. Těmito argumenty zpravidla jsou velikost (<code>size</code>), barva obrysu (<code>color</code>), barva výplně (<code>fill</code>), průhlednost (<code>alpha</code>) a v určitých případech i tvar (<code>shape</code>).</p>
+<div id="barvy" class="section level2">
+<h2>Barvy</h2>
+<p>V R je možné barvy specifikovat dvěma způsoby. Tím prvním je využít některou z předpřipravených barev. Seznam předpřivaných barev je možné pomocí funkce <code>demo("colors")</code> (případně pouze názvy pomocí <code>colors()</code>). Druhou možností je využít hex kód, tedy kód určijící přesnou barvu, odstín a tmavost.</p>
+<p>Pokud bychom chtěli pro náš sloupcový graf použít předpřipravenou barvu s názvem “wheat”:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col(fill = &quot;wheat&quot;)</code></pre>
+<p><img src="09_plot_format_files/figure-html/fill%20example-1.png" width="672" /></p>
+<p>Případně můžeme využít hex kód:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col(fill = &quot;#f9d9b4&quot;)</code></pre>
+<p><img src="09_plot_format_files/figure-html/fill%20hex%20example-1.png" width="672" /></p>
+<p>Určitou zákeřností je, že barva výchozích bodů v geom_point je kontrolována pomocí <code>color</code>, ne <code>fill</code>:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point(color = &quot;orange&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/color%20example-1.png" width="672" /></p>
+<p>Speciálním případem jsou palety (palettes), tedy sady k sobě ladících barev. Balíček <code>RColorBrewer</code>, nainstalovaný společně s <code>ggplot2</code>, poskytuje základní sadu palet, kterou je možné zobrazit pomocí</p>
+<pre class="r"><code>library(RColorBrewer)
+
+display.brewer.all()</code></pre>
+<p>Tyto palety jsou rozděleny do tří skupin. Tou první jsou takzvané sequential palety, tedy palety se stupňující se intenzitou. Ty se hodí zejména pro unipolární škály (např. frekvence výskytu, úroveň vzdělání). Druhou skupinou jsou qualitative, tedy škály používané pokud pokud skupiny nemají pevně dané pořadí (např. pohlaví, náboženská příslušnost). Poslední skupinou jsou diverging škály, které jsou využíváné pro bipolární škály (např. spokjen-nespokojen).</p>
+<p>Brewer škály můžeme aplikovat pomocí funkce <code>scale_color_brewer()</code>, ve které argument <code>palette</code> slouží k výběru škály. Pro vytvoření scatterplotu naděje na dožití a HDI, kde jsou barevně odlišené země podle převažujícího náboženství paletou “Set1”:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point() +
+  scale_color_brewer(palette = &quot;Set1&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/brewer%20palette%20example-1.png" width="672" /></p>
+<p>Případně můžeme nastavit barvy ručně pomocí funkce <code>scale_color_manul()</code> a argumentu <code>values</code>. V takovém případě musí počet barev odpovídat počtu kategorií:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point() +
+  scale_color_manual(values = c(&quot;orange&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;yellow&quot;, &quot;pink&quot;))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/manual%20palette%20example-1.png" width="672" /></p>
+</div>
+<div id="velikost" class="section level2">
+<h2>Velikost</h2>
+<p>Poměrně přímočarým argumentem je size, kterým můžeme kontrolovat velikost objektů:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point(size = 4)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/size%20example-1.png" width="672" /></p>
+</div>
+<div id="průhlednost" class="section level2">
+<h2>Průhlednost</h2>
+<p>Průhlednost objektů je kontrolována pomocí argumentu <code>alpha</code>. <code>alpha</code> se pohybuje v rozmezí od 0 do 1. <code>alpha = 0</code> znamená úplně průhledný objekt, <code>alpha = 1</code> plný objekt.</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point(alpha = 0.2)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/alpha%20example-1.png" width="672" /></p>
+</div>
+<div id="tvar" class="section level2">
+<h2>Tvar</h2>
+<p>Zvláště u bodů využijeme argument <code>shape</code>, určující tvar. Možných tvarů je 25 a jsou kódovány čísly. Pokud bychom chtěli změnit tvar bodů v našem grafu:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point(shape = 8)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/shape%20example-1.png" width="672" /></p>
+</div>
+</div>
+<div id="osy-grafu" class="section level1">
+<h1>Osy grafu</h1>
+<p>Vzhled os grafů je možné upravovat pomocí funckí začínající slovem <code>scale_</code>. Použité funkce se liší podle toho, jestli pracujeme s numerickými nebo kategoriálními proměnými a podle toho, zda chceme upravovat osu x nebo y. Pro numerické proměnné používáme <code>scale_x_continous()</code> a <code>scale_y_Continuous()</code>. Pokud pracujeme s kategorickými proměnnými, používáme <code>scale_x_discrete()</code> a <code>scale_y_discrete()</code>.</p>
+<div id="rozpětí-os" class="section level2">
+<h2>Rozpětí os</h2>
+<p>Prvním argumentem těchto funkcí je <code>limits</code>, který kontroluje minimální a maximální hodnoty osy. Pokud bychom chtěli, aby minimum osy x bylo 0.7 a maximum 1:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  scale_x_continuous(limits = c(0.7, 1))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/limits%20example-1.png" width="672" /></p>
+<p>Pokud chceme určit pouze jeden z limitů osy, druhý nahradíme <code>NA</code>:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  scale_x_continuous(limits = c(NA, 1))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/limits%20single%20example-1.png" width="672" /></p>
+</div>
+<div id="hodnoty-os" class="section level2">
+<h2>Hodnoty os</h2>
+<p>Pro nastavení popisných hodnot na ose je možné využít argument <code>breaks</code>. breaks by měl být vektor čísel, určující hodnoty, které mají být zobrazeny. Pokud bychom chtěli na ose y mít tři čísla, 75, 80 a 82:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  scale_y_continuous(breaks = c(75, 80, 82))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/breaks%20example-1.png" width="672" /></p>
+<p>Pro určení většího počtu hodnot osy se vyplatí využít funkci seq(). Tato funkce vytvoří vektor čísel od určité hodnoty po určitou hodnotu po specifikovaných intervalech. Toho můžeme využít v kombinaci s <code>breaks</code>:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  scale_y_continuous(breaks = seq(from = 75, to = 85, by = 2))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/breaks%20seq%20example-1.png" width="672" /></p>
+</div>
+<div id="popisky-hodnot-os" class="section level2">
+<h2>Popisky hodnot os</h2>
+<p>Třetím užitečným argument je <code>labels</code>, umožňující měnit formu popisky. Tento argument je nejefektivnější v kombinace s funkcemi s balíčkem scales. Pokud bychom chtěli změnit popisky osy z desetiných míst na procenta:</p>
+<pre class="r"><code>library(scales)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  scale_x_continuous(labels = percent_format())</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/axis%20labels%20example-1.png" width="672" /></p>
+<p>U kategoriálních proměnných můžeme využít scale_x_discrete() (případně scale_y_discrete()) k změně popisků:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col() +
+  scale_x_discrete(labels = c(&quot;nonbelief&quot; = &quot;atheist/agnostic&quot;,
+                              &quot;catholic&quot; = &quot;catholicism&quot;))</code></pre>
+<p><img src="09_plot_format_files/figure-html/rename%20discrete%20example-1.png" width="672" /> ## Pořadí kategorií</p>
+<p>U kategoriálních proměnných je často třeba změnit pořadí kategorií na ose. Pořadí kategorií je určeno pořadím úrovní faktorů. Nejjednoduší je tedy změnit ten.</p>
+<p>Nejpřímočařejší cestou je nastavit pořadí ručně pomocí <code>fct_relevel()</code>:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;%
+  mutate(maj_belief = fct_relevel(maj_belief,
+                                  &quot;nonbelief&quot;,
+                                  &quot;catholic&quot;,
+                                  &quot;protestantism&quot;,
+                                  &quot;orthodox&quot;,
+                                  &quot;islam&quot;)) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col()</code></pre>
+<p><img src="09_plot_format_files/figure-html/manual%20relevel%20example-1.png" width="672" /> Alternativně můžeme můžeme kategorie seřadit podle hodnot jiné proměnné, napříkald frekvence výskytu:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;%
+  mutate(maj_belief = fct_reorder(maj_belief, n)) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col()</code></pre>
+<p><img src="09_plot_format_files/figure-html/reorder%20example-1.png" width="672" /></p>
+<p>Občas nám bude stačit pořadí kategorií obrátit:</p>
+<pre class="r"><code>countries %&gt;% count(maj_belief) %&gt;%
+  mutate(maj_belief = fct_rev(maj_belief)) %&gt;% 
+  ggplot(aes(x = maj_belief, y = n)) +
+  geom_col()</code></pre>
+<p><img src="09_plot_format_files/figure-html/rev%20example-1.png" width="672" /></p>
+</div>
+</div>
+<div id="popisky-grafu-labels" class="section level1">
+<h1>Popisky grafu (labels)</h1>
+<p>Popisky grafu a os je možné měnit pomocí funkce <code>labs()</code>. POmocí této funkce je možné nastavit název, podnázev a popisek grafu a názvy os:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  labs(x = &quot;Human Development Index&quot;,
+       y = &quot;Life expectency at birth&quot;,
+       title = &quot;Life expectancy at birth and Human Development index&quot;,
+       subtitle = &quot;European countries&quot;,
+       caption = &quot;Data source: Eurostat 2018&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/labels%20example-1.png" width="672" /></p>
+</div>
+<div id="facety-facets" class="section level1">
+<h1>Facety (facets)</h1>
+<p>Občas chceme místo jednoho velkého grafu skupinku menších, tříděných podle určité proměnné. K tomu slouží takzvané facety. K využití facet můžeme několik funkcí, začínajích slovem <code>facet_</code>. Hlavním argumentem je facets, který je ve tvaru formule, tedy tilda (~) a název proměnné, podle které chceme filtrovat. Funkce <code>facet_wrap()</code> grafy skládá postupně vedle sebe. U této funkce si můžeme také zvolit počet grafů ve sloupci/řádku.</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  facet_wrap(~maj_belief, ncol = 2)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/facet%20wrap%20example-1.png" width="672" /></p>
+<p>Ve výchozím nastavení mají všechny facety (minigrafy) stejné rozpětí os, což nemusí být vždy vhodné. Rozpětí os můžeme uvolnit pomocí argumentu <code>scales = "free"</code> (případně můžeme uvolnit pouze jednu z os pomocí <code>"free_x"</code> a <code>"free_y"</code>):</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  facet_wrap(~maj_belief, scales = &quot;free&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/facet%20wrap%20scales%20example-1.png" width="672" /></p>
+<p>Facety mohou být definovány více než jednou proměnnou. V takovém případě se často vyplatí využít funkce facet_grid(), která nám umožní vytvořit “kontingenční tabulku” grafů:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  facet_grid(di_cat~postsoviet)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/facet%20grid%20example-1.png" width="672" /></p>
+</div>
+<div id="celková-kompozice-themes" class="section level1">
+<h1>Celková kompozice (themes)</h1>
+<p>Celkový vzhled/kompozici je možné upravovat pomocí funkce theme(). ggplo2 obsahuje několik předpřipravných kompozic, která nám umožňují rychle upravovat celkový vzhled grafu. Těmi jsou:</p>
+<ul>
+<li><code>theme_grey()</code> (výchozí theme)</li>
+<li><code>theme_bw()</code></li>
+<li><code>theme_linedraw()</code></li>
+<li><code>theme_light()</code></li>
+<li><code>theme_dark()</code></li>
+<li><code>theme_minimal()</code></li>
+<li><code>theme_classic()</code></li>
+<li><code>theme_void()</code></li>
+</ul>
+<p>Pro využití těchto kompozic stačí připojit příslušnou funkci ke grafu:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+  theme_minimal()</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Kromě předpřipravených funkcí je možné vytvořit si vlastní pomocí funkce <code>theme()</code>. Tato funkce má velkou řadu argumentů, nicméně jeden z nich je využíván velmi často a to je <code>legend_position</code>. Ta nám umožňuje měnit pozici legendy a to buď na předem připravená místa (“left”, “right”, “top” a “bottom”):</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point() +
+theme(legend.position = &quot;bottom&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Případně je možné specifikovat pozici legendy pomocí koordinátů. Kordináty pro obě osy (x a y) mohou nabývat hodnot 0 až 1, kdy (0,0) odpovídá levému dolnímů rohu grafu, (1,1) pravému hornímu rohu a (0.5, 0.5) je střed grafu:</p>
+<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp, color = maj_belief), data = countries) + geom_point() +
+theme(legend.position = c(0.9, 0.3))</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="09_plot_format_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -25,6 +25,17 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -379,6 +390,9 @@ div.tocify {
     <li>
       <a href="08_data_visualization.html">Vytváření grafů</a>
     </li>
+    <li>
+      <a href="09_plot_format.html">Vzhled grafů</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -494,7 +508,7 @@ div.tocify {
 <p>Přestože je možné při importu a exportu dat explicitně určit cestu k souboru v rámci dané funkce, opakované vypisování cesty je nepohodlné. Místu toho můžeme určitý adresář určit jako pracovní adresář (<code>working directory</code>). Pracovní adresář je místo, odkud bude R automaticky importovat a kam bude exportovat soubory, pokud neřekneme jinak.</p>
 <p>Adresu současného pracovního adresáře zjistíme pomocí funkce <code>getwd()</code>, zkratka pro <em>get working directory</em> :</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;C:/rwd_main/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
+<pre><code>## [1] &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
 <p>Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci <code>setwd()</code> (<em>set working directory</em>):</p>
 <pre class="r"><code>setwd(r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data)&quot;)</code></pre>
 <p>Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a ukládat do výše zmíněné složky. Například, pokud bychom chtěli importovat .csv soubor, který ve složce je v pracovním adresáři, stačí:</p>
@@ -567,7 +581,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
