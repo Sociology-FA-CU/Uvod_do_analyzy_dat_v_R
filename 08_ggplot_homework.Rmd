@@ -1,0 +1,165 @@
+---
+title: "ggplot2 - Domácí úkoly"
+output:
+  html_document:
+    code_foldin: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+### 1. úkol
+
+Vytvořte sloupcový graf pro proměnnou *Kategorizovaný index demokracie*.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 1, eval=FALSE}
+countries %>% count(di_cat) %>% 
+  ggplot(aes(x = di_cat, y = n)) + geom_col()
+
+#Alternativne
+qplot(x = di_cat, data = countries)
+```
+
+#### 2. úkol
+
+Přidejde do grafu z 1. úkolu nad každý sloupec popisek, vyjadřující počet zemí v dané kategorii. Popisky by měli být nad sloupci.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 2, eval=FALSE}
+countries %>% count(di_cat) %>% 
+  ggplot(aes(x = di_cat, y = n, label = n)) +
+  geom_col() +
+  geom_text(nudge_y = 1)
+```
+
+### 3. úkol
+
+Vytvořte boxploty, které budou vyjadřovat vztah mezi proměnnými *Kategorizovaný index demokracie* a *Naděje na dožití*.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 3, eval=FALSE}
+ggplot(aes(x = di_cat, y = life_exp), data = countries) + geom_boxplot()
+```
+
+### 4. úkol
+
+Odfiltrujte kategorii *NA* z grafu z 2. úkolu a seřaďte boxploty do pořadí "Full democracy", "Flawed democracy" a "Hybrid regime":
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 4, eval=FALSE}
+countries %>%
+  filter(!is.na(di_cat)) %>% #odfiltruje chybejici hodnoty
+  mutate(di_cat = fct_relevel(di_cat, "Full democracy", "Flawed democracy", "Hybrid regime")) %>% #seradi kategorie
+  ggplot(aes(x = di_cat, y = life_exp)) + geom_boxplot()
+```
+
+### 5. úkol
+
+Vytvořte scatterplot pro proměnné *Podíl lidí s vysokoškolským vzděláním* a *Naděje na dožití*.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 5, eval=FALSE}
+ggplot(aes(x = uni_prc, y = life_exp), data = countries) + geom_point()
+```
+
+
+### 6. úkol
+
+Ve grafu z 5. úkolu od sebe barevně odlište postsovětské a západní země a tvarem bodu od sebe odlište země spadající do různých kategorií Kategorizovaného indexu demokracie.
+
+```{r question 6, eval=FALSE}
+ggplot(aes(x = uni_prc, y = life_exp, color = postsoviet, shape = di_cat), data = countries) + geom_point()
+```
+
+
+### 7. úkol
+
+Replikujte následující graf (Budete potřebovat balíček `scales`).
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 7, message=FALSE}
+library(scales)
+
+ggplot(data = countries, aes(x = uni_prc, y = life_exp)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(labels = percent_format(1)) +
+  labs(x = "Podíl lidí s vysokoškolským vzděláním",
+       y = "Naděje na dožití při narození",
+       title = "Naděje na dožití a podíl obyvatel s VŠ vzděláním",
+       subtitle = "Evropské země 2018",
+       caption = "Zdroj dat: Eurostat 2018")
+```
+
+### 8. úkol
+
+Replikujte následující graf.
+
+Několik tipů:
+
+1. Budete potřebovat balíček `scales`.
+2. Barvy pochází z brewer palety `Set1`.
+3. Pozadí a celkový vzhled je možné měnit pomocí předpřipravených themes (např. `theme_bw()`, `theme_minimal()`,...).
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 8, message=FALSE}
+countries %>% 
+  filter(!is.na(di_cat)) %>% 
+  count(di_cat, postsoviet) %>% 
+  mutate(postsoviet = fct_rev(postsoviet), #obrati poradi kategorii v promenne postsoviet
+         di_cat = fct_relevel(di_cat, "Full democracy", "Flawed democracy", "Hybrid regime")) %>%
+  ggplot(aes(x = di_cat, y = n, fill = postsoviet)) +
+  geom_col(position = "fill") +
+  scale_fill_brewer(palette = "Set1") + #paleta barev
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = "Democracy index", y = element_blank(), fill = "Is country postsoviet?") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+### 9. úkol
+
+Vytvořte si simulovaná data pomocí následujícího skriptu (klikněte na tlačítko **code** vpravo):
+
+```{r question 9 prep}
+likert = c("Spokojen", "Spíše spokojen", "Spíše nespokojen", "Nespokojen")
+
+spokojenost = data.frame(spokojenst_prace = sample(likert, size = 100 ,replace = TRUE, prob = c(0.2, 0.5, 0.3, 0.1)),
+                         spokojenost_pratele = sample(likert, size = 100 ,replace = TRUE, prob = c(0.3, 0.5, 0.2, 0.1)),
+                         spokojenost_parner = sample(likert, size = 100 ,replace = TRUE, prob = c(0.5,  0.1, 0.3, 0.1)),
+                         spokojenost_rodina = sample(likert, size = 100 ,replace = TRUE, prob = c(0.1, 0.3, 0.2, 0.5)) )
+```
+
+A replikujte následující graf.
+
+Několik tipů:
+
+1. Budete potřebovat balíček scales.
+2. Barvy pochází z brewer palety. Přehled palet najdete pomocí funkce `display.brewer.all()` z balíčku `RColorBrewer`.
+
+Pro odpověď klikněte na tlačítko **code**:
+```{r question 9, message=FALSE}
+spokojenost %>%
+  pivot_longer(cols = everything()) %>% 
+  count(name, value) %>% 
+  group_by(name) %>% 
+  mutate(trust = sum(n[value %in% c("Spokojen","Spíše spokojen")] )) %>% 
+  ungroup() %>% 
+  mutate(name = fct_reorder(name, trust)) %>% 
+  ggplot(aes(x = n, y = name, fill = value)) +
+    geom_col(position = "fill") +
+    labs(x = element_blank(),
+         y = element_blank(),
+         fill = element_blank(),
+         title = "Spokojenost s vybranými aspekty života") +
+    scale_x_continuous(labels = percent_format(accuracy = 1)) +
+    scale_fill_brewer(palette = "RdYlGn") +
+    theme(legend.position = "bottom")
+```

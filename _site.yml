@@ -43,6 +43,8 @@ navbar:
           href: 06_d_variables_mutate_summarise_homework.html
         - text: "Forcats - práce s faktory"
           href: 07_factors_homework.html
+        - text: "ggplot2 - grafy"
+          href: 08_ggplot_homework.html
     - text: "Atestace"
       href: atestation.html
     - text: "Data"

@@ -353,6 +353,9 @@ $(document).ready(function () {
     <li>
       <a href="07_factors_homework.html">Forcats - práce s faktory</a>
     </li>
+    <li>
+      <a href="08_ggplot_homework.html">ggplot2 - grafy</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -472,16 +475,9 @@ display.brewer.all()</code></pre>
 <div id="popisky-hodnot-os" class="section level2">
 <h2>Popisky hodnot os</h2>
 <p>Třetím užitečným argument je <code>labels</code>, umožňující měnit formu popisky. Tento argument je nejefektivnější v kombinace s funkcemi s balíčkem scales. Pokud bychom chtěli změnit popisky osy z desetiných míst na procenta:</p>
-<pre class="r"><code>library(scales)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;scales&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     discard</code></pre>
-<pre><code>## The following object is masked from &#39;package:readr&#39;:
-## 
-##     col_factor</code></pre>
-<pre class="r"><code>ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
+<pre class="r"><code>library(scales)
+
+ggplot(aes(x = hdi, y = life_exp), data = countries) + geom_point() +
   scale_x_continuous(labels = percent_format())</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <p><img src="09_plot_format_files/figure-html/axis%20labels%20example-1.png" width="672" /></p>
