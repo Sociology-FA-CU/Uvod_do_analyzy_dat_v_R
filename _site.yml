@@ -22,7 +22,9 @@ navbar:
         - text: "Vytváření grafů"
           href: 08_data_visualization.html
         - text: "Vzhled grafů"
-          href: 09_plot_format.html      
+          href: 09_plot_format.html
+        - text: "Práce se stringy"
+          href: 10_strings.html
     - text: "Domácí úkoly"
       menu:
         - text: "Objekty, proměnné a funkce"

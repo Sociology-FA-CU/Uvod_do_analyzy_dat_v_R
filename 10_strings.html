@@ -11,7 +11,7 @@
 
 
 
-<title>Dplyr warm-up - úkoly ze začátku semináře 27-10-2020</title>
+<title>Práce se stringy</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
@@ -258,9 +257,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -378,66 +374,82 @@ $(document).ready(function () {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Dplyr warm-up - úkoly ze začátku semináře 27-10-2020</h1>
+<h1 class="title toc-ignore">Práce se stringy</h1>
 
 </div>
 
 
-<div id="úkol" class="section level3">
-<h3>1. úkol</h3>
-<ul>
-<li>1.1 select variables country, uni_prc, life_exp and only observations</li>
-<li>1.2 do the same but only for countries with dem_index bigger than 6</li>
-<li>1.3 and last time the same, but only for countries with dem_index below median dem_index and show from highest life_exp</li>
-<li>1.4 how can we find the one which has median dem_index?</li>
-</ul>
-<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% select(country, uni_prc, life_exp) # 1.1
-
-countries %&gt;% filter(dem_index &gt; 6) %&gt;% select(country, uni_prc, life_exp) # 1.2
-
-countries %&gt;% filter(dem_index &lt; median(dem_index, na.rm = TRUE)) %&gt;% 
-  select(country, uni_prc, life_exp) %&gt;% arrange(desc(life_exp)) #1.3
-
-countries %&gt;% filter(dem_index == median(dem_index, na.rm = TRUE)) #1.4</code></pre>
+<p>Stringr je balíček pro práci se stringy, tedy nestrukturovaným textem.</p>
+<div id="počet-znaků-stringu" class="section level1">
+<h1>Počet znaků stringu</h1>
+<p>Pro zjištění délky textu můžeme využít funkce str_length(), která vrátí počet počet znaků ve stringu:</p>
+<pre class="r"><code>str_length(countries$hd_title_name)</code></pre>
+<pre><code>##  [1] 15 23 23 20 35 28 30 32 16 27 36 29 30 24 27 18 22 24 23 44 24 35 26 23 27
+## [26] 26 22 20 33 29 15 23 26 29 21 28 32 36</code></pre>
 </div>
-<div id="úkol-1" class="section level3">
-<h3>2. úkol</h3>
-<ul>
-<li>2.1 what is the max dem_index and min dem_index?</li>
-<li>2.2 what is the max and min dem_index in each maj_belief category</li>
-</ul>
-<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% summarise(maximum = max(dem_index, na.rm = TRUE),
-                        minimum = min(dem_index, na.rm = TRUE)) #2.1
-
-countries %&gt;% group_by(maj_belief) %&gt;%
-  summarise(maximum = max(dem_index, na.rm = TRUE), minimum = min(dem_index, na.rm = TRUE)) #2.2</code></pre>
+<div id="velká-a-malá-písmena" class="section level1">
+<h1>Velká a malá písmena</h1>
+<p>Pokud chceme všechny písmene ve stringu převést všechna písmena na velká, můžeme využít funkce <code>str_to_upper()</code>:</p>
+<pre class="r"><code>str_to_upper(countries$hd_title_name)</code></pre>
+<pre><code>##  [1] &quot;KING – PHILIPPE&quot;                             
+##  [2] &quot;PRESIDENT – RUMEN RADEV&quot;                     
+##  [3] &quot;PRESIDENT – MILOŠ ZEMAN&quot;                     
+##  [4] &quot;QUEEN – MARGRETHE II&quot;                        
+##  [5] &quot;PRESIDENT – FRANK-WALTER STEINMEIER&quot;         
+##  [6] &quot;PRESIDENT – KERSTI KALJULAID&quot;                
+##  [7] &quot;PRESIDENT – MICHAEL D. HIGGINS&quot;              
+##  [8] &quot;PRESIDENT – PROKOPIS PAVLOPOULOS&quot;            
+##  [9] &quot;KING – FELIPE VI&quot;                            
+## [10] &quot;PRESIDENT – EMMANUEL MACRON&quot;                 
+## [11] &quot;PRESIDENT – KOLINDA GRABAR-KITAROVIĆ&quot;        
+## [12] &quot;PRESIDENT – SERGIO MATTARELLA&quot;               
+## [13] &quot;PRESIDENT – NICOS ANASTASIADES&quot;              
+## [14] &quot;PRESIDENT – EGILS LEVITS&quot;                    
+## [15] &quot;PRESIDENT – GITANAS NAUS?DA&quot;                 
+## [16] &quot;GRAND DUKE – HENRI&quot;                          
+## [17] &quot;PRESIDENT – JÁNOS ÁDER&quot;                      
+## [18] &quot;PRESIDENT – GEORGE VELLA&quot;                    
+## [19] &quot;KING – WILLEM-ALEXANDER&quot;                     
+## [20] &quot;FEDERAL PRESIDENT – ALEXANDER VAN DER BELLEN&quot;
+## [21] &quot;PRESIDENT – ANDRZEJ DUDA&quot;                    
+## [22] &quot;PRESIDENT – MARCELO REBELO DE SOUSA&quot;         
+## [23] &quot;PRESIDENT – KLAUS IOHANNIS&quot;                  
+## [24] &quot;PRESIDENT – BORUT PAHOR&quot;                     
+## [25] &quot;PRESIDENT – ZUZANA ČAPUTOVÁ&quot;                 
+## [26] &quot;PRESIDENT – SAULI NIINISTÖ&quot;                  
+## [27] &quot;KING – CARL XVI GUSTAF&quot;                      
+## [28] &quot;QUEEN – ELIZABETH II&quot;                        
+## [29] &quot;PRESIDENT – GU?NI TH. JÓHANNESSON&quot;           
+## [30] &quot;PRINCE REGNANT – HANS-ADAM II&quot;               
+## [31] &quot;KING – HARALD V&quot;                             
+## [32] &quot;PRESIDENT - UELI MAURER&quot;                     
+## [33] &quot;PRESIDENT – MILO ĐUKANOVIĆ&quot;                  
+## [34] &quot;PRESIDENT – STEVO PENDAROVSKI&quot;               
+## [35] &quot;PRESIDENT – ILIR META&quot;                       
+## [36] &quot;PRESIDENT – ALEKSANDAR VUČIĆ&quot;                
+## [37] &quot;PRESIDENT – RECEP TAYYIP ERDO?AN&quot;            
+## [38] &quot;HIGH REPRESENTATIVE – VALENTIN INZKO&quot;</code></pre>
+<p>Obdobně můžeme využít funkcí <code>str_to_lower()</code> k převedení všech písmen na malá, <code>str_to_sentence()</code> ke kapitalizace prvního písmene prvního slova a <code>str_to_title()</code> ke kapitalizaci prvního písmene každého slova.</p>
+<p>#Vyhledávání vzorců znaků</p>
+<p>Pokud chceme zjistit jestli string obsahuje daný vzorec znaků, je možné využít funkce <code>str_detect()</code>. Pokud bychom chtěli zjistit, kolik hlav států v našem dataframu countries má titul krále (<code>King</code>), můžeme využít funkci <code>str_detect()</code> v kombinaci s funkcí <code>sum()</code>:</p>
+<pre class="r"><code>str_detect(countries$hd_title_name, pattern = &quot;King&quot;) %&gt;% sum()</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>Pokud bychom naopak chtěli zjistit, kolik zemí nemá krále, můžeme využít argument <code>negate = TRUE</code>:</p>
+<pre class="r"><code>str_detect(countries$hd_title_name, pattern = &quot;King&quot;, negate = TRUE) %&gt;% sum()</code></pre>
+<pre><code>## [1] 33</code></pre>
+<p>Funkci <code>str_detect()</code> je možné využít i k filtrování. Pro vyfiltrování zemí, jejichž hlavou státu je král:</p>
+<pre class="r"><code>countries %&gt;% filter(str_detect(hd_title_name, &quot;King&quot;))</code></pre>
 </div>
-<div id="úkol-2" class="section level3">
-<h3>3. úkol</h3>
-<ul>
-<li>3.1 create new variable - uni_prc_100</li>
-<li>3.2 create new variable - difference from mean life_exp within post_soviet</li>
-</ul>
-<p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
-<pre class="r"><code>countries %&gt;% mutate(uni_prc_100 = uni_prc*100) %&gt;%
-  select(code, uni_prc, uni_prc_100) # 3.1
-
-countries %&gt;% group_by(postsoviet) %&gt;% 
-  mutate(life_exp_within_postsovier = mean(life_exp, na.rm=TRUE),
-         life_exp_diff_within_postsoviet = life_exp - mean(life_exp, na.rm = TRUE)) %&gt;% 
-  select(code, life_exp,life_exp_within_postsovier, life_exp_diff_within_postsoviet) # 3.2</code></pre>
+<div id="rozdělování-stringů" class="section level1">
+<h1>Rozdělování stringů</h1>
+<p>Občas je nutné string rozdělit do více menších částí, k čemuž slouží funkce str_split(). Tato funkce vyžaduje dva argumenty, string samotný a pattern, který odděluje jednotlivé částí textu. Pokud bychom chtěli například oddělit titul hlavy státu od jména:</p>
+<pre class="r"><code>str_split(countries$hd_title_name, pattern = &quot;–&quot;, simplify = TRUE)</code></pre>
+<p>Pokud je argument <code>simplify = TRUE</code>, vrátí funkce matici znaků, jinak vrátí list vektorů.</p>
+<p>Pokud je string součástí dataframu, je vhodnější využít funkci <code>separate()</code>. Tato funkce vyžaduje čtyři argumenty. Tím prvním je <code>data</code>, což je název dataframu, ve kterém se string nachází. Druhým argumentem je <code>col</code>, tedy název sloupce se stringem. Třetím je <code>sep</code>, znak oddělující jednotlivé částí stringu. Posledním argumentem je <code>into</code>, což je vektor obsahující názvy nových sloupců.</p>
+<p>Pro rozdělení proměnné <code>hd_title_name</code> v dataframu <code>countries</code> do dvou nových proměnných, jménem <code>title</code> a <code>name</code>, pomocí znaku <code>–</code>:</p>
+<pre class="r"><code>separate(data = countries, col = hd_title_name, sep = &quot;–&quot;, into = c(&quot;title&quot;, &quot;name&quot;))</code></pre>
 </div>
 
 
@@ -473,11 +485,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

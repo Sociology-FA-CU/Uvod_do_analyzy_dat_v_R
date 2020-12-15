@@ -1,0 +1,76 @@
+---
+title: "Práce se stringy"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+
+countries = read.csv(here("data", "countries.csv"))
+```
+
+Stringr je balíček pro práci se stringy, tedy nestrukturovaným textem.
+
+# Počet znaků stringu
+
+Pro zjištění délky textu můžeme využít funkce str_length(), která vrátí počet počet znaků ve stringu:
+
+```{r str_length, example}
+str_length(countries$hd_title_name)
+```
+
+# Velká a malá písmena
+
+Pokud chceme všechny písmene ve stringu převést všechna písmena na velká, můžeme využít funkce `str_to_upper()`:
+
+```{r str_upper example}
+str_to_upper(countries$hd_title_name)
+```
+
+Obdobně můžeme využít funkcí `str_to_lower()` k převedení všech písmen na malá, `str_to_sentence()` ke kapitalizace prvního písmene prvního slova a `str_to_title()` ke kapitalizaci prvního písmene každého slova.
+
+
+#Vyhledávání vzorců znaků
+
+Pokud chceme zjistit jestli string obsahuje daný vzorec znaků, je možné využít funkce `str_detect()`. Pokud bychom chtěli zjistit, kolik hlav států v našem dataframu countries má titul krále (`King`), můžeme využít funkci `str_detect()` v kombinaci s funkcí `sum()`:
+
+```{r str_detect example}
+str_detect(countries$hd_title_name, pattern = "King") %>% sum()
+```
+
+Pokud bychom naopak chtěli zjistit, kolik zemí nemá krále, můžeme využít argument `negate = TRUE`:
+
+```{r str_detect negate example}
+str_detect(countries$hd_title_name, pattern = "King", negate = TRUE) %>% sum()
+```
+
+Funkci `str_detect()` je možné využít i k filtrování. Pro vyfiltrování zemí, jejichž hlavou státu je král:
+
+
+```{r str_detect filter example, eval=FALSE}
+countries %>% filter(str_detect(hd_title_name, "King"))
+```
+
+# Rozdělování stringů
+
+Občas je nutné string rozdělit do více menších částí, k čemuž slouží funkce str_split(). Tato funkce vyžaduje dva argumenty, string samotný a pattern, který odděluje jednotlivé částí textu. Pokud bychom chtěli například oddělit titul hlavy státu od jména: 
+
+```{r str_split example, eval=FALSE}
+str_split(countries$hd_title_name, pattern = "–", simplify = TRUE)
+```
+
+Pokud je argument `simplify = TRUE`, vrátí funkce matici znaků, jinak vrátí list vektorů.
+
+Pokud je string součástí dataframu, je vhodnější využít funkci `separate()`. Tato funkce vyžaduje čtyři argumenty.
+Tím prvním je `data`, což je název dataframu, ve kterém se string nachází. Druhým argumentem je `col`, tedy název sloupce se stringem. Třetím je `sep`, znak oddělující jednotlivé částí stringu. Posledním argumentem je `into`, což je vektor obsahující názvy nových sloupců.
+
+
+Pro rozdělení proměnné `hd_title_name` v dataframu `countries` do dvou  nových proměnných, jménem `title` a `name`, pomocí znaku `–`:
+
+```{r str_split, eval=FALSE}
+separate(data = countries, col = hd_title_name, sep = "–", into = c("title", "name"))
+```
+
