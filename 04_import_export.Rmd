@@ -182,7 +182,7 @@ Nový Rstudio projekt vytvoříme tak, že v pravém horním rohu Rstudia klikne
 Na výběr budeme mít několik možností:
 
 ```{r,echo=FALSE, out.width="500px"}
-knitr::include_graphics(here("images", "rstudio_project.png"))
+knitr::include_graphics(here("images", "rstudio_project.PNG"))
 ```
 
 Pokud chceme pro náš projekt vytvořit novou složku, zvolíme možnost **New directory**.
@@ -278,5 +278,5 @@ Tyto typy by měly výrazně ulehčit práci s R a umožnit hladký průběh ana
 Pro představu, složka projektu, ve kterém pracujeme by měla vypadat nějak takto:
 
 ```{r,echo=FALSE, out.width="700px"}
-knitr::include_graphics(here("images", "project_folder.png"))
+knitr::include_graphics(here("images", "project_folder.PNG"))
 ```

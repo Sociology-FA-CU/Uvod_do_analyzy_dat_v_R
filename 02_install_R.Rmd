@@ -34,7 +34,7 @@ Přesvědčit se o tom můžete jeho spuštěním buď přes ikonu na ploše (po
 Pokud R spustíte, bude vypadat takto:
 
 ```{r, fig.cap="Základní vzhled R",echo=FALSE, out.width=700}
-knitr::include_graphics(here("images", "R_install.PNG"))
+knitr::include_graphics(here("images", "R_install.png"))
 ```
 
 # Instalace rozhraní Rstudio

@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(here)
 
-countries = read.csv(here("data", "countries.csv"))
+countries = readRDS("data/countries.rds")
 ```
 
 Stringr je balíček pro práci se stringy, tedy nestrukturovaným textem.
