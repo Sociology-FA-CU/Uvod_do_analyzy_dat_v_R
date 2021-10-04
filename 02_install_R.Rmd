@@ -72,3 +72,15 @@ Nakonec si úspěšnou instalaci můžete ověřit tím, že nainstalovaný bal�
 ```{r, fig.cap="Úspěšné nahrání tidyverse",echo=FALSE, out.width=700}
 knitr::include_graphics(here("images", "tidyverse_load.PNG"))
 ```
+
+# Poslední kroky
+
+Jako úplně poslední věc se vyplatí změnit dvě výchozí nastavení, abychom si dlouhodobě ušetřili práci.
+R ve výchozím nastavení ukládá všechny nahraná data a další vámi vytvořerné objekty a nahraje je pokaždé, když R znovu zapnete.
+To je ovšem v praxi spíše na škodu, protože to znamená, že zanedlouho budete mít vaše prostředí zaneřáděné daty z předchozích hodin a projektů.
+Tomu se dá jednoduše zabránit tím, že si v Rstudiu otevřete záložku **Tools**, a v ní volbu **Global options**.
+V tomto nastevení *odškrtněte* možnost **Restore .Rdata into workspace at startup** a zároveň nastavte možnost **Save workspace to .Rdata on exit** na *never* tak, jak je to na obrázku níže.
+
+```{r, fig.cap="Nastavení .Rdata workspace",echo=FALSE}
+knitr::include_graphics(here("images", "rstudio-startup-settings.png"))
+```
