@@ -13,7 +13,7 @@
 
 <title>Objekty, proměnné a funkce</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -60,6 +60,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -84,6 +85,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -309,7 +313,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -318,47 +322,11 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -419,20 +387,41 @@ div.tocify {
 </div>
 
 
-<p>R je v základu jazyk orientovaný na objekty (<em>object oriented language</em>). Tím je myšleno, že centrem R jsou objekty, tedy datové struktury (jednoduše, data), na rozdíl od např. funkcionálních jazyků (které chápou programování skrze optiku matematických funkcí) nebo procedurálních jazyků (které se zaměřují na sérii výpočetních kroků). Protože objekty hrají centrální úlohu při práci s R, vyplatí se znát jejich základní přehled.</p>
+<p>R je v základu jazyk orientovaný na objekty (<em>object oriented
+language</em>). Tím je myšleno, že centrem R jsou objekty, tedy datové
+struktury (jednoduše, data), na rozdíl od např. funkcionálních jazyků
+(které chápou programování skrze optiku matematických funkcí) nebo
+procedurálních jazyků (které se zaměřují na sérii výpočetních kroků).
+Protože objekty hrají centrální úlohu při práci s R, vyplatí se znát
+jejich základní přehled.</p>
 <div id="typy-objektů" class="section level1">
 <h1>Typy objektů</h1>
 <div id="atomový-vektor" class="section level2">
 <h2>Atomový vektor</h2>
-<p>Při práci s R se setkáme s řadou objektů. Nejzákladnějším typem objektu je takzvaný atomický vektor (<em>atomic vector</em>). Atomické vektory jsou základním stavebním kamenem R a všechny ostatní objekty, se kterými se setkáme, z nich vychází. Každý vektor má určitý počet elementů, tedy dílčích částí. Atomový vektor s jedním elementem si můžeme představit jako základní jednotku informace. Příkladem atomových vektorů s jedním elementem je:</p>
+<p>Při práci s R se setkáme s řadou objektů. Nejzákladnějším typem
+objektu je takzvaný atomický vektor (<em>atomic vector</em>). Atomické
+vektory jsou základním stavebním kamenem R a všechny ostatní objekty, se
+kterými se setkáme, z nich vychází. Každý vektor má určitý počet
+elementů, tedy dílčích částí. Atomový vektor s jedním elementem si
+můžeme představit jako základní jednotku informace. Příkladem atomových
+vektorů s jedním elementem je:</p>
 <pre class="r"><code>&quot;jablko&quot;</code></pre>
 <pre><code>## [1] &quot;jablko&quot;</code></pre>
-<p>Tedy jedna hodnota. Několik různých atomových vektorů lze sloučit dohromady pomocí funkce <code>c()</code> (zkratka pro <em>concatenate</em>). Například, spojením tří vektorů s jedním elementem, <code>jablko</code>, <code>pomeranč</code>, <code>hruška</code> můžeme vytvořit nový vektor s třemi elementy:</p>
+<p>Tedy jedna hodnota. Několik různých atomových vektorů lze sloučit
+dohromady pomocí funkce <code>c()</code> (zkratka pro
+<em>concatenate</em>). Například, spojením tří vektorů s jedním
+elementem, <code>jablko</code>, <code>pomeranč</code>,
+<code>hruška</code> můžeme vytvořit nový vektor s třemi elementy:</p>
 <pre class="r"><code>c(&quot;jablko&quot;, &quot;pomeranč&quot;, &quot;hruška&quot;)</code></pre>
 <pre><code>## [1] &quot;jablko&quot;   &quot;pomeranč&quot; &quot;hruška&quot;</code></pre>
 <div id="typy-atomových-vektorů" class="section level3">
 <h3>Typy atomových vektorů</h3>
-<p>Ne všechny atomové vektory jsou stejné. Existuje šest typů vektorů: <code>integer</code> a <code>double</code> (dohromady spadající do kategorie <code>numeric</code>), <code>character</code>, <code>logical</code>, <code>complex</code> a <code>raw</code>. S vektory typu <code>complex</code> a <code>raw</code> se setkáme naprosto minimálně a proto se jim nebudeme více věnovat.</p>
+<p>Ne všechny atomové vektory jsou stejné. Existuje šest typů vektorů:
+<code>integer</code> a <code>double</code> (dohromady spadající do
+kategorie <code>numeric</code>), <code>character</code>,
+<code>logical</code>, <code>complex</code> a <code>raw</code>. S vektory
+typu <code>complex</code> a <code>raw</code> se setkáme naprosto
+minimálně a proto se jim nebudeme více věnovat.</p>
 <table>
 <thead>
 <tr class="header">
@@ -455,7 +444,7 @@ div.tocify {
 <tr class="odd">
 <td align="center">Character</td>
 <td align="center">Znak</td>
-<td align="center">“a”, “1”, "_"</td>
+<td align="center">“a”, “1”, “_”</td>
 </tr>
 <tr class="even">
 <td align="center">Logical</td>
@@ -464,18 +453,33 @@ div.tocify {
 </tr>
 </tbody>
 </table>
-<p>Všechny elementy atomického vektoru musí být stejného typu. Kombinace <code>c(1, 2, 3, 4, "a")</code> není platným vektorem, protože obsahuje jak čislo (konkrétně <code>integer</code>), tak znak (<code>character</code>). Pokud chceme těchto pět vektorů zkombinovat, musí být všechny ve formátu <code>character</code>, tedy <code>c("1", "2", "3", "4", "a")</code></p>
-<p>Specifickou pozoronost si zaslouží <code>NA</code>, které kóduje chybějící hodnoty. R chápe <code>NA</code> jako neznámé, tedy elementy, které mohou teoreticky nabýt jakkékoliv hodnoty. To má důležité implikace pro prováděné výpočty, viz. níže. <code>NA</code> také může být součástí součástí jakkéhokoliv typu atomového vektoru, ne pouze logického (přesněji řečeno, v R existuje několik typů <code>NA</code>, ty jsou ale ve většině případů přiřazeny automaticky a není nutné je řešit).</p>
+<p>Všechny elementy atomického vektoru musí být stejného typu. Kombinace
+<code>c(1, 2, 3, 4, "a")</code> není platným vektorem, protože obsahuje
+jak čislo (konkrétně <code>integer</code>), tak znak
+(<code>character</code>). Pokud chceme těchto pět vektorů zkombinovat,
+musí být všechny ve formátu <code>character</code>, tedy
+<code>c("1", "2", "3", "4", "a")</code></p>
+<p>Specifickou pozoronost si zaslouží <code>NA</code>, které kóduje
+chybějící hodnoty. R chápe <code>NA</code> jako neznámé, tedy elementy,
+které mohou teoreticky nabýt jakkékoliv hodnoty. To má důležité
+implikace pro prováděné výpočty, viz. níže. <code>NA</code> také může
+být součástí součástí jakkéhokoliv typu atomového vektoru, ne pouze
+logického (přesněji řečeno, v R existuje několik typů <code>NA</code>,
+ty jsou ale ve většině případů přiřazeny automaticky a není nutné je
+řešit).</p>
 </div>
 </div>
 <div id="matice-matrix-a-array" class="section level2">
 <h2>Matice (matrix) a Array</h2>
-<p>Zatímco atomové vektory jsou jednodimenzionální, přidáním druhé dimenze vytvoříme matici (<em>matrix</em>):</p>
+<p>Zatímco atomové vektory jsou jednodimenzionální, přidáním druhé
+dimenze vytvoříme matici (<em>matrix</em>):</p>
 <pre class="r"><code>matrix(1:6, nrow = 2, ncol = 3)</code></pre>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    3    5
 ## [2,]    2    4    6</code></pre>
-<p>Jedná se o klasické matice, jak je známe z matematiky a dá se s nimi proto pracovat stejným způsobem. Rozšířením o třetí a další dimenze získáme <em>array</em>.</p>
+<p>Jedná se o klasické matice, jak je známe z matematiky a dá se s nimi
+proto pracovat stejným způsobem. Rozšířením o třetí a další dimenze
+získáme <em>array</em>.</p>
 <pre class="r"><code>array(1:12, c(2, 3, 2))</code></pre>
 <pre><code>## , , 1
 ## 
@@ -491,7 +495,9 @@ div.tocify {
 </div>
 <div id="tabulka" class="section level2">
 <h2>Tabulka</h2>
-<p>Tabulka je speciální případ matice/array, která obsahuje názvy jednotlivých sloupců a řádků. Jedná se zpravidla o frekvenční a kontingenční tabulky</p>
+<p>Tabulka je speciální případ matice/array, která obsahuje názvy
+jednotlivých sloupců a řádků. Jedná se zpravidla o frekvenční a
+kontingenční tabulky</p>
 <pre class="r"><code>table(c(&quot;jablko&quot;, &quot;jablko&quot;, &quot;jablko&quot;, &quot;pomeranč&quot;, &quot;pomeranč&quot;))</code></pre>
 <pre><code>## 
 ##   jablko pomeranč 
@@ -499,20 +505,31 @@ div.tocify {
 </div>
 <div id="faktor" class="section level2">
 <h2>Faktor</h2>
-<p>Faktory představují speciální typ objektu, sloužící k uchovávání kategoriálních dat. Jedná se o <code>integer</code> vektor, kde je každé číselné hodnotě přiřazen slovní název (zvaný <code>level</code>).</p>
+<p>Faktory představují speciální typ objektu, sloužící k uchovávání
+kategoriálních dat. Jedná se o <code>integer</code> vektor, kde je každé
+číselné hodnotě přiřazen slovní název (zvaný <code>level</code>).</p>
 <pre class="r"><code>factor(x = c(&quot;Souhlasím&quot;, &quot;Nesouhlasím&quot;, &quot;Nesouhlasím&quot;,&quot;Nevím&quot;, &quot;Neutrální&quot;), levels = c(&quot;Souhlasím&quot;, &quot;Neutrální&quot;, &quot;Nesouhlasím&quot;))</code></pre>
 <pre><code>## [1] Souhlasím   Nesouhlasím Nesouhlasím &lt;NA&gt;        Neutrální  
 ## Levels: Souhlasím Neutrální Nesouhlasím</code></pre>
-<p>Faktory mohou nabývat pouze předem definovaných hodnot. Všimněme si, že předposlední hodnota v příkladu výše je <code>&lt;NA&gt;</code>. To proto, že jsme nikdy nedefinovali level <em>Nevím</em>. Tato vlastnost se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála souhlasu) a všechny ostatní hodnoty musí být nutně chybné.</p>
-<p>Speciální typem faktoru je seřazaný faktor (<em>ordered factor</em>). V seřazeném faktoru mají hodnoty pevně dané pořadí a hodí se proto uchovávání ordinálních proměnných.</p>
+<p>Faktory mohou nabývat pouze předem definovaných hodnot. Všimněme si,
+že předposlední hodnota v příkladu výše je <code>&lt;NA&gt;</code>. To
+proto, že jsme nikdy nedefinovali level <em>Nevím</em>. Tato vlastnost
+se hodí, pokud pracujeme s předem definovanými kategoriemi (např. škála
+souhlasu) a všechny ostatní hodnoty musí být nutně chybné.</p>
+<p>Speciální typem faktoru je seřazaný faktor (<em>ordered factor</em>).
+V seřazeném faktoru mají hodnoty pevně dané pořadí a hodí se proto
+uchovávání ordinálních proměnných.</p>
 <pre class="r"><code>ordered(x = c(&quot;Souhlasím&quot;, &quot;Nesouhlasím&quot;, &quot;Nesouhlasím&quot;,&quot;Nevím&quot;, &quot;Neutrální&quot;), levels = c(&quot;Souhlasím&quot;, &quot;Neutrální&quot;, &quot;Nesouhlasím&quot;))</code></pre>
 <pre><code>## [1] Souhlasím   Nesouhlasím Nesouhlasím &lt;NA&gt;        Neutrální  
 ## Levels: Souhlasím &lt; Neutrální &lt; Nesouhlasím</code></pre>
-<p>Všimněme si, že popisu úrovní (<code>levels</code>) se oproti neseřazenému faktoru změnil.</p>
+<p>Všimněme si, že popisu úrovní (<code>levels</code>) se oproti
+neseřazenému faktoru změnil.</p>
 </div>
 <div id="list" class="section level2">
 <h2>List</h2>
-<p>List představuje složitější (již ne atomový) typ vektoru. Jednotlivé elementy listu nemusí být stejného typy a mohou to být dokonce jiné listy. To je z nich dělá efektivní způsob pro uchovávání dat.</p>
+<p>List představuje složitější (již ne atomový) typ vektoru. Jednotlivé
+elementy listu nemusí být stejného typy a mohou to být dokonce jiné
+listy. To je z nich dělá efektivní způsob pro uchovávání dat.</p>
 <pre class="r"><code>list(numeric = c(1,2,3,4),
      character = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;),
      list2 = list(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;))</code></pre>
@@ -534,7 +551,11 @@ div.tocify {
 </div>
 <div id="dataframe" class="section level2">
 <h2>Dataframe</h2>
-<p>Dataframe je speciální typ listu, složený z atomových vektorů stejné délky. Vektory v data framu mohou být různých typů a musí mít unikatní jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme s ním pracovat ve většině analýz. Dataframe je obdobou toho, co se v SPSS nazývá datovou maticí.</p>
+<p>Dataframe je speciální typ listu, složený z atomových vektorů stejné
+délky. Vektory v data framu mohou být různých typů a musí mít unikatní
+jméno. Dataframe je nejčastější způsob uchovávání dat v R a budeme s ním
+pracovat ve většině analýz. Dataframe je obdobou toho, co se v SPSS
+nazývá datovou maticí.</p>
 <pre class="r"><code>data.frame(numeric = c(1,2,3,4,5),
            character = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, NA, &quot;e&quot;))</code></pre>
 <pre><code>##   numeric character
@@ -547,21 +568,46 @@ div.tocify {
 </div>
 <div id="přiřazovaní-jmen-objektům" class="section level1">
 <h1>Přiřazovaní jmen objektům</h1>
-<p>Pokud chceme některý objekt využívat opakovaně, je nutné mu přiřadit jméno, aby na něj bylo možné v budoucnu odkazovat. Jména objektům můžeme přiřadit pomocí funkce <code>&lt;-</code>, případně <code>=</code> (v naprosté většině situací jsou ty dvě funkce identické). Přiřazování jmen probíhá v podobě <code>jméno &lt;- objekt</code>, případně <code>jméno = objekt</code>. Například:</p>
+<p>Pokud chceme některý objekt využívat opakovaně, je nutné mu přiřadit
+jméno, aby na něj bylo možné v budoucnu odkazovat. Jména objektům můžeme
+přiřadit pomocí funkce <code>&lt;-</code>, případně <code>=</code> (v
+naprosté většině situací jsou ty dvě funkce identické). Přiřazování jmen
+probíhá v podobě <code>jméno &lt;- objekt</code>, případně
+<code>jméno = objekt</code>. Například:</p>
 <pre class="r"><code>x &lt;- c(1,2,3,4,5,6)</code></pre>
-<p>vytvoří atomový vektor <code>c(1,2,3,4,5,6)</code> a přiřadí mu jméno <code>x</code>. V budoucnu už nebudeme muset vytvářet objekt znovu, ale můžeme ho ho zavolat jménem:</p>
+<p>vytvoří atomový vektor <code>c(1,2,3,4,5,6)</code> a přiřadí mu jméno
+<code>x</code>. V budoucnu už nebudeme muset vytvářet objekt znovu, ale
+můžeme ho ho zavolat jménem:</p>
 <pre class="r"><code>x</code></pre>
 <pre><code>## [1] 1 2 3 4 5 6</code></pre>
-<p>Jména objektů jsou tranzitivní, můžeme tedy jednomu objektu přiřadit dvě jména, čímž ho prakticky zduplikujeme:</p>
+<p>Jména objektů jsou tranzitivní, můžeme tedy jednomu objektu přiřadit
+dvě jména, čímž ho prakticky zduplikujeme:</p>
 <pre class="r"><code>x = c(1,2,3,4,5,6)
 y = x
 
 x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta</code></pre>
-<p>Přiřazování jmen se řídí jistými omezeními. Následující slova nemůžou být jmény objektu (ani funkcí): <code>if</code>, <code>else</code>, <code>repeat</code> <code>while</code>, <code>function</code>, <code>for</code>,<code>in</code>, <code>next</code>, <code>break</code>, <code>TRUE</code>, <code>FALSE</code>, <code>NULL</code>, <code>Inf</code>, <code>NaN</code>, <code>NA</code>, <code>NA_integer_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, <code>NA_character_</code> a <code>…</code>. Těmto výrazům se říká rezervovaná slova a jsou využívaná pro vnitřní fungování R jako programovacího jazyka (např. <code>NA</code> je rezervováno pro vyjádření chybějící hodnoty). Jméno musí začínát buď písmenem nebo tečkou. Pokud začíná tečkou, druhý znak nesmí být číslice (např. <code>.2scale</code> není validní jméno). Jména také mohou obsahovat pouze znaky, číslice, tečky nebo podtržítka (<code>_</code>).</p>
+<p>Přiřazování jmen se řídí jistými omezeními. Následující slova nemůžou
+být jmény objektu (ani funkcí): <code>if</code>, <code>else</code>,
+<code>repeat</code> <code>while</code>, <code>function</code>,
+<code>for</code>,<code>in</code>, <code>next</code>, <code>break</code>,
+<code>TRUE</code>, <code>FALSE</code>, <code>NULL</code>,
+<code>Inf</code>, <code>NaN</code>, <code>NA</code>,
+<code>NA_integer_</code>, <code>NA_real_</code>,
+<code>NA_complex_</code>, <code>NA_character_</code> a <code>…</code>.
+Těmto výrazům se říká rezervovaná slova a jsou využívaná pro vnitřní
+fungování R jako programovacího jazyka (např. <code>NA</code> je
+rezervováno pro vyjádření chybějící hodnoty). Jméno musí začínát buď
+písmenem nebo tečkou. Pokud začíná tečkou, druhý znak nesmí být číslice
+(např. <code>.2scale</code> není validní jméno). Jména také mohou
+obsahovat pouze znaky, číslice, tečky nebo podtržítka
+(<code>_</code>).</p>
 </div>
 <div id="vnořené-objekty" class="section level1">
 <h1>Vnořené objekty</h1>
-<p>Jak jsme již viděli, některé objekty, např. dataframe nebo list, mohou obsahovat objekty jiné. Vytvořme například dataframe <code>zeme</code>, obsahující dvě proměnné (atomové vektory), <code>evropa</code> a <code>amerika</code>:</p>
+<p>Jak jsme již viděli, některé objekty, např. dataframe nebo list,
+mohou obsahovat objekty jiné. Vytvořme například dataframe
+<code>zeme</code>, obsahující dvě proměnné (atomové vektory),
+<code>evropa</code> a <code>amerika</code>:</p>
 <pre class="r"><code>zeme = data.frame(evropa = c(&quot;Česko&quot;, &quot;Slovensko&quot;, &quot;Německo&quot;, &quot;Francie&quot;, &quot;Norsko&quot;),
                   amerika = c(&quot;USA&quot;, &quot;Kanada&quot;, &quot;Mexiko&quot;, &quot;Brazílie&quot;, &quot;Chile&quot;))</code></pre>
 <p>Tento dataframe můžeme zavolat jeho jménem:</p>
@@ -572,10 +618,17 @@ x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta</code></pr
 ## 3   Německo   Mexiko
 ## 4   Francie Brazílie
 ## 5    Norsko    Chile</code></pre>
-<p>Co když ale chceme pouze určitou proměnnou? Možností je několik. První možností je zavolat proměnnou pomocí jejího jména. To lze udělat pomocí znaku dolaru, a to ve formátu <code>objekt$vnoreny objekt</code>. Pokud bychom chtěli z dataframu <code>zeme</code> pouze proměnnou <code>evropa</code>:</p>
+<p>Co když ale chceme pouze určitou proměnnou? Možností je několik.
+První možností je zavolat proměnnou pomocí jejího jména. To lze udělat
+pomocí znaku dolaru, a to ve formátu <code>objekt$vnoreny objekt</code>.
+Pokud bychom chtěli z dataframu <code>zeme</code> pouze proměnnou
+<code>evropa</code>:</p>
 <pre class="r"><code>zeme$evropa</code></pre>
 <pre><code>## [1] &quot;Česko&quot;     &quot;Slovensko&quot; &quot;Německo&quot;   &quot;Francie&quot;   &quot;Norsko&quot;</code></pre>
-<p>Druhou možností je zavolat proměnnou podle jejího pořadí v objektu. K tomu slouží hranaté závorky, ve formátu <code>objekt[cislo sloupce]</code> V našem případě můžeme zavolat první proměnnou v dataframu <code>zeme</code> pomocí:</p>
+<p>Druhou možností je zavolat proměnnou podle jejího pořadí v objektu. K
+tomu slouží hranaté závorky, ve formátu
+<code>objekt[cislo sloupce]</code> V našem případě můžeme zavolat první
+proměnnou v dataframu <code>zeme</code> pomocí:</p>
 <pre class="r"><code>zeme[1]</code></pre>
 <pre><code>##      evropa
 ## 1     Česko
@@ -583,7 +636,9 @@ x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta</code></pr
 ## 3   Německo
 ## 4   Francie
 ## 5    Norsko</code></pre>
-<p>Poslední možností je odkázat pomocí maticové notace na konkrétní řádek nebo sloupec. I to se provádí pomocí hranatých závorek, ale ve formátu <code>objekt[řádek, sloupce]</code>.</p>
+<p>Poslední možností je odkázat pomocí maticové notace na konkrétní
+řádek nebo sloupec. I to se provádí pomocí hranatých závorek, ale ve
+formátu <code>objekt[řádek, sloupce]</code>.</p>
 <p>Například první řádek:</p>
 <pre class="r"><code>zeme[1,]</code></pre>
 <pre><code>##   evropa amerika
@@ -597,70 +652,141 @@ x = y = c(1,2,3,4,5,6) #stejný výsledek jako u předchozí varianta</code></pr
 </div>
 <div id="funkce" class="section level1">
 <h1>Funkce</h1>
-<p>Funkce je speciálním typem objektu, pomocí kterého lze manipulovat s jinými objekty. funkci poznáme zpravidla podle závorek, následujících za jméném funkce samotné (tedy <code>funkce()</code>). S některými funkcemi jsme se již setkali, např. <code>table()</code>, <code>list()</code> a <code>data.frame()</code>jsou funkce vytvářející objekty stejného jména. Dalšími funkcemi jsou například <code>sum()</code>, <code>mean()</code> a <code>var()</code>. Vytvořme si následující objekt <code>cisla</code>:</p>
+<p>Funkce je speciálním typem objektu, pomocí kterého lze manipulovat s
+jinými objekty. funkci poznáme zpravidla podle závorek, následujících za
+jméném funkce samotné (tedy <code>funkce()</code>). S některými funkcemi
+jsme se již setkali, např. <code>table()</code>, <code>list()</code> a
+<code>data.frame()</code>jsou funkce vytvářející objekty stejného jména.
+Dalšími funkcemi jsou například <code>sum()</code>, <code>mean()</code>
+a <code>var()</code>. Vytvořme si následující objekt
+<code>cisla</code>:</p>
 <pre class="r"><code>cisla = c(17, 28, 37, 41, 56)</code></pre>
-<p>Pokud bychom chtěli spočítat součet hodnot v tomto objektu, stačí jednoduše použít:</p>
+<p>Pokud bychom chtěli spočítat součet hodnot v tomto objektu, stačí
+jednoduše použít:</p>
 <pre class="r"><code>sum(cisla)</code></pre>
 <pre><code>## [1] 179</code></pre>
-<p>Obdobně můžeme použít i funkce <code>mean()</code>, <code>median()</code> nebo <code>var()</code>.</p>
+<p>Obdobně můžeme použít i funkce <code>mean()</code>,
+<code>median()</code> nebo <code>var()</code>.</p>
 <div id="argumenty-funkce" class="section level2">
 <h2>Argumenty funkce</h2>
-<p>Do většiny funkcí lze přidávat argumenty, které upravují jejich chování. Například funkce <code>sum()</code> má x argumenty:</p>
-<p><strong>…</strong> - numerický nebo logický vektor, jehož součet funkce počítá.</p>
-<p><strong>na.rm</strong> - logický argument řídící, jestli mají být před výpočtem součtu odstraněny chybějící hodnoty.</p>
+<p>Do většiny funkcí lze přidávat argumenty, které upravují jejich
+chování. Například funkce <code>sum()</code> má x argumenty:</p>
+<p><strong>…</strong> - numerický nebo logický vektor, jehož součet
+funkce počítá.</p>
+<p><strong>na.rm</strong> - logický argument řídící, jestli mají být
+před výpočtem součtu odstraněny chybějící hodnoty.</p>
 <p>Pro ukázku toho, jak argumenty fungují, si vytvořme nový objekt:</p>
 <pre class="r"><code>cisla2 = c(17, 28, 37, 41, 56, NA)</code></pre>
-<p>Objekt <code>cisla2</code> je téměř stejný jako <code>cisla</code>, ale obsahuje navíc hodnotu <code>NA</code>. Pokud bychom chtěli spočítat pro něj, narazíme na problém:</p>
+<p>Objekt <code>cisla2</code> je téměř stejný jako <code>cisla</code>,
+ale obsahuje navíc hodnotu <code>NA</code>. Pokud bychom chtěli spočítat
+pro něj, narazíme na problém:</p>
 <pre class="r"><code>sum(cisla2)</code></pre>
 <pre><code>## [1] NA</code></pre>
-<p>Součet těchto hodnot je neznámy. Jak jsme již zmínili, R interpretuje <code>NA</code> jako existující, ale neznámé hodnotu. Jelikož je poslední poslední z čísel v objektu <code>cisla2</code> neznáme, může teoreticky nabývat jakkékoliv hodnoty. A protože poslední číslo může nabývat jakkékoliv hodnoty, i součet našich čísel může být jakkýkoliv. Součet <code>cisla2</code> je tedy technicky vzato neznámy.</p>
-<p>V praxi se tomuto problému můžeme jednoduše vyhnout tím, že budeme existenci chybějících hodnot ignorovat. K tomu slouží argument <code>na.rm</code>, která najdeme u celé řady funkcí. Ve výchozím nastavení funkce <code>sum()</code> je hodna argumentu <code>na.rm</code> <code>FALSE</code>, tedy chybějící hodnoty nejsou ignorovány. Pokud chceme aby R chybějící hodnoty ignorovalo:</p>
+<p>Součet těchto hodnot je neznámy. Jak jsme již zmínili, R interpretuje
+<code>NA</code> jako existující, ale neznámé hodnotu. Jelikož je
+poslední poslední z čísel v objektu <code>cisla2</code> neznáme, může
+teoreticky nabývat jakkékoliv hodnoty. A protože poslední číslo může
+nabývat jakkékoliv hodnoty, i součet našich čísel může být jakkýkoliv.
+Součet <code>cisla2</code> je tedy technicky vzato neznámy.</p>
+<p>V praxi se tomuto problému můžeme jednoduše vyhnout tím, že budeme
+existenci chybějících hodnot ignorovat. K tomu slouží argument
+<code>na.rm</code>, která najdeme u celé řady funkcí. Ve výchozím
+nastavení funkce <code>sum()</code> je hodna argumentu
+<code>na.rm</code> <code>FALSE</code>, tedy chybějící hodnoty nejsou
+ignorovány. Pokud chceme aby R chybějící hodnoty ignorovalo:</p>
 <pre class="r"><code>sum(cisla2, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 179</code></pre>
-<p>Čímž dostaneme stejný výsledek jako pokud by chybějící hodnota neexistovala.</p>
+<p>Čímž dostaneme stejný výsledek jako pokud by chybějící hodnota
+neexistovala.</p>
 </div>
 <div id="aplikovaní-funkcí-na-vnořené-objekty" class="section level2">
 <h2>Aplikovaní funkcí na vnořené objekty</h2>
-<p>Pokud je nějaký objekt součástí jiného, například proměnné součástí dataframu, můžeme na něj způsoby, které jsme si ukázaly v kapitole <strong>Vnořené objekty</strong>. Vytvořme si nový dataframe <code>vyska</code>:</p>
+<p>Pokud je nějaký objekt součástí jiného, například proměnné součástí
+dataframu, můžeme na něj způsoby, které jsme si ukázaly v kapitole
+<strong>Vnořené objekty</strong>. Vytvořme si nový dataframe
+<code>vyska</code>:</p>
 <pre class="r"><code>vyska = data.frame(muzi = c(172, 183, 187),
                    zeny = c(174, 167, 159))</code></pre>
 <p>Pokud bychom chtěli spočítat průměr proměnné <code>muzi</code>:</p>
 <pre class="r"><code>mean(vyska$muzi)</code></pre>
 <pre><code>## [1] 180.6667</code></pre>
-<p>Případně můžeme místo názvu odkázat na sloupec podle jeho pozice v dataframu:</p>
+<p>Případně můžeme místo názvu odkázat na sloupec podle jeho pozice v
+dataframu:</p>
 <pre class="r"><code>mean(vyska[,1])</code></pre>
 <pre><code>## [1] 180.6667</code></pre>
-<p>Stejně jako můžeme odkazovat na vnořené objekty v rámci funkcí, můžeme uložit výsledek funkce jako vnořený objekt. Pokud bychom například chtěli vytvořit v dataframu <code>vyska</code> novou proměnnou <code>rozdil</code>, které představuje rozdíl mezi hodnotami proměnných <code>muzi</code> a <code>zeny</code>:</p>
+<p>Stejně jako můžeme odkazovat na vnořené objekty v rámci funkcí,
+můžeme uložit výsledek funkce jako vnořený objekt. Pokud bychom
+například chtěli vytvořit v dataframu <code>vyska</code> novou proměnnou
+<code>rozdil</code>, které představuje rozdíl mezi hodnotami proměnných
+<code>muzi</code> a <code>zeny</code>:</p>
 <pre class="r"><code>vyska$rozdil = vyska$muzi - vyska$zeny</code></pre>
-<p>Následně můžeme na tuto novou proměnnou odkazovat, například spočítat průměrný rozdíl v páru:</p>
+<p>Následně můžeme na tuto novou proměnnou odkazovat, například spočítat
+průměrný rozdíl v páru:</p>
 <pre class="r"><code>mean(vyska$rozdil)</code></pre>
 <pre><code>## [1] 14</code></pre>
 </div>
 <div id="řetězení-funkcí" class="section level2">
 <h2>Řetězení funkcí</h2>
-<p>V praxi budeme potřebovat pro naše účely téměř vždy aplikovat více než jednu funkci na objekty, se kterými pracujeme. Co kdybychom chtěli nejen spočítat průměr proměnné <code>muzi</code> v dataframu <code>vyska</code>, ale výsledek zaokrouhlit na celé čislo? Možností máme několika.</p>
-<p>První možností je si spočítaný průměr uložit do nového objektu a ten potom zaokrouhlit:</p>
+<p>V praxi budeme potřebovat pro naše účely téměř vždy aplikovat více
+než jednu funkci na objekty, se kterými pracujeme. Co kdybychom chtěli
+nejen spočítat průměr proměnné <code>muzi</code> v dataframu
+<code>vyska</code>, ale výsledek zaokrouhlit na celé čislo? Možností
+máme několika.</p>
+<p>První možností je si spočítaný průměr uložit do nového objektu a ten
+potom zaokrouhlit:</p>
 <pre class="r"><code>prumer_muzi = mean(vyska$muzi)
 
 round(prumer_muzi)</code></pre>
 <pre><code>## [1] 181</code></pre>
-<p>Tento postup je přehledný, často ale vede k vytváření velkého množství nových objektů.</p>
-<p>Druhou možností je funkce nabalovat na sebe. Protože výsledkem funkce je objekt, na který lze aplikovat novou funkci, můžeme udělat následující:</p>
+<p>Tento postup je přehledný, často ale vede k vytváření velkého
+množství nových objektů.</p>
+<p>Druhou možností je funkce nabalovat na sebe. Protože výsledkem funkce
+je objekt, na který lze aplikovat novou funkci, můžeme udělat
+následující:</p>
 <pre class="r"><code>round(mean(vyska$muzi))</code></pre>
 <pre><code>## [1] 181</code></pre>
-<p>Tento postup se na rozdíl od předchozího obejde bez vytváření nových objektů, čtení skriptu je ovšem neintuitivní a skript se rychle stává nečitelným. Pokud funkce nabalujeme na sebe, je nutné skript číst ze středu k vnějšku. Funkce <code>mean()</code> je ve středu, takže bude aplikovaná jako první, a funkce <code>round()</code> bude aplikovaná po ní.</p>
-<p>Poslední možností je využít takzvané <strong>pipes</strong> (<code>%&gt;%</code>), “fajfky” pocházející z balíčku <code>magrittr</code>, ale obsažení i v balíčku <code>dplyr</code> (který je součástí <code>tidyverse</code>). <strong>Pipe</strong> (kterou můžeme rychle napsat pomocí klávesové zkratky <strong>ctrl</strong> + <strong>shift</strong> + <strong>m</strong>) je funkce, která vezme objekt (většinou dataframe) nalevo od ní a aplikuje na něj funkci napravo. Fajfky je také možné řetězit:</p>
+<p>Tento postup se na rozdíl od předchozího obejde bez vytváření nových
+objektů, čtení skriptu je ovšem neintuitivní a skript se rychle stává
+nečitelným. Pokud funkce nabalujeme na sebe, je nutné skript číst ze
+středu k vnějšku. Funkce <code>mean()</code> je ve středu, takže bude
+aplikovaná jako první, a funkce <code>round()</code> bude aplikovaná po
+ní.</p>
+<p>Poslední možností je využít takzvané <strong>pipes</strong>
+(<code>%&gt;%</code>), “fajfky” pocházející z balíčku
+<code>magrittr</code>, ale obsažení i v balíčku <code>dplyr</code>
+(který je součástí <code>tidyverse</code>). <strong>Pipe</strong>
+(kterou můžeme rychle napsat pomocí klávesové zkratky
+<strong>ctrl</strong> + <strong>shift</strong> + <strong>m</strong>) je
+funkce, která vezme objekt (většinou dataframe) nalevo od ní a aplikuje
+na něj funkci napravo. Fajfky je také možné řetězit:</p>
 <pre class="r"><code>vyska$muzi %&gt;% mean() %&gt;% round()</code></pre>
 <pre><code>## [1] 181</code></pre>
-<p>Hlavní výhodou fajfek/ <strong>pipes</strong>/<code>%&gt;%</code> je, že jejich čtění je intuitivní. Skript se čte zleva do prava jako klasický text. V našem případě první <code>%&gt;%</code> vezme objekt <code>muzi</code> (vnořený v dataframu <code>vyska</code>) a aplikuje na něj funkci <code>mean()</code>. Druhá <code>%&gt;%</code> potom vezme výsledek funkce <code>mean()</code> a aplikuje na něj funkci <code>round()</code>.</p>
-<p><strong>Pipes</strong> mají dvě hlavní nevýhody. První z nich je, že jejich použití je primárně zaměřené na dataframy. Pokud jsou aplikované na jiné typy objektů, nemusí nutně fungovat. Druhou nevýhodou je, že jsou výpočetně pomalejší než ostatní postupy. U běžných datasetů je rozdíl neznatelný, ale u velmi velkých dat (velikostně v řádu gigabytů a větší) je už zpomalení znatelné.</p>
+<p>Hlavní výhodou fajfek/ <strong>pipes</strong>/<code>%&gt;%</code> je,
+že jejich čtění je intuitivní. Skript se čte zleva do prava jako
+klasický text. V našem případě první <code>%&gt;%</code> vezme objekt
+<code>muzi</code> (vnořený v dataframu <code>vyska</code>) a aplikuje na
+něj funkci <code>mean()</code>. Druhá <code>%&gt;%</code> potom vezme
+výsledek funkce <code>mean()</code> a aplikuje na něj funkci
+<code>round()</code>.</p>
+<p><strong>Pipes</strong> mají dvě hlavní nevýhody. První z nich je, že
+jejich použití je primárně zaměřené na dataframy. Pokud jsou aplikované
+na jiné typy objektů, nemusí nutně fungovat. Druhou nevýhodou je, že
+jsou výpočetně pomalejší než ostatní postupy. U běžných datasetů je
+rozdíl neznatelný, ale u velmi velkých dat (velikostně v řádu gigabytů a
+větší) je už zpomalení znatelné.</p>
 </div>
 <div id="nápověda-funkcí" class="section level2">
 <h2>Nápověda funkcí</h2>
-<p>V tuto chvíli jsme si už stihli ukázat řadu funkcí. Co když se ale setkáme s funkcí, kterou neznáme? Nebo známe, ale zapomněli jsme, jaké jsou její argumenty nebo jak ji aplikovat? Naštěstí pro nás, R obsahuje podrobnou nápovědu pro všechny funkce, které nabízí.</p>
-<p>Nápovědu můžeme zobrazit pomocí otazníků (<code>?</code>) před jménem funkce (<code>?jméno funkce</code>). Například nápovědu pro funkci <code>sum()</code> můžeme zobrazit pomocí:</p>
+<p>V tuto chvíli jsme si už stihli ukázat řadu funkcí. Co když se ale
+setkáme s funkcí, kterou neznáme? Nebo známe, ale zapomněli jsme, jaké
+jsou její argumenty nebo jak ji aplikovat? Naštěstí pro nás, R obsahuje
+podrobnou nápovědu pro všechny funkce, které nabízí.</p>
+<p>Nápovědu můžeme zobrazit pomocí otazníků (<code>?</code>) před jménem
+funkce (<code>?jméno funkce</code>). Například nápovědu pro funkci
+<code>sum()</code> můžeme zobrazit pomocí:</p>
 <pre class="help"><code>?sum()</code></pre>
-<p>Nápověda většiny funkcí má standardizovaný formát, obsahující několik oddílů. Těmito oddíly jsou:</p>
+<p>Nápověda většiny funkcí má standardizovaný formát, obsahující několik
+oddílů. Těmito oddíly jsou:</p>
 <table>
 <colgroup>
 <col width="14%" />
@@ -687,7 +813,8 @@ round(prumer_muzi)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">Details</td>
-<td align="left">Detailní popis toho, jak funkce funguje a jak je implementována</td>
+<td align="left">Detailní popis toho, jak funkce funguje a jak je
+implementována</td>
 </tr>
 <tr class="odd">
 <td align="left">Value</td>
@@ -695,11 +822,13 @@ round(prumer_muzi)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">References</td>
-<td align="left">Zdroje využité v Description, zvlášť u statistických funkci užitečné pro teoretický popis jejich fungování</td>
+<td align="left">Zdroje využité v Description, zvlášť u statistických
+funkci užitečné pro teoretický popis jejich fungování</td>
 </tr>
 <tr class="odd">
 <td align="left">See also</td>
-<td align="left">Příbuzné funkce nebo funkce, které se často používají spolu s danou funkcí</td>
+<td align="left">Příbuzné funkce nebo funkce, které se často používají
+spolu s danou funkcí</td>
 </tr>
 <tr class="even">
 <td align="left">Examples</td>
@@ -707,7 +836,11 @@ round(prumer_muzi)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Pokud si tedy nejsme jistí, co funkce dělá, je nejlepší se podívat na <em>Description</em>, a případně <em>Details</em>. Pokud si nepamatujeme, jaké argumenty funkce má, pak samozřejmě oddíl <em>Arguments</em>. A nakonec, pokud si nejsme jistí, jak funkci použít, nejlepší je podívat se na do oddílu <em>Examples</em>.</p>
+<p>Pokud si tedy nejsme jistí, co funkce dělá, je nejlepší se podívat na
+<em>Description</em>, a případně <em>Details</em>. Pokud si
+nepamatujeme, jaké argumenty funkce má, pak samozřejmě oddíl
+<em>Arguments</em>. A nakonec, pokud si nejsme jistí, jak funkci použít,
+nejlepší je podívat se na do oddílu <em>Examples</em>.</p>
 </div>
 </div>
 

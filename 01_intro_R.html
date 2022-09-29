@@ -13,7 +13,7 @@
 
 <title>Představení R, Rstudio a Tidyverse</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -60,6 +60,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -84,6 +85,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -309,7 +313,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -318,47 +322,11 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -419,25 +387,111 @@ div.tocify {
 </div>
 
 
-<p>R je volně šiřitelný, otevřený programovací jazyk zaměřený specificky na vizualizaci a statistickou analýzu dat. Jeho počátky sahají do poloviny 90. let minulého století, kdy začal být vytvářen dvěma pracovníky Aucklandské university, Rossem Ihakem a Robertem Gentlemanem. Od té doby se stal stal jedním z nejpopulárnějších jazyků pro analýzu dat a drží se mezi nejpopulárnějšími jazyky vůbec. R je široce využívané jak pro akademický výzkum, tak v komerční i veřejné sféře.</p>
-<p>Zatímco funkčnost jiných statistické programů, jako například SPSS nebo Excel, je omezená na předpřipravené nástroje a postupy, možnosti R jsou téměř neomezené. Kromě základních i pokročilých statistických analýz je možné R využít k psaní <a href="https://bookdown.org/">knih</a>, <a href="https://rmarkdown.rstudio.com/">článků</a>, webových stránek (včetně této) nebo <a href="https://shiny.rstudio.com/gallery/">aplikací</a>. R je také využíváno řadou předních statistiků, jejichž práce se týká i sociálněvědního výzkumu.</p>
-<p>Cenou za široké možnosti R jsou vyšší nároky na jeho naučení. Na rozdíl od programů s grafickým rozhraním vyžaduje práce s R alespoň základní znalosti programování. Naštěstí dnes již existuje řada zdrojů a komunit, které mohou s tímto problémem pomoci. Pro inspiraci můžeme zmínit blog <a href="https://www.r-bloggers.com/">R-bloggers</a>, skupinu <a href="https://rladies.org/">Rladies</a> nebo komunitní projekt a podcast <a href="https://www.tidytuesday.com/">Tidytuesday</a>.</p>
+<p>R je volně šiřitelný, otevřený programovací jazyk zaměřený specificky
+na vizualizaci a statistickou analýzu dat. Jeho počátky sahají do
+poloviny 90. let minulého století, kdy začal být vytvářen dvěma
+pracovníky Aucklandské university, Rossem Ihakem a Robertem Gentlemanem.
+Od té doby se stal stal jedním z nejpopulárnějších jazyků pro analýzu
+dat a drží se mezi nejpopulárnějšími jazyky vůbec. R je široce využívané
+jak pro akademický výzkum, tak v komerční i veřejné sféře.</p>
+<p>Zatímco funkčnost jiných statistické programů, jako například SPSS
+nebo Excel, je omezená na předpřipravené nástroje a postupy, možnosti R
+jsou téměř neomezené. Kromě základních i pokročilých statistických
+analýz je možné R využít k psaní <a
+href="https://bookdown.org/">knih</a>, <a
+href="https://rmarkdown.rstudio.com/">článků</a>, webových stránek
+(včetně této) nebo <a
+href="https://shiny.rstudio.com/gallery/">aplikací</a>. R je také
+využíváno řadou předních statistiků, jejichž práce se týká i
+sociálněvědního výzkumu.</p>
+<p>Cenou za široké možnosti R jsou vyšší nároky na jeho naučení. Na
+rozdíl od programů s grafickým rozhraním vyžaduje práce s R alespoň
+základní znalosti programování. Naštěstí dnes již existuje řada zdrojů a
+komunit, které mohou s tímto problémem pomoci. Pro inspiraci můžeme
+zmínit blog <a href="https://www.r-bloggers.com/">R-bloggers</a>,
+skupinu <a href="https://rladies.org/">Rladies</a> nebo komunitní
+projekt a podcast <a
+href="https://www.tidytuesday.com/">Tidytuesday</a>.</p>
 <div id="rstudio" class="section level1">
 <h1>Rstudio</h1>
-<p>Jedno z věcí, která může práci s R výrazně zjednodušit, je použití vývojářského prostředí, jako je Rstudio. Rstudio je integrované vývojářské prostředí (<em>integrated development environmet</em>), tedy program, který poskytuje funkce nad rámec samotného R. Jeho cílem je co nejvíce usnadnit každodenní práci. Nabízí vytváření skriptů, spellcheck, zvýrazňování kódu, automatické hledání chyb, nástroje pro export grafů a mnoho dalšího. Rstudio není jediným vývojářským prostředí pro (zmínit můžeme například <a href="https://www.vim.org/scripts/script.php?script_id=2628">Vim</a> nebo <a href="https://ess.r-project.org/">ESS Emacs</a>), představuje však představuje výbornou rovnováhu mezi výkonem a uživatelskou přívětivostí.</p>
+<p>Jedno z věcí, která může práci s R výrazně zjednodušit, je použití
+vývojářského prostředí, jako je Rstudio. Rstudio je integrované
+vývojářské prostředí (<em>integrated development environmet</em>), tedy
+program, který poskytuje funkce nad rámec samotného R. Jeho cílem je co
+nejvíce usnadnit každodenní práci. Nabízí vytváření skriptů, spellcheck,
+zvýrazňování kódu, automatické hledání chyb, nástroje pro export grafů a
+mnoho dalšího. Rstudio není jediným vývojářským prostředí pro (zmínit
+můžeme například <a
+href="https://www.vim.org/scripts/script.php?script_id=2628">Vim</a>
+nebo <a href="https://ess.r-project.org/">ESS Emacs</a>), představuje
+však představuje výbornou rovnováhu mezi výkonem a uživatelskou
+přívětivostí.</p>
 </div>
 <div id="tidyverse" class="section level1">
 <h1>Tidyverse</h1>
-<p>Existuje mnoho balíčků a rozšíření, které přináší do R nespočet dalších funkcí nad rámec základní instalace. <a href="https://www.tidyverse.org/">Tidyverse</a> je rodinou takovýchto rozšiřujících balíčků. Balíčky Tidyverse rozšiřují možnosti R zejména v oblastech manipulace a vizualizace dat. Mnoho úkonů, které se v základním R provádí velmi zdlouhavě nebo krkolomně, jsou v Tidyverse velmi jednoduché. Další velkou výhodou je, že všechny současti Tidyverse jsou designováni tak, aby si spolu rozuměly a využívaly stejnou logiku kódu. Jednou z nevýhod otevřenosti R je, že řada autorů má řadu různých představ o psání počítačového kódu. To vede k mnoha různým konvencím, které jsou pro běžného uživatele matoucí (např. mají funkce začínat velkým, nebo malým písmenem? mají se slova oddělovat potržítkem, nebo tečkou?). Všechny balíčky Tidyverse se drží jednotného principu programování a je proto velice jednoduché jejich funkce kombinovat, bez zbytečných zmatků. Jedná se tak o další způsob, jak ulehčit ponoření do R.</p>
-<p>Je nutné zmínit, že využívání Tidyverse není striktně nutné. Tidyverse vzniklo dlouho po vzniku samotného R a do dneška existuje mnoho uživatelů, pro které představuje základní R (nebo jiné balíčky pro analýzu dat) ideální pracovní prostředí. Nicméně, stejně jako u Rstudio, Tidyverse představuje rovnováhu mezi uživatelskou přívětivostí a flexibilitou práce.</p>
+<p>Existuje mnoho balíčků a rozšíření, které přináší do R nespočet
+dalších funkcí nad rámec základní instalace. <a
+href="https://www.tidyverse.org/">Tidyverse</a> je rodinou takovýchto
+rozšiřujících balíčků. Balíčky Tidyverse rozšiřují možnosti R zejména v
+oblastech manipulace a vizualizace dat. Mnoho úkonů, které se v
+základním R provádí velmi zdlouhavě nebo krkolomně, jsou v Tidyverse
+velmi jednoduché. Další velkou výhodou je, že všechny současti Tidyverse
+jsou designováni tak, aby si spolu rozuměly a využívaly stejnou logiku
+kódu. Jednou z nevýhod otevřenosti R je, že řada autorů má řadu různých
+představ o psání počítačového kódu. To vede k mnoha různým konvencím,
+které jsou pro běžného uživatele matoucí (např. mají funkce začínat
+velkým, nebo malým písmenem? mají se slova oddělovat potržítkem, nebo
+tečkou?). Všechny balíčky Tidyverse se drží jednotného principu
+programování a je proto velice jednoduché jejich funkce kombinovat, bez
+zbytečných zmatků. Jedná se tak o další způsob, jak ulehčit ponoření do
+R.</p>
+<p>Je nutné zmínit, že využívání Tidyverse není striktně nutné.
+Tidyverse vzniklo dlouho po vzniku samotného R a do dneška existuje
+mnoho uživatelů, pro které představuje základní R (nebo jiné balíčky pro
+analýzu dat) ideální pracovní prostředí. Nicméně, stejně jako u Rstudio,
+Tidyverse představuje rovnováhu mezi uživatelskou přívětivostí a
+flexibilitou práce.</p>
 </div>
-<div id="závěrem-proč-nepoužíváme-grafická-rozhraní" class="section level1">
+<div id="závěrem-proč-nepoužíváme-grafická-rozhraní"
+class="section level1">
 <h1>Závěrem: Proč nepoužíváme grafická rozhraní?</h1>
-<p>Na začátku jsme zmínili, že R je programovací jazyk a pro práci s ním je nutné znát základy programování. Protože je ovšem v R udělat téměř vše, je možné pro něj vytvořit i grafické rozhraní, jako má například SPSS. Těchto rozhraní je celá řada, nejpopulárnější jsou pravděpodobně <a href="https://www.jamovi.org/">Jamovi</a> a <a href="https://www.rcommander.com/">R commander</a>. S využitím těchto rozhraní je možné analýzy “naklikávat” místo psaní programovacího kódu. Tím se výrazně snižuje obtížnost práce s R. Grafická rozhraní ale mají tři velké slabiny, které dříve nebo později převáží nad jakýmikoliv výhodami:</p>
+<p>Na začátku jsme zmínili, že R je programovací jazyk a pro práci s ním
+je nutné znát základy programování. Protože je ovšem v R udělat téměř
+vše, je možné pro něj vytvořit i grafické rozhraní, jako má například
+SPSS. Těchto rozhraní je celá řada, nejpopulárnější jsou pravděpodobně
+<a href="https://www.jamovi.org/">Jamovi</a> a <a
+href="https://www.rcommander.com/">R commander</a>. S využitím těchto
+rozhraní je možné analýzy “naklikávat” místo psaní programovacího kódu.
+Tím se výrazně snižuje obtížnost práce s R. Grafická rozhraní ale mají
+tři velké slabiny, které dříve nebo později převáží nad jakýmikoliv
+výhodami:</p>
 <ul>
-<li><p><strong>Grafická rozhraní nikdy nepokryjí vše, co R nabízí a co my potřebujeme</strong>: přestože většina grafických rozhraní obsahuje možnosti pro jednoduchou manipulaci s daty a základní statistické postupy, v žádném z nich nenaklikáte složitější úkony jako cyklické aplikace funkce (“<em>loopy</em>”) ani nevytvoříte složité psychometrické modely. Jinak řečeno, pokud se rozhodnee vážněji zabývat kvantitativní analýzou, dříve nebo později se alespoň lehkému programování nevyhneme. A čas ztrávený v grafických rozhraních v tu chvíli nebude příliš přinosný.</p></li>
-<li><p><strong>Grafické rozhraní jsou časově neefektivní</strong>: I kdyby všechny funkce, které pro naši práci potřebujeme, byly obsaženy v některém grafickém rozhraní, práce s nimi by vždy byla pomalejší ve srovnání se sběhlým uživatelem kódu. Jedním z největších výhod, které počítače přinášejí, je možnost automatizace. Není třeba ručně vytvářet tucet kontingenčních tabulek nebo kontrolovat desítky proměnných, pokud to může počítač udělat za nás. Práce se skriptem umožňuje zadat počítači příkaz a nechat ho, ať ho sám zopakuje na jakkoliv velkém počtu případů, což výrazně šetří čas. Takovéto efektivity s grafickými rozhraními nikdy nedosáhneme.</p></li>
-<li><p><strong>Klikání svádí k nereprodukovatelnosti</strong>: velkou výhodou práce skrze psaní skriptu je, že tento skript slouží jako záznam toho, co se stalo. Kdokoliv, ať už mi sami nebo lidé se zájmem o naši práci, se mohou v budoucnu podívat, jak jsme při analýze postupovali a případně se naší prací inspirovat nebo ji vylepšit. Práce v grafickém rozhraní svádí k rychlému naklikávání, po kterém často nezůstane ani stopa.</p></li>
+<li><p><strong>Grafická rozhraní nikdy nepokryjí vše, co R nabízí a co
+my potřebujeme</strong>: přestože většina grafických rozhraní obsahuje
+možnosti pro jednoduchou manipulaci s daty a základní statistické
+postupy, v žádném z nich nenaklikáte složitější úkony jako cyklické
+aplikace funkce (“<em>loopy</em>”) ani nevytvoříte složité
+psychometrické modely. Jinak řečeno, pokud se rozhodnee vážněji zabývat
+kvantitativní analýzou, dříve nebo později se alespoň lehkému
+programování nevyhneme. A čas ztrávený v grafických rozhraních v tu
+chvíli nebude příliš přinosný.</p></li>
+<li><p><strong>Grafické rozhraní jsou časově neefektivní</strong>: I
+kdyby všechny funkce, které pro naši práci potřebujeme, byly obsaženy v
+některém grafickém rozhraní, práce s nimi by vždy byla pomalejší ve
+srovnání se sběhlým uživatelem kódu. Jedním z největších výhod, které
+počítače přinášejí, je možnost automatizace. Není třeba ručně vytvářet
+tucet kontingenčních tabulek nebo kontrolovat desítky proměnných, pokud
+to může počítač udělat za nás. Práce se skriptem umožňuje zadat počítači
+příkaz a nechat ho, ať ho sám zopakuje na jakkoliv velkém počtu případů,
+což výrazně šetří čas. Takovéto efektivity s grafickými rozhraními nikdy
+nedosáhneme.</p></li>
+<li><p><strong>Klikání svádí k nereprodukovatelnosti</strong>: velkou
+výhodou práce skrze psaní skriptu je, že tento skript slouží jako záznam
+toho, co se stalo. Kdokoliv, ať už mi sami nebo lidé se zájmem o naši
+práci, se mohou v budoucnu podívat, jak jsme při analýze postupovali a
+případně se naší prací inspirovat nebo ji vylepšit. Práce v grafickém
+rozhraní svádí k rychlému naklikávání, po kterém často nezůstane ani
+stopa.</p></li>
 </ul>
 </div>
 

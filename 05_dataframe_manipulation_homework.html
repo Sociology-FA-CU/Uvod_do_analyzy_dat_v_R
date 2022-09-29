@@ -13,7 +13,7 @@
 
 <title>Prohlížení a manipulace s dataframem - Domácí úkoly</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -58,6 +58,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -82,6 +83,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -237,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -246,47 +250,11 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -341,7 +309,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -350,7 +318,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Prohlížení a manipulace s dataframem - Domácí úkoly</h1>
+<h1 class="title toc-ignore">Prohlížení a manipulace s dataframem -
+Domácí úkoly</h1>
 
 </div>
 

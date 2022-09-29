@@ -13,7 +13,7 @@
 
 <title>Import a export dat, pracovní adresáře a R projekty</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -60,6 +60,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -84,6 +85,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -309,7 +313,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -318,47 +322,11 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -414,123 +382,318 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Import a export dat, pracovní adresáře a R projekty</h1>
+<h1 class="title toc-ignore">Import a export dat, pracovní adresáře a R
+projekty</h1>
 
 </div>
 
 
-<p>V této sekci se zaměříme na to, jak importovat a exportovat data v R a probereme základní praktiky organizace dat.</p>
+<p>V této sekci se zaměříme na to, jak importovat a exportovat data v R
+a probereme základní praktiky organizace dat.</p>
 <div id="import-dat" class="section level1">
 <h1>Import dat</h1>
-<p>Většina analýz začíná importem dat do R. Funkce pro import začínájí slovem read, např. <code>read.csv()</code> nebo <code>readRDS()</code>. R samotné umí načíst základní typy souborů, z nichž nejdůležitější je <em>comma separated value</em> (.csv) a vlastní formát <code>RDS</code> (.rds).</p>
-<div id="import-comma-separated-value-.csv-souborů" class="section level2">
+<p>Většina analýz začíná importem dat do R. Funkce pro import začínájí
+slovem read, např. <code>read.csv()</code> nebo <code>readRDS()</code>.
+R samotné umí načíst základní typy souborů, z nichž nejdůležitější je
+<em>comma separated value</em> (.csv) a vlastní formát <code>RDS</code>
+(.rds).</p>
+<div id="import-comma-separated-value-.csv-souborů"
+class="section level2">
 <h2>Import comma separated value (.csv) souborů</h2>
-<p>CSV soubory je možné importovat pomocí funkce <code>read.csv()</code>. Tato funkce vyžaduje alespoň jeden argument, <code>file</code>, což je cesta k datasetu. Výsledek rovnou uložíme do nového dataframu:</p>
+<p>CSV soubory je možné importovat pomocí funkce
+<code>read.csv()</code>. Tato funkce vyžaduje alespoň jeden argument,
+<code>file</code>, což je cesta k datasetu. Výsledek rovnou uložíme do
+nového dataframu:</p>
 <pre class="r"><code>countries = read.csv(file = &quot;C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R/data/countries.csv&quot;)</code></pre>
-<p>Cestu k souboru můžeme ve Windows podržením klávesy <strong>shift</strong> a <strong>kliknutím pravým tlačítkem myši</strong> na soubor v našem počítači. Potom zvolíme možnost <em>copy as path</em> a zkopírovanou adresu vložíme do R klasicky pomocí <strong>ctrl</strong> + <strong>c</strong>.</p>
-<p>V některých operačních systémech je třeba si dát pozor ještě na jednu věc. Zkopírovaná adresa souboru bude obsahovat <strong>backslash</strong> (<code>\</code>), R ale v adrese očekává <strong>forwardslash</strong> (<code>/</code>), případně dvojité <strong>backslash</strong> (<code>\\</code>). Pokud bychom zkusili ve funkci read.csv() použít adresu, tak jak je, dostaneme chybu:</p>
+<p>Cestu k souboru můžeme ve Windows podržením klávesy
+<strong>shift</strong> a <strong>kliknutím pravým tlačítkem
+myši</strong> na soubor v našem počítači. Potom zvolíme možnost <em>copy
+as path</em> a zkopírovanou adresu vložíme do R klasicky pomocí
+<strong>ctrl</strong> + <strong>c</strong>.</p>
+<p>V některých operačních systémech je třeba si dát pozor ještě na jednu
+věc. Zkopírovaná adresa souboru bude obsahovat
+<strong>backslash</strong> (<code>\</code>), R ale v adrese očekává
+<strong>forwardslash</strong> (<code>/</code>), případně dvojité
+<strong>backslash</strong> (<code>\\</code>). Pokud bychom zkusili ve
+funkci read.csv() použít adresu, tak jak je, dostaneme chybu:</p>
 <pre class="r"><code>countries = read.csv(&quot;C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.csv&quot;)</code></pre>
-<p>Naštěstí pro to existuje relativně jednoduchá oprava. Před cestu k souboru napíšem <code>r</code> a cestu samotnou (uvnitř úvozovek!) dáme do kulatých závorek:</p>
+<p>Naštěstí pro to existuje relativně jednoduchá oprava. Před cestu k
+souboru napíšem <code>r</code> a cestu samotnou (uvnitř úvozovek!) dáme
+do kulatých závorek:</p>
 <pre class="r"><code>countries = read.csv(r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.csv)&quot;)</code></pre>
-<div id="argumenty-read.csv---sep-dec-a-encoding" class="section level3">
+<div id="argumenty-read.csv---sep-dec-a-encoding"
+class="section level3">
 <h3>Argumenty read.csv() - sep, dec a encoding</h3>
-<p>Prestože funkce <code>read.csv()</code> vyžaduje pouze argument <code>file</code>, často je nutné využít i některé další.</p>
-<p>První problémem je, že i když se formát jmenuje <strong>comma separated values</strong>, hodnoty nemusí být nutně oddělené čárkou (<code>,</code>). Například česká verze Excelu odděluje hodnoty středníkem (<code>;</code>) a to i když mají být data vyexportována do .csv formátu. Je to dáno tím, že čárka se v českém prostředí tradičně používá pro oddělení desetiných čísel (na rozdíl od anglosaské tečky). Excel tedy využívá čárku pro oddělení desetiných míst a sloupce odděluje středníkem. Pokud se nám jednotlivé sloupce dat špatně načtou, je na vině pravděpodobně toto. Tento problém se dá naštěstí jednoduše vyřešit tím, že ručně nastavíme separátor sloupců (<code>sep</code>) na středníky a oddělovač desetiných míst (<code>dec</code>) na čárky. Funkce tedy bude ve formátu <code>read.csv(file = ,sep = ";", dec = ",")</code>. Případně můžeme využít funkci <code>read.csv2()</code>, která dělá to samé, abychom si ušetřili psaní.</p>
-<p>Druhým častým problém je encoding. Encoding je způsob, jakým počítače uchovávají a zobrazují znaky. Některé operační systémy a programy využívají takzavaný <em>Unicode</em>, standardizovaný systém zajišťující čitelnost znaků napříč všemi jazyky. Jiné operační systémy, mezi které patří i Windows, využívají <em>local encoding</em>, tedy uchovávání znaků specifické pro daný jazykový region. Česká verze Windows tedy čte jinak, než například anglická nebo ruská. To vede k problémům při náhrávání dat. Pokud jsou data uložené v lokálním českém encodingu, nemusí být nahraná správně. Například ze slova <code>muž</code> se stane <code>mu?</code>. Tento problém je většinou možné vyřešit tak, že ručně nastavíme, do jakého encodingu mají být data převedena, a to pomocí argumentu <code>encoding</code>. Největší šanci na úspěch má nastavení encodingu na <code>UTF-8</code>, což je jedna z verzí unicodu (univerzálního encodingu). Funkce bude vypadat jednoduše <code>read.csv(file = , encoding = "UTF-8")</code>.</p>
+<p>Prestože funkce <code>read.csv()</code> vyžaduje pouze argument
+<code>file</code>, často je nutné využít i některé další.</p>
+<p>První problémem je, že i když se formát jmenuje <strong>comma
+separated values</strong>, hodnoty nemusí být nutně oddělené čárkou
+(<code>,</code>). Například česká verze Excelu odděluje hodnoty
+středníkem (<code>;</code>) a to i když mají být data vyexportována do
+.csv formátu. Je to dáno tím, že čárka se v českém prostředí tradičně
+používá pro oddělení desetiných čísel (na rozdíl od anglosaské tečky).
+Excel tedy využívá čárku pro oddělení desetiných míst a sloupce odděluje
+středníkem. Pokud se nám jednotlivé sloupce dat špatně načtou, je na
+vině pravděpodobně toto. Tento problém se dá naštěstí jednoduše vyřešit
+tím, že ručně nastavíme separátor sloupců (<code>sep</code>) na
+středníky a oddělovač desetiných míst (<code>dec</code>) na čárky.
+Funkce tedy bude ve formátu
+<code>read.csv(file = ,sep = ";", dec = ",")</code>. Případně můžeme
+využít funkci <code>read.csv2()</code>, která dělá to samé, abychom si
+ušetřili psaní.</p>
+<p>Druhým častým problém je encoding. Encoding je způsob, jakým počítače
+uchovávají a zobrazují znaky. Některé operační systémy a programy
+využívají takzavaný <em>Unicode</em>, standardizovaný systém zajišťující
+čitelnost znaků napříč všemi jazyky. Jiné operační systémy, mezi které
+patří i Windows, využívají <em>local encoding</em>, tedy uchovávání
+znaků specifické pro daný jazykový region. Česká verze Windows tedy čte
+jinak, než například anglická nebo ruská. To vede k problémům při
+náhrávání dat. Pokud jsou data uložené v lokálním českém encodingu,
+nemusí být nahraná správně. Například ze slova <code>muž</code> se stane
+<code>mu?</code>. Tento problém je většinou možné vyřešit tak, že ručně
+nastavíme, do jakého encodingu mají být data převedena, a to pomocí
+argumentu <code>encoding</code>. Největší šanci na úspěch má nastavení
+encodingu na <code>UTF-8</code>, což je jedna z verzí unicodu
+(univerzálního encodingu). Funkce bude vypadat jednoduše
+<code>read.csv(file = , encoding = "UTF-8")</code>.</p>
 </div>
 </div>
 <div id="import-rds-.rds-souborů" class="section level2">
 <h2>Import RDS (.rds) souborů</h2>
-<p><code>.rds</code> je specializovaný R formát, obdobně jako je <code>.sav</code> specializovaný formát SPSS a <code>.dta</code> specializovaný formát Stata. Na rozdíl od prostého <code>.csv</code> souboru, může .rds uchovávat další informace o datech, jako například pořadí odpovědí likertových položek nebo textové označení (labely) proměnných. <code>.rds</code> také nemusí sloužit pouze k uchovávání syrových dat, ale i dalších objektu, například spočítaných modelů!</p>
-<p>Import <code>.rds</code> dat je téměř identický s importem <code>.csv</code> souborů:</p>
+<p><code>.rds</code> je specializovaný R formát, obdobně jako je
+<code>.sav</code> specializovaný formát SPSS a <code>.dta</code>
+specializovaný formát Stata. Na rozdíl od prostého <code>.csv</code>
+souboru, může .rds uchovávat další informace o datech, jako například
+pořadí odpovědí likertových položek nebo textové označení (labely)
+proměnných. <code>.rds</code> také nemusí sloužit pouze k uchovávání
+syrových dat, ale i dalších objektu, například spočítaných modelů!</p>
+<p>Import <code>.rds</code> dat je téměř identický s importem
+<code>.csv</code> souborů:</p>
 <pre class="r"><code>countries = readRDS(file = r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries.rds)&quot;)</code></pre>
-<p>Platí přitom stejná omezení, co se týče lomítek, tedy je třeba přidat <code>r</code> před cestu k souboru a závorky okolo cesty samotné (unvitř úvozovek). Není ovšem nutné řešit separátory sloupců a ani encoding.</p>
+<p>Platí přitom stejná omezení, co se týče lomítek, tedy je třeba přidat
+<code>r</code> před cestu k souboru a závorky okolo cesty samotné
+(unvitř úvozovek). Není ovšem nutné řešit separátory sloupců a ani
+encoding.</p>
 </div>
 <div id="import-dat-z-jiných-formátů" class="section level2">
 <h2>Import dat z jiných formátů</h2>
-<p>Kromě výše zmíněných formátů je možné importovat i data z dalších populárních softwarů pro analýzu dat. Využít pro to můžeme balíček <code>haven</code> (který je součástí projektu <code>tidyverse</code>). Data z SPSS je možné importovat pomocí funkce read_spss(). Pro import dat ze softwaru Stata slouží funkce <code>read_dta()</code> a pro SAS funkce <code>read_sas()</code>. Pro data z Excelu je nutné nainstalovat samostatný balíček <code>readxl</code> (který je součástí <code>tidyverse</code>) a využít funkci <code>read_excel()</code>.</p>
-<p>U importu dat v SPSS formátu se ještě zastavíme. Přestože balíček <code>haven</code> dokáže importovat .sav soubory, má dvě omezení. Zaprvé je nutné ručně specifikovat encoding .sav souborů pocházejících z české verze SPSS (argument <code>encoding = "Windows-1250"</code>) a zadruhé proměnné načítá v atypickém <code>labelled</code> formátu. V mnoha případech je pohodlnější použít balíček <code>foreign</code></p>
-<p>Balíček <code>foregin</code> nejen lépe zvládá český encoding, ale i automaticky převede labely na hodnoty. Data cvvm_cerven_2019.sav můžeme nahrát pomocí funkce:</p>
+<p>Kromě výše zmíněných formátů je možné importovat i data z dalších
+populárních softwarů pro analýzu dat. Využít pro to můžeme balíček
+<code>haven</code> (který je součástí projektu <code>tidyverse</code>).
+Data z SPSS je možné importovat pomocí funkce read_spss(). Pro import
+dat ze softwaru Stata slouží funkce <code>read_dta()</code> a pro SAS
+funkce <code>read_sas()</code>. Pro data z Excelu je nutné nainstalovat
+samostatný balíček <code>readxl</code> (který je součástí
+<code>tidyverse</code>) a využít funkci <code>read_excel()</code>.</p>
+<p>U importu dat v SPSS formátu se ještě zastavíme. Přestože balíček
+<code>haven</code> dokáže importovat .sav soubory, má dvě omezení.
+Zaprvé je nutné ručně specifikovat encoding .sav souborů pocházejících z
+české verze SPSS (argument <code>encoding = "Windows-1250"</code>) a
+zadruhé proměnné načítá v atypickém <code>labelled</code> formátu. V
+mnoha případech je pohodlnější použít balíček <code>foreign</code></p>
+<p>Balíček <code>foregin</code> nejen lépe zvládá český encoding, ale i
+automaticky převede labely na hodnoty. Data cvvm_cerven_2019.sav můžeme
+nahrát pomocí funkce:</p>
 <pre class="r"><code>cvvm = read.spss(&quot;cvvm_cerven_2019.sav&quot;, to.data.frame = TRUE, reencode = TRUE)</code></pre>
-<p>Argument <code>to.data.frame = TRUE</code> importuje data jako dataframe (jinak bude výsledkem list) a argument <code>reencode = TRUE</code> převede encoding tak, aby byly všechny znaky zobrazeny správně.</p>
+<p>Argument <code>to.data.frame = TRUE</code> importuje data jako
+dataframe (jinak bude výsledkem list) a argument
+<code>reencode = TRUE</code> převede encoding tak, aby byly všechny
+znaky zobrazeny správně.</p>
 </div>
 <div id="import-dat-z-internetu" class="section level2">
 <h2>Import dat z internetu</h2>
-<p>Data nemusíme nutně importovat pouze z našeho počítače. Pokud jsou data ke stažení na internetu, je možné je stáhnout do R rovnou. Například data o zemích jsou uložena na Githubu na adrese <a href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv" class="uri">https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv</a>. Pro jejich stažení stačí použít:</p>
+<p>Data nemusíme nutně importovat pouze z našeho počítače. Pokud jsou
+data ke stažení na internetu, je možné je stáhnout do R rovnou.
+Například data o zemích jsou uložena na Githubu na adrese <a
+href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv"
+class="uri">https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv</a>.
+Pro jejich stažení stačí použít:</p>
 <pre class="r"><code>countries = read.csv(&quot;https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.csv&quot;)</code></pre>
 </div>
 </div>
 <div id="export-dat" class="section level1">
 <h1>Export dat</h1>
-<p>Export dat probíhá velmi podobně jako jejich import. Funkce pro export zpravidla začínájí slovem <code>write</code>, případně <code>save</code>. Pro uložení dat v .csv formátu slouží funkce <code>write.csv()</code>, která potřebuje dva argumenty. <code>x</code> je jméno objektu, který chceme exportovat a <code>file</code> je cesta, kam má být objekt uložen:</p>
+<p>Export dat probíhá velmi podobně jako jejich import. Funkce pro
+export zpravidla začínájí slovem <code>write</code>, případně
+<code>save</code>. Pro uložení dat v .csv formátu slouží funkce
+<code>write.csv()</code>, která potřebuje dva argumenty. <code>x</code>
+je jméno objektu, který chceme exportovat a <code>file</code> je cesta,
+kam má být objekt uložen:</p>
 <pre class="r"><code>write.csv(x = countries, file = r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries_backup.csv)&quot;)</code></pre>
-<p>Na konci cesty je název souboru, do kterého budou data exportovány (v našem případě <code>countries.csv</code>). Nesmíme také zapomenout na koncovku souboru (<em>.csv</em>), jinak se soubor exportuje bez ní a bude nutné jí později přidávat manuálně. Můžeme také ručně nastavit seperátor sloupc pomocí argumenty sep (ve výchozím nastavení <code>,</code>) a oddělovač desetinných čísel (ve výchozím nastavení <code>.</code>). Encoding je možné nastavit pomocí argumentu <code>fileEncoding</code> (standardně <code>UTF-8</code>).</p>
-<p>Uložení do .rds probíhá pomocí funkce <code>saveRDS()</code>. Stejně jako v předchozím případě je nutné specifikovat, jaký objekt má být exportován (argument <code>object</code>) a cesta, kam má být soubor uložen (argument <code>file</code>):</p>
+<p>Na konci cesty je název souboru, do kterého budou data exportovány (v
+našem případě <code>countries.csv</code>). Nesmíme také zapomenout na
+koncovku souboru (<em>.csv</em>), jinak se soubor exportuje bez ní a
+bude nutné jí později přidávat manuálně. Můžeme také ručně nastavit
+seperátor sloupc pomocí argumenty sep (ve výchozím nastavení
+<code>,</code>) a oddělovač desetinných čísel (ve výchozím nastavení
+<code>.</code>). Encoding je možné nastavit pomocí argumentu
+<code>fileEncoding</code> (standardně <code>UTF-8</code>).</p>
+<p>Uložení do .rds probíhá pomocí funkce <code>saveRDS()</code>. Stejně
+jako v předchozím případě je nutné specifikovat, jaký objekt má být
+exportován (argument <code>object</code>) a cesta, kam má být soubor
+uložen (argument <code>file</code>):</p>
 <pre class="r"><code>saveRDS(object = countries, file = r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data\countries_backup.rds)&quot;)</code></pre>
 </div>
 <div id="pracovní-adresář-working-directory" class="section level1">
 <h1>Pracovní adresář (<em>working directory</em>)</h1>
-<p>Přestože je možné při importu a exportu dat explicitně určit cestu k souboru v rámci dané funkce, opakované vypisování cesty je nepohodlné. Místu toho můžeme určitý adresář určit jako pracovní adresář (<code>working directory</code>). Pracovní adresář je místo, odkud bude R automaticky importovat a kam bude exportovat soubory, pokud neřekneme jinak.</p>
-<p>Adresu současného pracovního adresáře zjistíme pomocí funkce <code>getwd()</code>, zkratka pro <em>get working directory</em> :</p>
+<p>Přestože je možné při importu a exportu dat explicitně určit cestu k
+souboru v rámci dané funkce, opakované vypisování cesty je nepohodlné.
+Místu toho můžeme určitý adresář určit jako pracovní adresář
+(<code>working directory</code>). Pracovní adresář je místo, odkud bude
+R automaticky importovat a kam bude exportovat soubory, pokud neřekneme
+jinak.</p>
+<p>Adresu současného pracovního adresáře zjistíme pomocí funkce
+<code>getwd()</code>, zkratka pro <em>get working directory</em> :</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/home/ales/Documents/phd/teaching/Uvod_do_analyzy_dat_v_R&quot;</code></pre>
-<p>Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci <code>setwd()</code> (<em>set working directory</em>):</p>
+<pre><code>## [1] &quot;/Users/ales/Documents/own-projects/uvod-do-r&quot;</code></pre>
+<p>Pokud bychom chtěli nastavit nový pracovní adresář, použijeme funkci
+<code>setwd()</code> (<em>set working directory</em>):</p>
 <pre class="r"><code>setwd(r&quot;(C:\Users\ales_\Desktop\own_projects\Uvod_do_analyzy_dat_v_R\data)&quot;)</code></pre>
-<p>Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a ukládat do výše zmíněné složky. Například, pokud bychom chtěli importovat .csv soubor, který ve složce je v pracovním adresáři, stačí:</p>
+<p>Od této chvíle, pokud neřekneme jinak, bude všechny soubory hledat a
+ukládat do výše zmíněné složky. Například, pokud bychom chtěli
+importovat .csv soubor, který ve složce je v pracovním adresáři,
+stačí:</p>
 <pre class="r"><code>countries = read.csv(&quot;countries.csv&quot;)</code></pre>
-<p>Na rozdíl od předchozích případů už nemmusíme vypisovat celou adresu do funkce read.csv(). Pokud se v pracovním adresáři nachází soubor <code>countries.csv</code>, R si ho najde samo. obdobně můžeme použít i funkce <code>readRDS()</code> nebo <code>write.csv()</code>.</p>
-<p>Toto nastavení pracovního adresáře platí pouze pro do konce sezení. Pokud bychom R vypnuli a zapnuli, vrátí se pracovní adresář na původní adresu. Pokud bychom chtěli adresu pracovního adresáře změnit permanentně, můžeme to udělat pomocí nastevení Rstudia. V záložce <strong>Tools</strong> zvolíme <strong>Global Options…</strong> . Hned v záložce <strong>General</strong> je možnost <strong>Default working directory (when not in a project)</strong>, kde můžeme nastavit permanentní adresu našeho pracovního adresáře.</p>
+<p>Na rozdíl od předchozích případů už nemmusíme vypisovat celou adresu
+do funkce read.csv(). Pokud se v pracovním adresáři nachází soubor
+<code>countries.csv</code>, R si ho najde samo. obdobně můžeme použít i
+funkce <code>readRDS()</code> nebo <code>write.csv()</code>.</p>
+<p>Toto nastavení pracovního adresáře platí pouze pro do konce sezení.
+Pokud bychom R vypnuli a zapnuli, vrátí se pracovní adresář na původní
+adresu. Pokud bychom chtěli adresu pracovního adresáře změnit
+permanentně, můžeme to udělat pomocí nastevení Rstudia. V záložce
+<strong>Tools</strong> zvolíme <strong>Global Options…</strong> . Hned v
+záložce <strong>General</strong> je možnost <strong>Default working
+directory (when not in a project)</strong>, kde můžeme nastavit
+permanentní adresu našeho pracovního adresáře.</p>
 </div>
 <div id="rstudio-projekty-rstudio-projects" class="section level1">
 <h1>Rstudio projekty (Rstudio projects)</h1>
-<p>Jednou z velkých předností Rstudia jsou Rstudio projekty. Rstudio projekty představují efektivní způsob organizace práce. Každý projekt může mít své vlastní nastavení, včetně pracovního adresáře a svojí vlastní historii změn. Projekty mají zároveň několik výhod ve spojení s některými balíčky (viz. níže).</p>
-<p>Nový Rstudio projekt vytvoříme tak, že v pravém horním rohu Rstudia klikneme na <strong>File</strong> a <strong>New project…</strong> . Na výběr budeme mít několik možností:</p>
+<p>Jednou z velkých předností Rstudia jsou Rstudio projekty. Rstudio
+projekty představují efektivní způsob organizace práce. Každý projekt
+může mít své vlastní nastavení, včetně pracovního adresáře a svojí
+vlastní historii změn. Projekty mají zároveň několik výhod ve spojení s
+některými balíčky (viz. níže).</p>
+<p>Nový Rstudio projekt vytvoříme tak, že v pravém horním rohu Rstudia
+klikneme na <strong>File</strong> a <strong>New project…</strong> . Na
+výběr budeme mít několik možností:</p>
 <p><img src="images/rstudio_project.PNG" width="500px" /></p>
-<p>Pokud chceme pro náš projekt vytvořit novou složku, zvolíme možnost <strong>New directory</strong>. Pokud už máme složku, ze které chceme vytvořit Rstudio projekt, zvolíme možnost možnost <strong>Existing directory</strong>. Nakonec, možnost <strong>Version control</strong> slouží k propojení se systém pro sledování a archivaci změn, což je nad rámec toho kurzu.</p>
-<p>Pokud vyvářime pro náš projekt novou složku, můžeme zvolit z několika předpřipravených nastavení. Pro teď stačí zvolit <strong>New project</strong>. Poté už jen stačí zvolit název složky, která bude složit jako projekt(<strong>Directory name</strong>) a adresu, kde se má projekt nacházet (<strong>Create project as subdirectory of</strong>).</p>
-<p>Pokud už máme vytvořený adresář a pouze z něj vytváříme projekt, stačí pouze nastavit jeho adresu (<strong>Project working directory</strong>).</p>
-<p>R studio projekt je v podstatě klasický adresář, ale obsahuje navíc soubor <code>.Rproj</code>. Otevřením toho souboru (klasicky dvojklikem) otevřeme projekt. Všechny změny v nastavení, jako třeba pracovní adresář, jsou izolovány pro daný projekt.</p>
+<p>Pokud chceme pro náš projekt vytvořit novou složku, zvolíme možnost
+<strong>New directory</strong>. Pokud už máme složku, ze které chceme
+vytvořit Rstudio projekt, zvolíme možnost možnost <strong>Existing
+directory</strong>. Nakonec, možnost <strong>Version control</strong>
+slouží k propojení se systém pro sledování a archivaci změn, což je nad
+rámec toho kurzu.</p>
+<p>Pokud vyvářime pro náš projekt novou složku, můžeme zvolit z několika
+předpřipravených nastavení. Pro teď stačí zvolit <strong>New
+project</strong>. Poté už jen stačí zvolit název složky, která bude
+složit jako projekt(<strong>Directory name</strong>) a adresu, kde se má
+projekt nacházet (<strong>Create project as subdirectory
+of</strong>).</p>
+<p>Pokud už máme vytvořený adresář a pouze z něj vytváříme projekt,
+stačí pouze nastavit jeho adresu (<strong>Project working
+directory</strong>).</p>
+<p>R studio projekt je v podstatě klasický adresář, ale obsahuje navíc
+soubor <code>.Rproj</code>. Otevřením toho souboru (klasicky dvojklikem)
+otevřeme projekt. Všechny změny v nastavení, jako třeba pracovní
+adresář, jsou izolovány pro daný projekt.</p>
 </div>
-<div id="dynamické-nastavení-pracovního-adresáře-a-balíček-here" class="section level1">
+<div id="dynamické-nastavení-pracovního-adresáře-a-balíček-here"
+class="section level1">
 <h1>Dynamické nastavení pracovního adresáře a balíček <em>here</em></h1>
-<p>Už jsme si ukázali dva způsoby importování a exportování souborů: buď můžeme určit adresu souboru v rámci funkce pro import/export nebo můžeme na začátku nastavit adresu pracovního adresáře. Oba tyto způsoby ale mají jednu nevýhodu: Adresy souborů, případně složek, jsou definované staticky. Například funkce <code>setwd("C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R)</code> bude fungovat pouze pokud požíváme operační systém Windows, uživatelský účet se jmenuje <code>ales_</code>, na ploše existuje složka <code>own_project</code> a v ní existuje složka <code>Uvod_do_analyzy_dat_v_R</code>. To znamená, že funkce nebude fungovat na žádném jiném počítačí nebo pokud by se někdy názvy složek změnily. Naštěstí existuje způsob, jak nastavit pracovní adresář dynamicky, tak aby se vždy přizpůsobil konkrétní situaci.</p>
-<p>Řešením je balíček <code>here</code>. Tento balíček dynamicky upravuje cestu k pracovnímu adresáři tak, aby fungoval bez ohledu na to, na jakém počítači a v jaké složce se skript nachází. Velmi dobře přitom spolupracuje s Rstudio projekty.</p>
+<p>Už jsme si ukázali dva způsoby importování a exportování souborů: buď
+můžeme určit adresu souboru v rámci funkce pro import/export nebo můžeme
+na začátku nastavit adresu pracovního adresáře. Oba tyto způsoby ale
+mají jednu nevýhodu: Adresy souborů, případně složek, jsou definované
+staticky. Například funkce
+<code>setwd("C:/Users/ales_/Desktop/own_projects/Uvod_do_analyzy_dat_v_R)</code>
+bude fungovat pouze pokud požíváme operační systém Windows, uživatelský
+účet se jmenuje <code>ales_</code>, na ploše existuje složka
+<code>own_project</code> a v ní existuje složka
+<code>Uvod_do_analyzy_dat_v_R</code>. To znamená, že funkce nebude
+fungovat na žádném jiném počítačí nebo pokud by se někdy názvy složek
+změnily. Naštěstí existuje způsob, jak nastavit pracovní adresář
+dynamicky, tak aby se vždy přizpůsobil konkrétní situaci.</p>
+<p>Řešením je balíček <code>here</code>. Tento balíček dynamicky
+upravuje cestu k pracovnímu adresáři tak, aby fungoval bez ohledu na to,
+na jakém počítači a v jaké složce se skript nachází. Velmi dobře přitom
+spolupracuje s Rstudio projekty.</p>
 <p>nejdříve je nutné si balíček <code>here</code> stáhnout:</p>
 <pre class="r"><code>install.packages(&quot;here&quot;)</code></pre>
-<p>Když máme balíček stažený, stačí ho vždy nahrát na začátku skriptu pomocí funkce <code>library()</code>:</p>
+<p>Když máme balíček stažený, stačí ho vždy nahrát na začátku skriptu
+pomocí funkce <code>library()</code>:</p>
 <pre class="r"><code>library(here)</code></pre>
-<p>Když balíček poprvé nahrajeme, zobrazí se zpráva <code>here() starts at...</code> následováná adresou. To znamená, že balíček nastavil pracovní adresář tam, kde pracujeme.</p>
-<p>Konkrétní adresu, kterou balíček <code>here</code> nastaví jako pracovní adresář, se řídí několika pravidly (převzato od <a href="https://github.com/jennybc/here_here">Jennifer Bryan</a>):</p>
+<p>Když balíček poprvé nahrajeme, zobrazí se zpráva
+<code>here() starts at...</code> následováná adresou. To znamená, že
+balíček nastavil pracovní adresář tam, kde pracujeme.</p>
+<p>Konkrétní adresu, kterou balíček <code>here</code> nastaví jako
+pracovní adresář, se řídí několika pravidly (převzato od <a
+href="https://github.com/jennybc/here_here">Jennifer Bryan</a>):</p>
 <ol style="list-style-type: decimal">
 <li>Is a file named .here present?</li>
-<li>Is this an RStudio Project? Literally, can I find a file named something like foo.Rproj?</li>
+<li>Is this an RStudio Project? Literally, can I find a file named
+something like foo.Rproj?</li>
 <li>Is this an R package? Does it have a DESCRIPTION file?</li>
 <li>Is this a remake project? Does it have a file named remake.yml?</li>
-<li>Is this a projectile project? Does it have a file named .projectile?</li>
-<li>Is this a checkout from a version control system? Does it have a directory named .git or .svn? Currently, only Git and Subversion are supported</li>
+<li>Is this a projectile project? Does it have a file named
+.projectile?</li>
+<li>Is this a checkout from a version control system? Does it have a
+directory named .git or .svn? Currently, only Git and Subversion are
+supported</li>
 </ol>
-<p>Pro nás je zajímavý zejména bod 2. <code>here</code> nastaví pracovní adresář tam, kde kde se nachází nejbližší soubor <code>.Rproj</code> (pokud dříve nenajde <code>.here</code>). Soubor <code>.Rproj</code> vzniká vytvořením Rstudio projektu. Jinak řečeno, pracovní adresář je vždy nastaven na současný Rstudio projekt. To znamená, že bez ohledu na to, kam složku s Rstudio projekt přesuneme, ať už na našem vlastním počítači nebo jiném jiném, pracovní adresář bude vždy nastaven správně.</p>
-<p>Po tom, co jsme aktivovaly balíček <code>here</code> pomocí <code>library(here)</code>, můžeme použí funkci <code>here()</code> uvnitř funkcí pro export a import dat:</p>
+<p>Pro nás je zajímavý zejména bod 2. <code>here</code> nastaví pracovní
+adresář tam, kde kde se nachází nejbližší soubor <code>.Rproj</code>
+(pokud dříve nenajde <code>.here</code>). Soubor <code>.Rproj</code>
+vzniká vytvořením Rstudio projektu. Jinak řečeno, pracovní adresář je
+vždy nastaven na současný Rstudio projekt. To znamená, že bez ohledu na
+to, kam složku s Rstudio projekt přesuneme, ať už na našem vlastním
+počítači nebo jiném jiném, pracovní adresář bude vždy nastaven
+správně.</p>
+<p>Po tom, co jsme aktivovaly balíček <code>here</code> pomocí
+<code>library(here)</code>, můžeme použí funkci <code>here()</code>
+uvnitř funkcí pro export a import dat:</p>
 <pre class="r"><code>countries = read.csv(here(&quot;countries.csv&quot;))</code></pre>
-<p>Tímto způsobem můžeme importovat data, aniž bychom museli vypisovat přesnou adresu nebo nastavovat pracovní adresář ručně. POkud by data nebyla přímo v pracovním adresáři, ale ve složce uvnitř pracovního adresáře, můžeme ji jednoduše specifikovat. Například, pokud by soubor <code>countries.csv</code> byl ve složce <code>data</code>, která se nachází v pracovní adresáři:</p>
+<p>Tímto způsobem můžeme importovat data, aniž bychom museli vypisovat
+přesnou adresu nebo nastavovat pracovní adresář ručně. POkud by data
+nebyla přímo v pracovním adresáři, ale ve složce uvnitř pracovního
+adresáře, můžeme ji jednoduše specifikovat. Například, pokud by soubor
+<code>countries.csv</code> byl ve složce <code>data</code>, která se
+nachází v pracovní adresáři:</p>
 <pre class="r"><code>countries = read.csv(here(&quot;data&quot;, &quot;countries.csv&quot;))</code></pre>
-<p>Pokud je náš skript uložený uvnitř Rstudio projektu, balíček here zaručuje, že skript bude fungovat vždy bez ohledu na to, kam ho přesuneme.</p>
+<p>Pokud je náš skript uložený uvnitř Rstudio projektu, balíček here
+zaručuje, že skript bude fungovat vždy bez ohledu na to, kam ho
+přesuneme.</p>
 </div>
 <div id="ideální-organizace-práce-v-r" class="section level1">
 <h1>Ideální organizace práce v R</h1>
-<p>Přestože existuje mnoho způsobů, jak organizovat práci v R, následující přístup vede k pravděpodobně nejpřehlednějšímu a nejhladšímu průběhu práce.</p>
+<p>Přestože existuje mnoho způsobů, jak organizovat práci v R,
+následující přístup vede k pravděpodobně nejpřehlednějšímu a nejhladšímu
+průběhu práce.</p>
 <div id="vytvořte-rstudio-projekt" class="section level2">
 <h2>1) Vytvořte Rstudio projekt</h2>
-<p>Každý pracovní projekt by měl mít vlastní Rstudio projekt. Výhody Rstudio projektu jsou shrnuty výše a váží se zejména k individualizovanému nastavení. Jeden Rstudio projekt by také měl korespondovat s pouze jedním pracovním projektem (např. každý školní předmět, případně studie na které pracujete, by měla mít svůj vlastni projekt).</p>
+<p>Každý pracovní projekt by měl mít vlastní Rstudio projekt. Výhody
+Rstudio projektu jsou shrnuty výše a váží se zejména k
+individualizovanému nastavení. Jeden Rstudio projekt by také měl
+korespondovat s pouze jedním pracovním projektem (např. každý školní
+předmět, případně studie na které pracujete, by měla mít svůj vlastni
+projekt).</p>
 </div>
 <div id="uspořádejte-rstudio-projekt" class="section level2">
 <h2>2) Uspořádejte Rstudio projekt</h2>
-<p>Rstudio projekt by neměla být jedna velká složka, ve které jsou smíchané všechny soubory od dat po skripty. Data by měla být uchovávana ve vlastní složce a stejně tak textové soubory (reporty, úkoly). Skripty mohou zůstat v hlavní složce.</p>
+<p>Rstudio projekt by neměla být jedna velká složka, ve které jsou
+smíchané všechny soubory od dat po skripty. Data by měla být uchovávana
+ve vlastní složce a stejně tak textové soubory (reporty, úkoly). Skripty
+mohou zůstat v hlavní složce.</p>
 </div>
 <div id="využívejte-balíčku-here" class="section level2">
 <h2>3) Využívejte balíčku here</h2>
-<p>Import a export dat může být překvapivě zdlouhavou záležitostí.Cesty k souborům měnit pokaždé, když složku s projektem přesuneme. Tento problém se ovšem dá vyřešit pomocí balíčku <code>here</code>, který cesty k souborům kontroluje za nás.</p>
-<p>Tyto typy by měly výrazně ulehčit práci s R a umožnit hladký průběh analýzy. Pro představu, složka projektu, ve kterém pracujeme by měla vypadat nějak takto:</p>
+<p>Import a export dat může být překvapivě zdlouhavou záležitostí.Cesty
+k souborům měnit pokaždé, když složku s projektem přesuneme. Tento
+problém se ovšem dá vyřešit pomocí balíčku <code>here</code>, který
+cesty k souborům kontroluje za nás.</p>
+<p>Tyto typy by měly výrazně ulehčit práci s R a umožnit hladký průběh
+analýzy. Pro představu, složka projektu, ve kterém pracujeme by měla
+vypadat nějak takto:</p>
 <p><img src="images/project_folder.PNG" width="700px" /></p>
 </div>
 </div>

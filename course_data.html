@@ -13,7 +13,7 @@
 
 <title>Data využívaná v kurzu</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -57,6 +57,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -81,6 +82,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -233,7 +237,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -242,47 +246,11 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -343,11 +311,16 @@ $(document).ready(function () {
 </div>
 
 
-<p>V kurzu jsou primárně používaná data o Evropských zemích, získáná z Eurostatu</p>
+<p>V kurzu jsou primárně používaná data o Evropských zemích, získáná z
+Eurostatu</p>
 <p>Data je možné stáhnout v několika formátech:</p>
 <ul>
-<li><p><strong>Comma separated values formát</strong> je ke stažení <a href="https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/countries.csv">zde</a> (klikněte pravým tlačítkem a zvolte <em>Uložit odkaz jako…</em>/<em>Save link as…</em>).</p></li>
-<li><p><strong>RDS formát</strong> <a href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.rds">zde</a>.</p></li>
+<li><p><strong>Comma separated values formát</strong> je ke stažení <a
+href="https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/countries.csv">zde</a>
+(klikněte pravým tlačítkem a zvolte <em>Uložit odkaz jako…</em>/<em>Save
+link as…</em>).</p></li>
+<li><p><strong>RDS formát</strong> <a
+href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.rds">zde</a>.</p></li>
 </ul>
 <p>Data obsahují následující proměnné:</p>
 <table>
@@ -406,7 +379,8 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td align="left">uni_prc</td>
-<td align="left">Podíl lidí s vysokoškolským vzděláním ve věku 15 až 64 let (2018)</td>
+<td align="left">Podíl lidí s vysokoškolským vzděláním ve věku 15 až 64
+let (2018)</td>
 <td align="left">Eurostat</td>
 </tr>
 <tr class="even">
@@ -416,7 +390,8 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td align="left">material_dep</td>
-<td align="left">Podíl lidí s materiální deprivací, 3 nebo méně položek (2017)</td>
+<td align="left">Podíl lidí s materiální deprivací, 3 nebo méně položek
+(2017)</td>
 <td align="left">Eurostat</td>
 </tr>
 <tr class="even">
@@ -436,7 +411,9 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p>Pro práci v kurzu doporučujeme stáhnout data v obou formátech (<code>.csv</code> i <code>.rds</code>) a uložit si je do podsložky <code>data</code> ve složce s ostatními materiály ke kurzu.</p>
+<p>Pro práci v kurzu doporučujeme stáhnout data v obou formátech
+(<code>.csv</code> i <code>.rds</code>) a uložit si je do podsložky
+<code>data</code> ve složce s ostatními materiály ke kurzu.</p>
 
 
 

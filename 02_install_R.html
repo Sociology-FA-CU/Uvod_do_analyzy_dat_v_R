@@ -13,7 +13,7 @@
 
 <title>Instalace R, Rstudia a Tidyverse</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -60,6 +60,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -84,6 +85,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -309,7 +313,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -318,47 +322,11 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -419,18 +387,39 @@ div.tocify {
 </div>
 
 
-<p>Před použitím R je nutné si ho nainstalovat na svůj počítač. Poté nainstalujeme Rstudio, rozhraní které práci s R usnadňuje. Nakonec nainstalujeme soubor balíčků Tidyverse, se kterými budeme pracovat. Je přitom nutné instalaci provést v tomto pořadí.</p>
+<p>Před použitím R je nutné si ho nainstalovat na svůj počítač. Poté
+nainstalujeme Rstudio, rozhraní které práci s R usnadňuje. Nakonec
+nainstalujeme soubor balíčků Tidyverse, se kterými budeme pracovat. Je
+přitom nutné instalaci provést v tomto pořadí.</p>
 <div id="instalace-r" class="section level1">
 <h1>Instalace R</h1>
-<p>Jako první je třeba nainstalovat R samotné. Odkaz na stažení je možné naléz na <a href="https://mirrors.nic.cz/R/" class="uri">https://mirrors.nic.cz/R/</a> (případně jsou na hlavní stránce <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>).</p>
+<p>Jako první je třeba nainstalovat R samotné. Odkaz na stažení je možné
+naléz na <a href="https://mirrors.nic.cz/R/"
+class="uri">https://mirrors.nic.cz/R/</a> (případně jsou na hlavní
+stránce <a href="https://www.r-project.org/"
+class="uri">https://www.r-project.org/</a>).</p>
 <p>Je třeba stáhnout verzi R odpovídající vašemu operačním systému:</p>
 <ul>
-<li>Pro Windows verzi: <a href="https://mirrors.nic.cz/R/bin/windows/">Download R for Windows</a> (soubor base)</li>
-<li>Pro MacOS verzi:Download <a href="https://mirrors.nic.cz/R/bin/macosx/">R for (Mac) OS X</a> (pod <em>Latest release</em> soubor s koncovkou .pkg)</li>
-<li>Pro Linux verzi: <a href="https://mirrors.nic.cz/R/bin/linux/">Download R for Linux</a> (je třeba zvolit odpovídající distribuci)</li>
+<li>Pro Windows verzi: <a
+href="https://mirrors.nic.cz/R/bin/windows/">Download R for Windows</a>
+(soubor base)</li>
+<li>Pro MacOS verzi:Download <a
+href="https://mirrors.nic.cz/R/bin/macosx/">R for (Mac) OS X</a> (pod
+<em>Latest release</em> soubor s koncovkou .pkg)</li>
+<li>Pro Linux verzi: <a
+href="https://mirrors.nic.cz/R/bin/linux/">Download R for Linux</a> (je
+třeba zvolit odpovídající distribuci)</li>
 </ul>
-<p>Po stažení se R instaluje jako jakýkoliv jiný program. Vyberte si adresu, kam si chcete R nainstalovat. Nainstalujte si verzi odpovídající vašemu systému (např. Windows 32bit vs Windows 64bit. Pokud si nejste jistí, jakou verzi Windows máte, konzultujte <a href="https://support.microsoft.com/cs-cz/help/15056/windows-32-64-bit-faq">nápovědu</a>). Zvolte default startup možnost.</p>
-<p>Teď byste měli mít nainstalovanou základní verzi R. Přesvědčit se o tom můžete jeho spuštěním buď přes ikonu na ploše (pokud jste si ji zvolili během instalace), přes start menu nebo přímo ve složce, kde je R nainstalované. Pokud R spustíte, bude vypadat takto:</p>
+<p>Po stažení se R instaluje jako jakýkoliv jiný program. Vyberte si
+adresu, kam si chcete R nainstalovat. Nainstalujte si verzi odpovídající
+vašemu systému (např. Windows 32bit vs Windows 64bit. Pokud si nejste
+jistí, jakou verzi Windows máte, konzultujte <a
+href="https://support.microsoft.com/cs-cz/help/15056/windows-32-64-bit-faq">nápovědu</a>).
+Zvolte default startup možnost.</p>
+<p>Teď byste měli mít nainstalovanou základní verzi R. Přesvědčit se o
+tom můžete jeho spuštěním buď přes ikonu na ploše (pokud jste si ji
+zvolili během instalace), přes start menu nebo přímo ve složce, kde je R
+nainstalované. Pokud R spustíte, bude vypadat takto:</p>
 <div class="figure">
 <img src="images/R_install.png" alt="Základní vzhled R" width="700" />
 <p class="caption">
@@ -440,25 +429,52 @@ Základní vzhled R
 </div>
 <div id="instalace-rozhraní-rstudio" class="section level1">
 <h1>Instalace rozhraní Rstudio</h1>
-<p>Dalším krokem je nainstalovat vývojářské prostředí Rstudio. Rstudio je momžné nalézt na <a href="https://rstudio.com" class="uri">https://rstudio.com</a>. Odkazy na stažení Rstudia najdeme na <a href="https://rstudio.com/products/rstudio/download/#download" class="uri">https://rstudio.com/products/rstudio/download/#download</a>. Znovu si pod odrážkou <em>All installers</em> vyberte verzi odpovíající vašemu operačnímu systému (Windows, Mac OS, Linux).</p>
-<p><strong>Důležitá poznámka</strong>: Pokud používáte 32bitovou verzi operačního systému, je nutné si stáhnout starší verzi Rstudia <a href="https://rstudio.com/products/rstudio/older-versions/">zde</a>, protože ty nejnovější už 32bitové systémy nepodporuje.</p>
-<p>Znovu nainstalujte jako jiné programy. Po instalaci se můžete přesvědčit, že je Rstudio správně nainstalováno jeho spuštěním přes ikonu nebo přímo ze složky, kam jste ho nainstalovali. Rstudio při prvním spuštění vypadá takto:</p>
+<p>Dalším krokem je nainstalovat vývojářské prostředí Rstudio. Rstudio
+je momžné nalézt na <a href="https://rstudio.com"
+class="uri">https://rstudio.com</a>. Odkazy na stažení Rstudia najdeme
+na <a href="https://rstudio.com/products/rstudio/download/#download"
+class="uri">https://rstudio.com/products/rstudio/download/#download</a>.
+Znovu si pod odrážkou <em>All installers</em> vyberte verzi odpovíající
+vašemu operačnímu systému (Windows, Mac OS, Linux).</p>
+<p><strong>Důležitá poznámka</strong>: Pokud používáte 32bitovou verzi
+operačního systému, je nutné si stáhnout starší verzi Rstudia <a
+href="https://rstudio.com/products/rstudio/older-versions/">zde</a>,
+protože ty nejnovější už 32bitové systémy nepodporuje.</p>
+<p>Znovu nainstalujte jako jiné programy. Po instalaci se můžete
+přesvědčit, že je Rstudio správně nainstalováno jeho spuštěním přes
+ikonu nebo přímo ze složky, kam jste ho nainstalovali. Rstudio při
+prvním spuštění vypadá takto:</p>
 <div class="figure">
-<img src="images/Rstudio_install.PNG" alt="" />
-<p class="caption">Základní vzhled Rstudia</p>
+<img src="images/Rstudio_install.PNG" alt="Základní vzhled Rstudia" width="960" />
+<p class="caption">
+Základní vzhled Rstudia
+</p>
 </div>
 </div>
 <div id="instalace-balíčků-tidyverse" class="section level1">
 <h1>Instalace balíčků Tidyverse</h1>
-<p>Posledním krokem je instalace skupiny balíčků <a href="https://www.tidyverse.org/">Tidyverse</a>. To se provádí přímo z Rstudia (resp. z R). Ujistěte se, že jste připojení k internetu, abyste si mohli balíčky stáhnout. Spusťte Rstudio a všimněte si, že na levé straně je konzole, do které můžete psát. Balíčky se v R instalují pomocí funkce <code>install.packages()</code>. Pro instalaci Tidyverse tedy do konzole napište <code>install.packages("tidyverse")</code> a stiskněte Enter, viz. obrázek:</p>
+<p>Posledním krokem je instalace skupiny balíčků <a
+href="https://www.tidyverse.org/">Tidyverse</a>. To se provádí přímo z
+Rstudia (resp. z R). Ujistěte se, že jste připojení k internetu, abyste
+si mohli balíčky stáhnout. Spusťte Rstudio a všimněte si, že na levé
+straně je konzole, do které můžete psát. Balíčky se v R instalují pomocí
+funkce <code>install.packages()</code>. Pro instalaci Tidyverse tedy do
+konzole napište <code>install.packages("tidyverse")</code> a stiskněte
+Enter, viz. obrázek:</p>
 <div class="figure">
 <img src="images/tidyverse_install.PNG" alt="Instalace Tidyverse" width="700" />
 <p class="caption">
 Instalace Tidyverse
 </p>
 </div>
-<p>R všechny balíčky samo stáhne a nainstaluje, takže stačí trpělivě čekat. Úspěšnou instalaci poznáte podle zprávy v konzoli s textem <code>package …. successfully unpacked and MD5 sums checked</code> (zpráva se objeví několikrát, protože R bude instalovat více balíčků najednou).</p>
-<p>Nakonec si úspěšnou instalaci můžete ověřit tím, že nainstalovaný balíček nahrajete/zapojíte příkazem <code>library(tidyverse)</code>. Úspěšné nahrání bude vypadat takto:</p>
+<p>R všechny balíčky samo stáhne a nainstaluje, takže stačí trpělivě
+čekat. Úspěšnou instalaci poznáte podle zprávy v konzoli s textem
+<code>package …. successfully unpacked and MD5 sums checked</code>
+(zpráva se objeví několikrát, protože R bude instalovat více balíčků
+najednou).</p>
+<p>Nakonec si úspěšnou instalaci můžete ověřit tím, že nainstalovaný
+balíček nahrajete/zapojíte příkazem <code>library(tidyverse)</code>.
+Úspěšné nahrání bude vypadat takto:</p>
 <div class="figure">
 <img src="images/tidyverse_load.PNG" alt="Úspěšné nahrání tidyverse" width="700" />
 <p class="caption">
@@ -468,10 +484,22 @@ Instalace Tidyverse
 </div>
 <div id="poslední-kroky" class="section level1">
 <h1>Poslední kroky</h1>
-<p>Jako úplně poslední věc se vyplatí změnit dvě výchozí nastavení, abychom si dlouhodobě ušetřili práci. R ve výchozím nastavení ukládá všechny nahraná data a další vámi vytvořerné objekty a nahraje je pokaždé, když R znovu zapnete. To je ovšem v praxi spíše na škodu, protože to znamená, že zanedlouho budete mít vaše prostředí zaneřáděné daty z předchozích hodin a projektů. Tomu se dá jednoduše zabránit tím, že si v Rstudiu otevřete záložku <strong>Tools</strong>, a v ní volbu <strong>Global options</strong>. V tomto nastevení <em>odškrtněte</em> možnost <strong>Restore .Rdata into workspace at startup</strong> a zároveň nastavte možnost <strong>Save workspace to .Rdata on exit</strong> na <em>never</em> tak, jak je to na obrázku níže.</p>
+<p>Jako úplně poslední věc se vyplatí změnit dvě výchozí nastavení,
+abychom si dlouhodobě ušetřili práci. R ve výchozím nastavení ukládá
+všechny nahraná data a další vámi vytvořerné objekty a nahraje je
+pokaždé, když R znovu zapnete. To je ovšem v praxi spíše na škodu,
+protože to znamená, že zanedlouho budete mít vaše prostředí zaneřáděné
+daty z předchozích hodin a projektů. Tomu se dá jednoduše zabránit tím,
+že si v Rstudiu otevřete záložku <strong>Tools</strong>, a v ní volbu
+<strong>Global options</strong>. V tomto nastevení <em>odškrtněte</em>
+možnost <strong>Restore .Rdata into workspace at startup</strong> a
+zároveň nastavte možnost <strong>Save workspace to .Rdata on
+exit</strong> na <em>never</em> tak, jak je to na obrázku níže.</p>
 <div class="figure">
-<img src="images/rstudio-startup-settings.png" alt="" />
-<p class="caption">Nastavení .Rdata workspace</p>
+<img src="images/rstudio-startup-settings.png" alt="Nastavení .Rdata workspace" width="295" />
+<p class="caption">
+Nastavení .Rdata workspace
+</p>
 </div>
 </div>
 

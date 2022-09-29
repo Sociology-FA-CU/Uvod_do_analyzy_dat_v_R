@@ -4,27 +4,7 @@ navbar:
   title: "Úvod do analýzy dat v R"
   left:
     - text: "Materiály k přednáškám"
-      menu:
-        - text: "Představení R"
-          href: 01_intro_R.html
-        - text: "Instalace R, R studia a tidyverse"
-          href: 02_install_R.html
-        - text: "Objekty, proměnné a funkce"
-          href: 03_objects_functions.html
-        - text: "Import a export dat"
-          href: 04_import_export.html
-        - text: "Prohlížení a manipulce s dataframem"
-          href: 05_dataframe_manipulation.html
-        - text: "Manipulace a sumarizace proměnných"
-          href: 06_variables_mutate_summarise.html
-        - text: "Práce s faktory"
-          href: 07_factors.html
-        - text: "Vytváření grafů"
-          href: 08_data_visualization.html
-        - text: "Vzhled grafů"
-          href: 09_plot_format.html
-        - text: "Práce se stringy"
-          href: 10_strings.html
+      href: https://sociology-fa-cu.github.io/uvod-do-r-kniha/
     - text: "Domácí úkoly"
       menu:
         - text: "Objekty, proměnné a funkce"

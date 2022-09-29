@@ -13,7 +13,7 @@
 
 <title>ggplot2 - Domácí úkoly</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
@@ -58,6 +58,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -82,6 +83,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -237,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -246,47 +250,11 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Materiály k přednáškám
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="01_intro_R.html">Představení R</a>
-    </li>
-    <li>
-      <a href="02_install_R.html">Instalace R, R studia a tidyverse</a>
-    </li>
-    <li>
-      <a href="03_objects_functions.html">Objekty, proměnné a funkce</a>
-    </li>
-    <li>
-      <a href="04_import_export.html">Import a export dat</a>
-    </li>
-    <li>
-      <a href="05_dataframe_manipulation.html">Prohlížení a manipulce s dataframem</a>
-    </li>
-    <li>
-      <a href="06_variables_mutate_summarise.html">Manipulace a sumarizace proměnných</a>
-    </li>
-    <li>
-      <a href="07_factors.html">Práce s faktory</a>
-    </li>
-    <li>
-      <a href="08_data_visualization.html">Vytváření grafů</a>
-    </li>
-    <li>
-      <a href="09_plot_format.html">Vzhled grafů</a>
-    </li>
-    <li>
-      <a href="10_strings.html">Práce se stringy</a>
-    </li>
-  </ul>
+        <li>
+  <a href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Materiály k přednáškám</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Domácí úkoly
      
     <span class="caret"></span>
@@ -341,7 +309,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -357,7 +325,8 @@ $(document).ready(function () {
 
 <div id="úkol" class="section level3">
 <h3>1. úkol</h3>
-<p>Vytvořte sloupcový graf pro proměnnou <em>Kategorizovaný index demokracie</em>.</p>
+<p>Vytvořte sloupcový graf pro proměnnou <em>Kategorizovaný index
+demokracie</em>.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>countries %&gt;% count(di_cat) %&gt;% 
   ggplot(aes(x = di_cat, y = n)) + geom_col()
@@ -366,7 +335,8 @@ $(document).ready(function () {
 qplot(x = di_cat, data = countries)</code></pre>
 <div id="úkol-1" class="section level4">
 <h4>2. úkol</h4>
-<p>Přidejde do grafu z 1. úkolu nad každý sloupec popisek, vyjadřující počet zemí v dané kategorii. Popisky by měli být nad sloupci.</p>
+<p>Přidejde do grafu z 1. úkolu nad každý sloupec popisek, vyjadřující
+počet zemí v dané kategorii. Popisky by měli být nad sloupci.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>countries %&gt;% count(di_cat) %&gt;% 
   ggplot(aes(x = di_cat, y = n, label = n)) +
@@ -376,13 +346,17 @@ qplot(x = di_cat, data = countries)</code></pre>
 </div>
 <div id="úkol-2" class="section level3">
 <h3>3. úkol</h3>
-<p>Vytvořte boxploty, které budou vyjadřovat vztah mezi proměnnými <em>Kategorizovaný index demokracie</em> a <em>Naděje na dožití</em>.</p>
+<p>Vytvořte boxploty, které budou vyjadřovat vztah mezi proměnnými
+<em>Kategorizovaný index demokracie</em> a <em>Naděje na
+dožití</em>.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>ggplot(aes(x = di_cat, y = life_exp), data = countries) + geom_boxplot()</code></pre>
 </div>
 <div id="úkol-3" class="section level3">
 <h3>4. úkol</h3>
-<p>Odfiltrujte kategorii <em>NA</em> z grafu z 2. úkolu a seřaďte boxploty do pořadí “Full democracy”, “Flawed democracy” a “Hybrid regime”:</p>
+<p>Odfiltrujte kategorii <em>NA</em> z grafu z 2. úkolu a seřaďte
+boxploty do pořadí “Full democracy”, “Flawed democracy” a “Hybrid
+regime”:</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>countries %&gt;%
   filter(!is.na(di_cat)) %&gt;% #odfiltruje chybejici hodnoty
@@ -391,18 +365,22 @@ qplot(x = di_cat, data = countries)</code></pre>
 </div>
 <div id="úkol-4" class="section level3">
 <h3>5. úkol</h3>
-<p>Vytvořte scatterplot pro proměnné <em>Podíl lidí s vysokoškolským vzděláním</em> a <em>Naděje na dožití</em>.</p>
+<p>Vytvořte scatterplot pro proměnné <em>Podíl lidí s vysokoškolským
+vzděláním</em> a <em>Naděje na dožití</em>.</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>ggplot(aes(x = uni_prc, y = life_exp), data = countries) + geom_point()</code></pre>
 </div>
 <div id="úkol-5" class="section level3">
 <h3>6. úkol</h3>
-<p>Ve grafu z 5. úkolu od sebe barevně odlište postsovětské a západní země a tvarem bodu od sebe odlište země spadající do různých kategorií Kategorizovaného indexu demokracie.</p>
+<p>Ve grafu z 5. úkolu od sebe barevně odlište postsovětské a západní
+země a tvarem bodu od sebe odlište země spadající do různých kategorií
+Kategorizovaného indexu demokracie.</p>
 <pre class="r"><code>ggplot(aes(x = uni_prc, y = life_exp, color = postsoviet, shape = di_cat), data = countries) + geom_point()</code></pre>
 </div>
 <div id="úkol-6" class="section level3">
 <h3>7. úkol</h3>
-<p>Replikujte následující graf (Budete potřebovat balíček <code>scales</code>).</p>
+<p>Replikujte následující graf (Budete potřebovat balíček
+<code>scales</code>).</p>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>library(scales)
 
@@ -426,7 +404,9 @@ ggplot(data = countries, aes(x = uni_prc, y = life_exp)) +
 <ol style="list-style-type: decimal">
 <li>Budete potřebovat balíček <code>scales</code>.</li>
 <li>Barvy pochází z brewer palety <code>Set1</code>.</li>
-<li>Pozadí a celkový vzhled je možné měnit pomocí předpřipravených themes (např. <code>theme_bw()</code>, <code>theme_minimal()</code>,…).</li>
+<li>Pozadí a celkový vzhled je možné měnit pomocí předpřipravených
+themes (např. <code>theme_bw()</code>,
+<code>theme_minimal()</code>,…).</li>
 </ol>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>countries %&gt;% 
@@ -445,7 +425,8 @@ ggplot(data = countries, aes(x = uni_prc, y = life_exp)) +
 </div>
 <div id="úkol-8" class="section level3">
 <h3>9. úkol</h3>
-<p>Vytvořte si simulovaná data pomocí následujícího skriptu (klikněte na tlačítko <strong>code</strong> vpravo):</p>
+<p>Vytvořte si simulovaná data pomocí následujícího skriptu (klikněte na
+tlačítko <strong>code</strong> vpravo):</p>
 <pre class="r"><code>likert = c(&quot;Spokojen&quot;, &quot;Spíše spokojen&quot;, &quot;Spíše nespokojen&quot;, &quot;Nespokojen&quot;)
 
 spokojenost = data.frame(spokojenst_prace = sample(likert, size = 100 ,replace = TRUE, prob = c(0.2, 0.5, 0.3, 0.1)),
@@ -456,7 +437,9 @@ spokojenost = data.frame(spokojenst_prace = sample(likert, size = 100 ,replace =
 <p>Několik tipů:</p>
 <ol style="list-style-type: decimal">
 <li>Budete potřebovat balíček scales.</li>
-<li>Barvy pochází z brewer palety. Přehled palet najdete pomocí funkce <code>display.brewer.all()</code> z balíčku <code>RColorBrewer</code>.</li>
+<li>Barvy pochází z brewer palety. Přehled palet najdete pomocí funkce
+<code>display.brewer.all()</code> z balíčku
+<code>RColorBrewer</code>.</li>
 </ol>
 <p>Pro odpověď klikněte na tlačítko <strong>code</strong>:</p>
 <pre class="r"><code>spokojenost %&gt;%
