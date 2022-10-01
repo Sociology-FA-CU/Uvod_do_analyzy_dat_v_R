@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.1.245">
@@ -47,15 +47,15 @@ ul.task-list li input[type="checkbox"] {
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Žádný výsledek",
+    "search-matching-documents-text": "Nalezené výsledky",
+    "search-copy-link-title": "Zkopírovat odkaz pro vyhledávání",
+    "search-hide-matches-text": "Skrýt další výsledky",
+    "search-more-match-text": "další výsledek v tomto dokumentu",
+    "search-more-matches-text": "dalších výsledků v tomto dokumentu",
+    "search-clear-button-title": "Vymazat",
+    "search-detached-cancel-button-title": "Zrušit",
+    "search-submit-button-title": "Odeslat"
   }
 }</script>
 
@@ -86,8 +86,45 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="https://sociology-fa-cu.github.io/uvod-do-r-kniha/">Skripta</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./atestace.html">Podmínky atestace</a>
+    <a class="nav-link" href="./atestace.html">Atestace</a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-domácí-cvičení" role="button" data-bs-toggle="dropdown" aria-expanded="false">Domácí cvičení</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-domácí-cvičení">    
+        <li>
+    <a class="dropdown-item" href="./procvicovani-objekty.html">
+ <span class="dropdown-text">Objekty, promenné a funkce</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-import-export.html">
+ <span class="dropdown-text">Import a export dat</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-dataframy.html">
+ <span class="dropdown-text">Manipulace s dataframy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-promenne-1.html">
+ <span class="dropdown-text">Manipulace s proměnnými 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-promenne-2.html">
+ <span class="dropdown-text">Manipulace s proměnnými 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-promenne-3.html">
+ <span class="dropdown-text">Manipulace s proměnnými 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-faktory.html">
+ <span class="dropdown-text">Práce s faktory</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./procvicovani-vizualizace.html">
+ <span class="dropdown-text">Vizualizace proměnných</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link active" href="./data.html" aria-current="page">Data</a>
   </li>  
@@ -129,14 +166,14 @@ ul.task-list li input[type="checkbox"] {
 <p>V kurzu jsou primárně využívaná data o Evropských zemích, získáná z Eurostatu.</p>
 <p>Dataset je možné stáhnout v několika formátech:</p>
 <ul>
-<li><p><strong>Comma separated values formát</strong>&nbsp;je ke stažení&nbsp;<a href="https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/countries.csv">zde</a>&nbsp;(klikněte pravým tlačítkem a zvolte&nbsp;<em>Uložit odkaz jako…</em>/<em>Save link as…</em>).</p></li>
-<li><p><strong>RDS formát</strong>&nbsp;<a href="https://github.com/alesvomacka/Uvod_do_analyzy_dat_v_R/raw/master/data/countries.rds">zde</a>.</p></li>
+<li><p><strong>Comma separated values formát</strong>&nbsp;je ke stažení&nbsp;<a href="https://github.com/Sociology-FA-CU/uvod-do-r/raw/master/data/cvvm_cerven_2019.csv">zde</a>&nbsp;(klikněte pravým tlačítkem a zvolte&nbsp;<em>Uložit odkaz jako…</em>/<em>Save link as…</em>).</p></li>
+<li><p><strong>RDS formát</strong>&nbsp;<a href="https://github.com/Sociology-FA-CU/uvod-do-r/raw/master/data/countries.rds">zde</a>.</p></li>
 </ul>
 <p>Data obsahují následující proměnné:</p>
 <table class="table">
 <colgroup>
-<col style="width: 15%">
-<col style="width: 62%">
+<col style="width: 21%">
+<col style="width: 56%">
 <col style="width: 21%">
 </colgroup>
 <thead>
@@ -263,7 +300,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Zkopírováno!");
     setTimeout(function() {
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
