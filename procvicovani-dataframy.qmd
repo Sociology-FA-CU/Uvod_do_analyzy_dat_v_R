@@ -1,0 +1,42 @@
+---
+title: "Domácí cvičení - Manipulace s dataframy"
+---
+
+### Úkol 1
+
+Zobrazte posledních 10 řádku dataframu `countries`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+tail(countries, 10)
+#nebo
+slice_tail(countries, n = 10)
+```
+</details>
+
+### Úkol 2
+
+Kolik unikátních hodnot obsahuje proměnná `di_cat`?
+
+<details>
+<summary>Řešení</summary>
+``` r
+length(unique(countries$di_cat))
+#nebo
+unique(countries$di_cat) %>% length()
+```
+</details>
+
+### Úkol 3
+
+Kolik chybějích hodnot obsahuje proměnná `di_cat`?
+
+<details>
+<summary>Řešení</summary>
+``` r
+sum(is.na(countries$di_cat))
+#nebo
+is.na(countries$di_cat) %>% sum() #proměnná di_cat obsahuje 1 chybějící hodnotu
+```
+</details>

@@ -1,0 +1,95 @@
+---
+title: "Domácí cvičení - Práce s faktory"
+---
+
+### Úkol 1
+
+Převeďte proměnnou `di_cat` na faktor a změnu uložte do dataframu `countries`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries <- countries %>% 
+  mutate(di_cat = as_factor(di_cat))
+```
+</details>
+
+### Úkol 2
+
+Zmeňte pořadí úrovní (*levels*) u nově vytvořeného faktoru `di_cat` od nejvíce po nejméně demokratickou úroveň a výsledek opět uložte do objektu `countries`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries <- countries %>% 
+  mutate(di_cat = fct_relevel(di_cat, "Full democracy", "Flawed democracy", "Hybrid regime"))
+```
+</details>
+
+### Úkol 3
+
+Vizualizujte proměnnou `di_cat` pomocí funnkce `qplot()`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+qplot(x = di_cat, data = countries)
+```
+</details>
+
+### Úkol 4
+
+Nyní otočte pořadí úrovní a a znovu proměnnou vizualizujte.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% 
+  mutate(di_cat = fct_rev(di_cat)) %>% 
+  qplot(x = di_cat)
+```
+</details>
+
+### Úkol 5
+
+Spojte úrovně `“Flawed democracy”` a `“Full democracy”` do jedné (`“Democracy”`) a zároveň úroveň `“Hybrid regime”` přejmenujte na `“Non-democracy”`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% 
+  mutate(di_cat = fct_collapse(di_cat, 
+                               "Democracy" = c ("Flawed democracy", "Full democracy"),
+                               "Non-democracy" = "Hybrid regime"))
+```
+</details>
+
+### Úkol 6
+
+Změňte pořadí úrovní podle průměrné hodnoty `gdp`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% 
+  mutate(di_cat = fct_reorder(.f = di_cat, 
+                              .x = gdp, 
+                              .fun = mean, 
+                              na.rm=TRUE))
+```
+</details>
+
+### Úkol 7
+
+Vytvořte nový faktor `povery_risk_halves`, který bude mít hodnotu `Lower half”` pro země s ohrožením chudobou nižším než medián, hodnotu `“Median”` pro země (zemi) přesně s mediánovou hodnotou, a hodnotu `“Upper half”` pro země s ohrožením chudobou větším než medián.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% 
+  mutate(poverty_risk_halves = case_when(poverty_risk < median(poverty_risk, na.rm=TRUE) ~ "Lower half",
+                                         poverty_risk == median(poverty_risk, na.rm=TRUE) ~ "Median",
+                                         poverty_risk > median(poverty_risk, na.rm=TRUE) ~ "Upper half"),
+         poverty_risk_halves = as.factor(poverty_risk_halves))
+```
+</details>

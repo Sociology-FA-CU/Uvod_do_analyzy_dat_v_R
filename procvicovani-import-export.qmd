@@ -1,0 +1,26 @@
+---
+title: "Domácí cvičení - Import a export dat"
+---
+
+### Úkol 1
+
+Importujte dataset `countries.csv` do R jako dataframe jménem `countries`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+library(tidyverse)
+countries <- read_csv("countries.csv")
+```
+</details>
+
+### Úkol 2
+
+Exportujte dataframe `countries` jako soubor ve formátu `.rds`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+write_rds(countries, "conutries.rds")
+```
+</details>

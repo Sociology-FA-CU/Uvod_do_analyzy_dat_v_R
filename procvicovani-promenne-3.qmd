@@ -1,0 +1,61 @@
+---
+title: "Domací cvičení - Manipulace s proměnnými 3"
+---
+
+### Úkol 1
+
+Najděte pro proměnné `uni_prc` a `poverty_risk` následující hodnoty - median, mezikvartilové rozpětí, rozptyl.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% 
+  summarise(across(c("uni_prc", "poverty_risk"),
+                               lst(median, IQR, var),
+                               na.rm = TRUE))
+```
+</details>
+
+### Úkol 2
+
+Pro všechny numerické proměnné v datasetu spočítejte následující hodnoty: minimum, median, mean, maximum, sd, IQR, var. Výsledný objekt přetvořte do dlouhého formátu (dva sloupce) tak, že názvy funkcí budou pojmenovány `descriptive_stats` a samotné hodnoty budou pojmenovány `results`. Výsledný objekt pojmenujte `descriptives`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+descriptives <- countries %>% 
+  summarise(across(where(is.numeric) & !X,
+                   lst(min, median, mean, max, sd, IQR, var),
+                   na.rm=TRUE)) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "descriptive_stats",
+               values_to = "results")
+
+```
+</details>
+
+### Úkol 3
+
+Pro proměnné `dem_index` a `life_exp` spočítejte minimum, median a maximum v rámci podskupin dle toho, jaké je v zemi hlavní náboženství. Výsledný objekt pojmenujte `stats_by_relig`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+stats_by_relig <- countries %>% 
+  group_by(maj_belief) %>% 
+  summarise(across(c("dem_index", "life_exp"),
+                   lst(min, median, max),
+                   na.rm=TRUE))
+```
+</details>
+
+### Úkol 4
+
+Nový objekt `stats_by_relig` transformujte do dlouhého formátu. Pozor, na rozdíl od situací, se kterými jsme se už setkali, je zde přítomen popisný sloupec `maj_belief` (popisuje skupinu), který neobsahuje hodoty - ten proto musíte z argumentu cols funkce `pivot_longer()` vyjmout.
+
+<details>
+<summary>Řešení</summary>
+``` r
+stats_by_relig %>% pivot_longer(cols = !maj_belief)
+```
+</details>

@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Úvod do analýzy dat v R"
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Anotace
+      - href: https://sociology-fa-cu.github.io/uvod-do-r-kniha/
+        text: Skripta
+      - href: atestace.qmd
+        text: Atestace
+      - text: Domácí cvičení
+        menu: 
+          - href: procvicovani-objekty.qmd
+            text: Objekty, promenné a funkce
+          - href: procvicovani-import-export.qmd
+            text: Import a export dat
+          - href: procvicovani-dataframy.qmd
+            text: Manipulace s dataframy
+          - href: procvicovani-promenne-1.qmd
+            text: Manipulace s proměnnými 1
+          - href: procvicovani-promenne-2.qmd
+            text: Manipulace s proměnnými 2
+          - href: procvicovani-promenne-3.qmd
+            text: Manipulace s proměnnými 3
+          - href: procvicovani-faktory.qmd  
+            text: Práce s faktory
+          - href: procvicovani-vizualizace.qmd
+            text: Vizualizace proměnných
+      - href: data.qmd
+        text: Data
+      - href: literatura.qmd
+        text: Doporučená literatura
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+lang: cs

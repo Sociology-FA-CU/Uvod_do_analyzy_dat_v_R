@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Anotace kurzu",
+    "section": "",
+    "text": "Vyučující: Mgr. Aleš Vomáčka\nKurz je úvodem do programovacího jazyka R vyvinutého pro statistickou analýzu dat. V kurzu není předpokládána předchozí znalost jazyka R, ale podmínkou je základní znalost statistiky a výhodou jsou předchozí zkušenosti s analýzou dat. Minimálním vstupním předpokladem pro je absolvování kurzů prvního ročníku Statistika 1 (ASG100117), Seminář ke statistice 1 (ASG100118) a doporučujeme si ho tedy nechat nejdříve do 2. ročníku bakalářského studia.\nV kurzu vycházíme z moderního přístupu k analýze dat v R pomocí vývojového prostředí R Studio a \"gramatiky\" Tidyverse. Tento přístup dnes mezi uživatelskou komunitou pravděpodobně převažuje.\nUčit se R je běh na dlouhou trať. Je to cesta, která znamená mnohem větší časovou investici než zvládnutí softwaru s GUI, jako je například SPSS. Odměnou je mnohem větší flexibilita a v ruce univerzální nástroj pro zpracování dat, analýzu, vizualizaci, ale i programování a automatizaci. Přestože v kurzu se tak daleko nedostaneme, v R je dnes díky dostupným knihovnám a nástrojům možné vytvářet také interaktivní grafické aplikace, webové stránky (tato webová stránka byla vytvořena v R), prezentace a kromě standardní statistické analýzy jsou dostupné také nástroje tzv. strojového učení. Tento kurz má smysl především pro ty studenty, kteří se chtějí ve své sociologické dráze zaměřovat kvantitativně a kteří jsou připraveni k samostudiu a dalšímu rozvoji skromných základů, které jim kurz nabídne.\nÚčast na výuce předpokládá vlastní notebook s připojením k internetu."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About page about this page."
+  },
+  {
+    "objectID": "atestace.html",
+    "href": "atestace.html",
+    "title": "Podmínky atestace",
+    "section": "",
+    "text": "V červnu roku 2019 provedlo Centrum pro výzkum veřejného mínění průzkum zaměřený na to, jak veřejnost hodnotí závažnost vybraných celospolečenských hrozeb a připravenost České republiky na ně. Respondenti byly dotazováni na zhruba 26 hrozeb a pro každou z nich určili, jak je podle nich závažná a jak dobře jsme na ni připravení. Celá zpráva s názvem Celospolečenské hrozby podle veřejnosti je k nalezení zde\nPro získání zápočtu splňte jedno z následujících:\n\nReplikujte Tabulku 1 a Tabulku 2 ve zprávě. Výsledkem by měli být dva objekty (ideálně dataframy), z nichž každý bude obsahovat čtyři sloupce: Název hrozby, Průměrná hodnota, Směrodatná odchylka a % odpovědí nevím. Pořadí hrozeb by mělo být seřazeno sestupně podle Průměrné hodnoty. Název tabulky ani poznámky pod čarou replikovat nemusíte.\nReplikujte Graf 1. Drobné odchylky od originálu nevadí (např. odstín barev, font a velikost písma), ale graf by měl obsahovat všechny důležité aspekty, jako popisky os, barevné rozlišení bodů, legendu, atd. Nezapomeňtě ani na název a popis grafu.\n\nV obou případech odevzdejte skript, který musí být plně funkční, tedy musí proběhnout bez chyby od začátku do konce bez vnějších zásahů.\nData pro vypracování úkolu jsou k nalezení buď v Českém sociálněvědním datovém archivu, nebo ke stažení rovnou zde.\nPřípadně stáhnout rovnou v R pomocí funkce:\ncvvm = read.csv(\"https://raw.githubusercontent.com/alesvomacka/Uvod_do_analyzy_dat_v_R/master/data/cvvm_cerven_2019.csv\")\nDotazník s popisem otázek je možné stejně jako data stáhout v Datovém archivu, případně zde."
+  },
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Data využívaná v kurzu",
+    "section": "",
+    "text": "Dataset je možné stáhnout v několika formátech:\n\nComma separated values formát je ke stažení zde (klikněte pravým tlačítkem a zvolte Uložit odkaz jako…/Save link as…).\nRDS formát zde.\n\nData obsahují následující proměnné:\n\n\n\n\n\n\n\n\nJméno proměnné\nPopis\nZdroj\n\n\n\n\ncountry\nJméno země\n\n\n\ncode\nDvoumístný ISO kód země\n\n\n\ngdp\nHDP země v milionech euro (2018)\nEurostat\n\n\npopulation\nPopulace země k 1. lednu 2018\nEurostat\n\n\narea\nCelková rozloha země\nCIA factbook\n\n\neu_member\nJe země členem Evropské unie? (2019)\nEvropská unie\n\n\npostsoviet\nByla země součástí Východního bloku?\nWikipedie\n\n\nlife_exp\nNaděje na dožití při narození (2017)\nOSN\n\n\nuni_prc\nPodíl lidí s vysokoškolským vzděláním ve věku 15 až 64 let (2018)\nEurostat\n\n\npoverty_risk\nPodíl lidí ohrožených chudobou (2017)\nEurostat\n\n\nmaterial_dep\nPodíl lidí s materiální deprivací, 3 nebo méně položek (2017)\nEurostat\n\n\nhdi\nIndex lidského rozvoje (2018)\nOSN\n\n\nfoundation_date\nDatum vzniku/zformování země\nWikipedie\n\n\nmaj_belief\nNejvětší náboženská skupina v zemi (2018)\nPew Researcher Center"
+  },
+  {
+    "objectID": "literatura.html",
+    "href": "literatura.html",
+    "title": "Doporučená literatura",
+    "section": "",
+    "text": "R for Data Science (Grolemund G. & Wickham H.) - Základní učebnice R, točící se kolem balíčků Tidyverse. Pokrývá důležité aspekty analýzy dat.\nggplot2: Elegant Graphics for Data Analysis (Wickham H.) - Učebnice zaměřená na vizualizaci dat pomocí balíčku ggplot2.\nAdvanced R (Wickham H.) - Učebnice osvětlující vnitřní fungování R jako programovacího jazyka. Pro vážnější zájemce o programování.\nKromě knih je možné využít ještě taháky od společnosti Rstudio, které poskytují přehled nejvyužívanějších funkcí. Pro tento kurz se hodí zejména následující:\n\nRstudio\nData Import\nData Transformation\nData Visualization"
+  },
+  {
+    "objectID": "procvicovani.html",
+    "href": "procvicovani.html",
+    "title": "Domací cvičení",
+    "section": "",
+    "text": "Objekty, proměnné a funkce\nImport a export dat\nManipulace s dataframy\nManipulace s proměnnými 1\nManipulace s proměnnými 2\nManipulace s proměnnými 3\nPráce s faktory\nVizualizace dat"
+  },
+  {
+    "objectID": "procvicovani-objekty.html",
+    "href": "procvicovani-objekty.html",
+    "title": "Domácí cvičení - Objekty, proměnné a funkce",
+    "section": "",
+    "text": "Úkol 2\nSpočítejte průměr a medián objektu numbers.\n\n\nŘešení\n\nmean(numbers)\nmedian(numbers)\n\n\n\nÚkol 3\nPodívejte se na nápovědu funkce weighted.mean().\nK čemu funkce slouží?\nJaké má funkce weighted.mean() argumenty?\nK čemu je argument w?\n\n\nŘešení\n\n`?weighted.mean()` zobrazí nápovědu funkce `weighted.mean()`\n\nFunkce počítá vážený průměr hodnot.\n\nFukce `weighted.mean()` má tři argumenty: `x`, `w`, `na.rm`.\n\nArgument `w` jsou váhy jednotlivých hodnot."
+  },
+  {
+    "objectID": "procvicovani-import-export.html",
+    "href": "procvicovani-import-export.html",
+    "title": "Domácí cvičení - Import a export dat",
+    "section": "",
+    "text": "Úkol 2\nExportujte dataframe countries jako soubor ve formátu .rds.\n\n\nŘešení\n\nwrite_rds(countries, \"conutries.rds\")"
+  },
+  {
+    "objectID": "procvicovani-dataframy.html",
+    "href": "procvicovani-dataframy.html",
+    "title": "Domácí cvičení - Manipulace s dataframy",
+    "section": "",
+    "text": "Úkol 2\nKolik unikátních hodnot obsahuje proměnná di_cat?\n\n\nŘešení\n\nlength(unique(countries$di_cat))\n#nebo\nunique(countries$di_cat) %>% length()\n\n\n\nÚkol 3\nKolik chybějích hodnot obsahuje proměnná di_cat?\n\n\nŘešení\n\nsum(is.na(countries$di_cat))\n#nebo\nis.na(countries$di_cat) %>% sum() #proměnná di_cat obsahuje 1 chybějící hodnotu"
+  },
+  {
+    "objectID": "procvicovani-promenne-1.html",
+    "href": "procvicovani-promenne-1.html",
+    "title": "Domací cvičení - Manipulace s proměnnými 1",
+    "section": "",
+    "text": "Úkol 2\nSeřaďte pozorování (řádky) v tomto novém objektu podle velikosti demokratického indexu od největšího.\n\n\nŘešení\n\ndemokracie_v_eu %>% arrange(desc(dem_index))\n\n\n\nÚkol 3\nPracujte s demokracie_v_eu a vytvořte novou proměnnou dem_index_100, která bude analogická k dem_index, ale bude nabývat hodnoty od 0 do 100 (nikoliv od 0 do 10 jako dem_index).\n\n\nŘešení\n\ndemokracie_v_eu %>% mutate(dem_index_100 = dem_index*10)\n\n\n\nÚkol 4\nPomocí funkce summarise() vyjádřete prostý aritmetický průměr naděje na dožití ve všech zemích v původních datech (tj. 38 zemí, nikoliv pouze EU).\n\n\nŘešení\n\ncountries %>% summarise(mean = mean(life_exp, na.rm = TRUE))\n\n\n\nÚkol 5\nPomocí kombince funkcí group_by() a summarise() vyjádřete maximum naděje na dožití zvlášť pro postsovětské a ostatní země v celém data setu.\n\n\nŘešení\n\ncountries %>%\n    group_by(postsoviet) %>%\n    summarise(maximum = max(life_exp, na.rm = TRUE))"
+  },
+  {
+    "objectID": "procvicovani-promenne-2.html",
+    "href": "procvicovani-promenne-2.html",
+    "title": "Domací cvičení - Manipulace s proměnnými 2",
+    "section": "",
+    "text": "Úkol 2\nVšechny numerické proměnné zaokrouhlete na 2 desetinná místa.\n\n\nŘešení\n\ncountries %>% mutate(across(where(is.numeric), round, 2))\n\n\n\nÚkol 3\nPro všechny numerické proměnné najděte směrodatnou odchylku.\n\n\nŘešení\n\ncountries %>% summarise(across(where(is.numeric), sd, na.rm = TRUE))\n\n\n\nÚkol 4\nPro proměnné gdp, population a area najděte průměr.\n\n\nŘešení\n\ncountries %>% summarise(across(c(\"gdp\", \"population\", \"area\"),\n                               mean, na.rm = TRUE))\n\n\n\nÚkol 5\nVytvořte v datasetu tři nové proměnné uni_prc_di_cat_mean, poverty_risk_di_cat_mean a material_dep_di_cat_mean, které budou mít hodnotu průměru dané původní proměnné pro podskupinu zemí podle di_cat. Například na řádku Dánska, Němekca atp. bude průměrná hodnota ze zemí, které jsou Full democracy na řádcích Bulharska, Belgie a Česka bude průměrná hodnota ze zemí Flawed democracy atp.\n\n\nŘešení\n\ncountries %>% group_by(di_cat) %>% \n  mutate(across(.cols = c(\"uni_prc\", \"poverty_risk\", \"material_dep\"),\n                .fns = mean,\n                na.rm = TRUE,\n                .names = \"{col}_di_cat_mean\"))\n\n\n\nÚkol 6\nVyberte všechny proměnné z datasetu countries, které začínají písmenem “p” (bez pojmenování jednotlivých proměnných začínajících na “p”). Pro správný tvar pomocné funkce můžete použít online nápovědu.\n\n\nŘešení\n\ncountries %>% select(starts_with(\"p\"))"
+  },
+  {
+    "objectID": "procvicovani-promenne-3.html",
+    "href": "procvicovani-promenne-3.html",
+    "title": "Domací cvičení - Manipulace s proměnnými 3",
+    "section": "",
+    "text": "Úkol 2\nPro všechny numerické proměnné v datasetu spočítejte následující hodnoty: minimum, median, mean, maximum, sd, IQR, var. Výsledný objekt přetvořte do dlouhého formátu (dva sloupce) tak, že názvy funkcí budou pojmenovány descriptive_stats a samotné hodnoty budou pojmenovány results. Výsledný objekt pojmenujte descriptives.\n\n\nŘešení\n\ndescriptives <- countries %>% \n  summarise(across(where(is.numeric) & !X,\n                   lst(min, median, mean, max, sd, IQR, var),\n                   na.rm=TRUE)) %>% \n  pivot_longer(cols = everything(),\n               names_to = \"descriptive_stats\",\n               values_to = \"results\")\n\n\n\nÚkol 3\nPro proměnné dem_index a life_exp spočítejte minimum, median a maximum v rámci podskupin dle toho, jaké je v zemi hlavní náboženství. Výsledný objekt pojmenujte stats_by_relig.\n\n\nŘešení\n\nstats_by_relig <- countries %>% \n  group_by(maj_belief) %>% \n  summarise(across(c(\"dem_index\", \"life_exp\"),\n                   lst(min, median, max),\n                   na.rm=TRUE))\n\n\n\nÚkol 4\nNový objekt stats_by_relig transformujte do dlouhého formátu. Pozor, na rozdíl od situací, se kterými jsme se už setkali, je zde přítomen popisný sloupec maj_belief (popisuje skupinu), který neobsahuje hodoty - ten proto musíte z argumentu cols funkce pivot_longer() vyjmout.\n\n\nŘešení\n\nstats_by_relig %>% pivot_longer(cols = !maj_belief)"
+  },
+  {
+    "objectID": "procvicovani-faktory.html",
+    "href": "procvicovani-faktory.html",
+    "title": "Domácí cvičení - Práce s faktory",
+    "section": "",
+    "text": "Úkol 2\nZmeňte pořadí úrovní (levels) u nově vytvořeného faktoru di_cat od nejvíce po nejméně demokratickou úroveň a výsledek opět uložte do objektu countries.\n\n\nŘešení\n\ncountries <- countries %>% \n  mutate(di_cat = fct_relevel(di_cat, \"Full democracy\", \"Flawed democracy\", \"Hybrid regime\"))\n\n\n\nÚkol 3\nVizualizujte proměnnou di_cat pomocí funnkce qplot().\n\n\nŘešení\n\nqplot(x = di_cat, data = countries)\n\n\n\nÚkol 4\nNyní otočte pořadí úrovní a a znovu proměnnou vizualizujte.\n\n\nŘešení\n\ncountries %>% \n  mutate(di_cat = fct_rev(di_cat)) %>% \n  qplot(x = di_cat)\n\n\n\nÚkol 5\nSpojte úrovně “Flawed democracy” a “Full democracy” do jedné (“Democracy”) a zároveň úroveň “Hybrid regime” přejmenujte na “Non-democracy”.\n\n\nŘešení\n\ncountries %>% \n  mutate(di_cat = fct_collapse(di_cat, \n                               \"Democracy\" = c (\"Flawed democracy\", \"Full democracy\"),\n                               \"Non-democracy\" = \"Hybrid regime\"))\n\n\n\nÚkol 6\nZměňte pořadí úrovní podle průměrné hodnoty gdp.\n\n\nŘešení\n\ncountries %>% \n  mutate(di_cat = fct_reorder(.f = di_cat, \n                              .x = gdp, \n                              .fun = mean, \n                              na.rm=TRUE))\n\n\n\nÚkol 7\nVytvořte nový faktor povery_risk_halves, který bude mít hodnotu Lower half” pro země s ohrožením chudobou nižším než medián, hodnotu “Median” pro země (zemi) přesně s mediánovou hodnotou, a hodnotu “Upper half” pro země s ohrožením chudobou větším než medián.\n\n\nŘešení\n\ncountries %>% \n  mutate(poverty_risk_halves = case_when(poverty_risk < median(poverty_risk, na.rm=TRUE) ~ \"Lower half\",\n                                         poverty_risk == median(poverty_risk, na.rm=TRUE) ~ \"Median\",\n                                         poverty_risk > median(poverty_risk, na.rm=TRUE) ~ \"Upper half\"),\n         poverty_risk_halves = as.factor(poverty_risk_halves))"
+  },
+  {
+    "objectID": "procvicovani-vizualizace.html",
+    "href": "procvicovani-vizualizace.html",
+    "title": "Domácí cvičení - Vizualizace dat",
+    "section": "",
+    "text": "Úkol 1\nVytvořte sloupcový graf pro proměnnou Kategorizovaný index demokracie.\n\n\nŘešení\n\ncountries %>% count(di_cat) %>% \n  ggplot(aes(x = di_cat, y = n)) + geom_col()\n\n#Alternativne\nqplot(x = di_cat, data = countries)\n\n\n\nÚkol 2\nPřidejte do grafu z 1. úkolu nad každý sloupec popisek, vyjadřující počet zemí v dané kategorii. Popisky by měli být nad sloupci.\n\n\nŘešení\n\ncountries %>% count(di_cat) %>% \n  ggplot(aes(x = di_cat, y = n, label = n)) +\n  geom_col() +\n  geom_text(nudge_y = 1)\n\n\n\nÚkol 3\nVytvořte boxploty, které budou vyjadřovat vztah mezi proměnnými Kategorizovaný index demokracie a Naděje na dožití.\n\n\nŘešení\n\nggplot(aes(x = di_cat, y = life_exp), data = countries) + geom_boxplot()\n\n\n\nÚkol 4\nOdfiltrujte kategorii NA z grafu z 2. úkolu a seřaďte boxploty do pořadí “Full democracy”, “Flawed democracy” a “Hybrid regime”.\n\n\nŘešení\n\ncountries %>%\n  filter(!is.na(di_cat)) %>% \n  mutate(di_cat = fct_relevel(di_cat,\n                              \"Full democracy\",\n                              \"Flawed democracy\",\n                              \"Hybrid regime\")) %>% \n  ggplot(aes(x = di_cat, y = life_exp)) +\n    geom_boxplot()\n\n\n\nÚkol 5\nVytvořte scatterplot pro proměnné Podíl lidí s vysokoškolským vzděláním a Naděje na dožití.\n\n\nŘešení\n\nggplot(aes(x = uni_prc, y = life_exp), data = countries) + geom_point()\n\n\n\nÚkol 6\nVe grafu z 5. úkolu od sebe barevně odlište postsovětské a západní země a tvarem bodu od sebe odlište země spadající do různých kategorií Kategorizovaného indexu demokracie.\n\n\nŘešení\n\nggplot(aes(x = uni_prc, y = life_exp, color = postsoviet, shape = di_cat), data = countries) + geom_point()\n\n\n\nÚkol 7\nReplikujte následující graf (Budete potřebovat balíček scales):\n\n\n\n\n\n\n\nŘešení\n\nlibrary(scales)\n\nggplot(data = countries, aes(x = uni_prc, y = life_exp)) +\n  geom_point() +\n  geom_smooth(method = \"lm\") +\n  scale_x_continuous(labels = percent_format(1)) +\n  labs(x = \"Podíl lidí s vysokoškolským vzděláním\",\n       y = \"Naděje na dožití při narození\",\n       title = \"Naděje na dožití a podíl obyvatel s VŠ vzděláním\",\n       subtitle = \"Evropské země 2018\",\n       caption = \"Zdroj dat: Eurostat 2018\")\n\n\n\nÚkol 8\nReplikujte následující graf:\n\n\n\n\n\nNěkolik tipů:\n\nBudete potřebovat balíček scales.\nBarvy pochází z brewer palety Set1.\nPozadí a celkový vzhled je možné měnit pomocí předpřipravených themes (např. theme_bw(), theme_minimal(),…).\n\n\n\nŘešení\n\ncountries %>% \n  filter(!is.na(di_cat)) %>% \n  count(di_cat, postsoviet) %>% \n  mutate(postsoviet = fct_rev(postsoviet), \n         di_cat = fct_relevel(di_cat, \"Full democracy\", \"Flawed democracy\", \"Hybrid regime\")) %>%\n  ggplot(aes(x = di_cat, y = n, fill = postsoviet)) +\n  geom_col(position = \"fill\") +\n  scale_fill_brewer(palette = \"Set1\") + \n  scale_y_continuous(labels = percent_format(accuracy = 1)) +\n  labs(x = \"Democracy index\", y = element_blank(), fill = \"Is country postsoviet?\") +\n  theme_minimal() +\n  theme(legend.position = \"bottom\")\n\n\n\nÚkol 9\nVytvořte si simulovaná data pomocí následujícího skriptu:\n\nlikert = c(\"Spokojen\", \"Spíše spokojen\", \"Spíše nespokojen\", \"Nespokojen\")\n\nset.seed(123)\nspokojenost = data.frame(spokojenst_prace = sample(likert, size = 100,\n                                                   replace = TRUE,\n                                                   prob = c(0.2, 0.5, 0.3, 0.1)),\n                         spokojenost_pratele = sample(likert, size = 100,\n                                                      replace = TRUE,\n                                                      prob = c(0.3, 0.5, 0.2, 0.1)),\n                         spokojenost_parner = sample(likert, size = 100,\n                                                     replace = TRUE,\n                                                     prob = c(0.5,  0.1, 0.3, 0.1)),\n                         spokojenost_rodina = sample(likert, size = 100,\n                                                     replace = TRUE,\n                                                     prob = c(0.1, 0.3, 0.2, 0.5)) )\n\nA replikujte následující graf:\n\n\n\n\n\nNěkolik tipů:\n\nBudete potřebovat balíček scales.\nBarvy pochází z brewer palety. Přehled palet najdete pomocí funkce display.brewer.all() z balíčku RColorBrewer.\n\n\n\nŘešení\n\nspokojenost %>%\n  pivot_longer(cols = everything()) %>% \n  count(name, value) %>% \n  group_by(name) %>% \n  mutate(trust = sum(n[value %in% c(\"Spokojen\",\"Spíše spokojen\")] )) %>% \n  ungroup() %>% \n  mutate(name = fct_reorder(name, trust)) %>% \n  ggplot(aes(x = n, y = name, fill = value)) +\n    geom_col(position = \"fill\") +\n    labs(x = element_blank(),\n         y = element_blank(),\n         fill = element_blank(),\n         title = \"Spokojenost s vybranými aspekty života\") +\n    scale_x_continuous(labels = percent_format(accuracy = 1)) +\n    scale_fill_brewer(palette = \"RdYlGn\") +\n    theme(legend.position = \"bottom\")"
+  }
+]

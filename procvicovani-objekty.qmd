@@ -1,0 +1,51 @@
+---
+title: "Domácí cvičení - Objekty, proměnné a funkce"
+---
+
+### Úkol 1
+
+Vytvořte numerický vektor jménem numbers, který bude obsahovat následující hodnoty: 2, 7, 14, 7 a 64.
+
+<details>
+<summary>Řešení</summary>
+``` r
+numbers = c(2, 7, 14, 7, 64)
+```
+</details>
+
+### Úkol 2
+
+Spočítejte průměr a medián objektu `numbers`.
+
+<details>
+<summary>Řešení</summary>
+``` r
+mean(numbers)
+median(numbers)
+```
+</details>
+
+
+### Úkol 3
+
+Podívejte se na nápovědu funkce `weighted.mean()`.
+
+K čemu funkce slouží?
+
+Jaké má funkce `weighted.mean()` argumenty?
+
+K čemu je argument `w`?
+
+
+<details>
+<summary>Řešení</summary>
+``` r
+`?weighted.mean()` zobrazí nápovědu funkce `weighted.mean()`
+
+Funkce počítá vážený průměr hodnot.
+
+Fukce `weighted.mean()` má tři argumenty: `x`, `w`, `na.rm`.
+
+Argument `w` jsou váhy jednotlivých hodnot.
+```
+</details>

@@ -1,0 +1,75 @@
+---
+title: "Domací cvičení - Manipulace s proměnnými 2"
+---
+
+### Úkol 1
+
+Vyberte z datasetu countries všechny proměnné, které jsou typu "character" a obsahují podtržítko.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% select(where(is.character) & contains("_"))
+```
+</details>
+
+### Úkol 2
+
+Všechny numerické proměnné zaokrouhlete na 2 desetinná místa.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% mutate(across(where(is.numeric), round, 2))
+```
+</details>
+
+### Úkol 3
+
+Pro všechny numerické proměnné najděte směrodatnou odchylku.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% summarise(across(where(is.numeric), sd, na.rm = TRUE))
+
+```
+</details>
+
+### Úkol 4
+
+Pro proměnné `gdp`, `population` a `area` najděte průměr.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% summarise(across(c("gdp", "population", "area"),
+                               mean, na.rm = TRUE))
+```
+</details>
+
+### Úkol 5
+
+Vytvořte v datasetu tři nové proměnné `uni_prc_di_cat_mean`, `poverty_risk_di_cat_mean` a `material_dep_di_cat_mean`, které budou mít hodnotu průměru dané původní proměnné pro podskupinu zemí podle `di_cat`. Například na řádku Dánska, Němekca atp. bude průměrná hodnota ze zemí, které jsou Full democracy na řádcích Bulharska, Belgie a Česka bude průměrná hodnota ze zemí Flawed democracy atp.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% group_by(di_cat) %>% 
+  mutate(across(.cols = c("uni_prc", "poverty_risk", "material_dep"),
+                .fns = mean,
+                na.rm = TRUE,
+                .names = "{col}_di_cat_mean"))
+```
+</details>
+
+### Úkol 6
+
+Vyberte všechny proměnné z datasetu `countries`, které začínají písmenem "p" (bez pojmenování jednotlivých proměnných začínajících na "p"). Pro správný tvar pomocné funkce můžete použít online nápovědu.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% select(starts_with("p"))
+```
+</details>

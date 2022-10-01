@@ -1,0 +1,62 @@
+---
+title: "Domací cvičení - Manipulace s proměnnými 1"
+---
+
+### Úkol 1
+
+Vytvořte nový objekt jménem `demokracie_v_eu`, kde budou jen proměnné `country`, `dem_index` a `di_cat` a pouze země, které jsou členy EU (zvažte v jakém pořadí je potřeba příkazy řetězit).
+
+<details>
+<summary>Řešení</summary>
+``` r
+demokracie_v_eu <- countries %>%
+    filter(eu_member == "yes") %>%
+    select(country, dem_index, di_cat)
+```
+</details>
+
+### Úkol 2
+
+Seřaďte pozorování (řádky) v tomto novém objektu podle velikosti demokratického indexu od největšího.
+
+<details>
+<summary>Řešení</summary>
+``` r
+demokracie_v_eu %>% arrange(desc(dem_index))
+```
+</details>
+
+### Úkol 3
+
+Pracujte s `demokracie_v_eu` a vytvořte novou proměnnou `dem_index_100`, která bude analogická k `dem_index`, ale bude nabývat hodnoty od 0 do 100 (nikoliv od 0 do 10 jako `dem_index`).
+
+<details>
+<summary>Řešení</summary>
+``` r
+demokracie_v_eu %>% mutate(dem_index_100 = dem_index*10)
+```
+</details>
+
+### Úkol 4
+
+Pomocí funkce `summarise()` vyjádřete prostý aritmetický průměr naděje na dožití ve všech zemích v původních datech (tj. 38 zemí, nikoliv pouze EU).
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>% summarise(mean = mean(life_exp, na.rm = TRUE))
+```
+</details>
+
+### Úkol 5
+
+Pomocí kombince funkcí `group_by()` a `summarise()` vyjádřete maximum naděje na dožití zvlášť pro postsovětské a ostatní země v celém data setu.
+
+<details>
+<summary>Řešení</summary>
+``` r
+countries %>%
+    group_by(postsoviet) %>%
+    summarise(maximum = max(life_exp, na.rm = TRUE))
+```
+</details>

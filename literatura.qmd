@@ -1,0 +1,21 @@
+---
+title: "Doporučená literatura"
+---
+
+Pro doplnění a rozšíření znalostí je možné využít následující publikce. Všechny publikace jsou volně šiřitelné:
+
+[**R for Data Science**](https://r4ds.had.co.nz/) (Grolemund G. & Wickham H.) - Základní učebnice R, točící se kolem balíčků Tidyverse. Pokrývá důležité aspekty analýzy dat.
+
+[**ggplot2: Elegant Graphics for Data Analysis**](https://ggplot2-book.org/) (Wickham H.) - Učebnice zaměřená na vizualizaci dat pomocí balíčku ggplot2.
+
+[**Advanced R**](https://adv-r.hadley.nz/) (Wickham H.) - Učebnice osvětlující vnitřní fungování R jako programovacího jazyka. Pro vážnější zájemce o programování.
+
+Kromě knih je možné využít ještě [taháky od společnosti Rstudio](https://rstudio.com/resources/cheatsheets/), které poskytují přehled nejvyužívanějších funkcí. Pro tento kurz se hodí zejména následující:
+
+-   [Rstudio](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf)
+
+-   [Data Import](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf)
+
+-   [Data Transformation](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf)
+
+-   [Data Visualization](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf)
